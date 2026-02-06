@@ -10,58 +10,70 @@
             --biz-bg: #121416; --biz-card: #1c1e21; --biz-blue: #007aff;
             --rakuten-green: #28a745; --jalan-orange: #ff9900;
             --text-main: #ffffff; --text-sub: #b0b3b8; --accent-gold: #d4af37; --header-h: 60px;
-            --sale-red: #ff3b30;
         }
         body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; }
         .biz-header { position: fixed; top: 0; width: 100%; height: var(--header-h); background: rgba(18,20,22,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #333; z-index: 2000; display: flex; align-items: center; padding: 0 15px; box-sizing: border-box; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 1px; }
 
-        /* インテリジェンスセクション */
+        /* 上部インテリジェンス */
         .intel-section { margin-top: calc(var(--header-h) + 10px); padding: 0 12px; }
         .builtin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
         .builtin-card { border-radius: 10px; padding: 12px; text-decoration: none; color: inherit; border: 1px solid #333; background: var(--biz-card); }
-        .weather-card { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border: none; }
         .intel-label { font-size: 10px; color: var(--accent-gold); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
         .status-dot { width: 6px; height: 6px; background: #4caf50; border-radius: 50%; box-shadow: 0 0 6px #4caf50; }
         .intel-val { font-size: 13px; font-weight: bold; margin: 0; }
 
-        .intel-icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 15px; }
-        .icon-btn { background: var(--biz-card); border-radius: 8px; padding: 8px; border: 1px solid #333; text-decoration: none; color: inherit; text-align: center; font-size: 9px; }
-        .icon-btn i { font-size: 14px; margin-bottom: 3px; display: block; color: var(--accent-gold); }
-
-        /* セール（超強調デザイン） */
-        .section-title { padding: 10px 15px 5px; font-size: 11px; font-weight: bold; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; }
-        .sale-container { padding: 0 12px; margin-bottom: 15px; }
+        /* セクションタイトル */
+        .section-title { padding: 15px 15px 5px; font-size: 11px; font-weight: bold; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* セール（ド迫力デザイン） */
+        .sale-container { padding: 0 12px; }
         .limited-sale-card { 
             background: linear-gradient(135deg, #2c2514 0%, #1c1e21 100%); 
             border: 2px solid var(--accent-gold); 
-            border-radius: 14px; text-decoration: none; color: inherit; display: flex;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden;
-            margin-bottom: 10px;
+            border-radius: 14px; text-decoration: none; color: inherit; display: flex; 
+            overflow: hidden; margin-bottom: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); 
         }
-        .sale-badge-big {
-            background: var(--accent-gold); color: #000; width: 80px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-weight: 900; text-align: center; line-height: 1.1;
+        .sale-badge-big { 
+            background: var(--accent-gold); color: #000; width: 80px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; 
         }
         .sale-content { padding: 12px; flex: 1; }
-        .sale-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; color: #fff; }
-        .sale-desc { font-size: 13px; color: #ffd700; font-weight: bold; margin-bottom: 6px; }
-        .timer { color: #ff453a; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 4px; }
+        .sale-title { font-size: 15px; font-weight: 800; }
+        .sale-desc { font-size: 13px; color: #ffd700; font-weight: bold; }
 
-        /* クーポン（2列並び） */
+        /* クーポン（2列グリッド） */
         .coupon-grid { padding: 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .coupon-card { 
-            background: #fff; border-radius: 8px; overflow: hidden; 
-            text-decoration: none; color: #333; display: flex; flex-direction: column; 
-            border: 1px solid #ddd; height: 100%;
-        }
+        .coupon-card { background: #fff; border-radius: 8px; overflow: hidden; text-decoration: none; color: #333; display: flex; flex-direction: column; border: 1px solid #ddd; }
         .coupon-label { padding: 4px; text-align: center; font-size: 9px; font-weight: 900; color: #fff; background: var(--biz-blue); }
         .label-rakuten { background: var(--rakuten-green) !important; }
         .label-jalan { background: var(--jalan-orange) !important; }
         .coupon-main { padding: 8px; flex-grow: 1; }
-        .coupon-title { font-size: 11px; font-weight: bold; margin-bottom: 4px; }
-        .coupon-code { font-family: monospace; font-size: 10px; color: var(--biz-blue); border: 1px dashed #ccc; padding: 2px; text-align: center; background: #f0f4f8; border-radius: 4px; font-weight: bold; }
+        .coupon-title { font-size: 11px; font-weight: bold; }
+        .coupon-code { font-family: monospace; font-size: 10px; color: var(--biz-blue); border: 1px dashed #ccc; padding: 2px; text-align: center; background: #f0f4f8; border-radius: 4px; }
+
+        /* TIPS（読み物リスト） */
+        .tips-container { padding: 0 12px 30px; }
+        .tips-card { 
+            background: var(--biz-card); border-radius: 10px; padding: 12px; 
+            margin-bottom: 8px; border: 1px solid #333; cursor: pointer; 
+            display: flex; align-items: center; gap: 10px; 
+        }
+        .tips-card i { color: var(--accent-gold); }
+        .tips-text { font-size: 13px; font-weight: 500; }
+
+        /* 新聞風モーダル */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { 
+            background: #f4f1ea; color: #1a1a1a; width: 100%; max-width: 500px; 
+            max-height: 80vh; border-radius: 4px; overflow-y: auto; padding: 30px; 
+            position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #dcd9d0; 
+        }
+        .modal-header { border-bottom: 2px solid #1a1a1a; margin-bottom: 15px; padding-bottom: 10px; }
+        .modal-category { font-size: 11px; font-weight: bold; color: #c00; letter-spacing: 1px; }
+        .modal-title { font-size: 22px; font-weight: 900; margin: 5px 0; line-height: 1.3; }
+        .modal-body { font-size: 16px; line-height: 1.8; text-align: justify; white-space: pre-wrap; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #888; }
     </style>
 </head>
 <body>
@@ -74,15 +86,10 @@
             <div class="intel-label"><span class="status-dot"></span> JR 運行状況</div>
             <p class="intel-val">東海道新幹線<br>平常運転</p>
         </a>
-        <a href="https://weathernews.jp/onebox/" target="_blank" class="builtin-card weather-card">
+        <div class="builtin-card" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border:none;">
             <div class="intel-label" style="color:#fff;"><i class="fa-solid fa-cloud-sun"></i> 東京の天気</div>
             <p class="intel-val" style="color:#fff;">12°C Cloudy</p>
-        </a>
-    </div>
-    <div class="intel-icon-grid">
-        <a href="https://www.jartic.or.jp/" target="_blank" class="icon-btn"><i class="fa-solid fa-car"></i>渋滞</a>
-        <a href="https://ja.flightaware.com/live/" target="_blank" class="icon-btn"><i class="fa-solid fa-plane"></i>フライト</a>
-        <a href="https://weathernews.jp/onebox/radar/" target="_blank" class="icon-btn"><i class="fa-solid fa-cloud-showers-heavy"></i>雨雲</a>
+        </div>
     </div>
 </div>
 
@@ -91,6 +98,20 @@
 
 <div class="section-title"><i class="fa-solid fa-ticket"></i> Active Coupons</div>
 <div id="coupon-area" class="coupon-grid"></div>
+
+<div class="section-title"><i class="fa-solid fa-lightbulb"></i> Travel Tips</div>
+<div id="tips-area" class="tips-container"></div>
+
+<div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+            <div class="modal-category">Travel Intel - Special Edition</div>
+            <h2 id="modalTitle" class="modal-title"></h2>
+        </div>
+        <div id="modalBody" class="modal-body"></div>
+    </div>
+</div>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
@@ -102,68 +123,44 @@ async function updateDashboard() {
         const rows = data.split('\n').map(row => row.split(','));
         const now = new Date();
 
-        let saleHtml = '';
-        let couponHtml = '';
+        let html = { sale: '', coupon: '', tips: '' };
 
         for(let i = 1; i < rows.length; i++) {
-            const [type, title, start, end, url, descOrCode, discount] = rows[i];
+            const row = rows[i].map(s => s?.trim());
+            const [type, title, start, end, url, desc, discount] = row;
+            const fullText = row[7]; // H列
+
             if(!type || !title) continue;
 
             const startTime = new Date(start);
             const endTime = new Date(end);
 
             if (now >= startTime && now <= endTime) {
-                if (type.trim() === 'SALE') {
-                    saleHtml += `
-                    <a href="${url}" class="limited-sale-card">
-                        <div class="sale-badge-big">
-                            <span style="font-size:10px;">MAX</span>
-                            <span style="font-size:20px;">${discount || '特売'}</span>
-                        </div>
-                        <div class="sale-content">
-                            <div class="sale-title">${title}</div>
-                            <div class="sale-desc">${descOrCode}</div>
-                            <div class="timer" id="timer-${i}">残り --:--:--</div>
-                        </div>
-                    </a>`;
-                    setupTimer(`timer-${i}`, endTime);
-                } else if (type.trim() === 'COUPON') {
-                    let labelClass = "";
-                    if (title.includes("楽天")) labelClass = "label-rakuten";
-                    if (title.includes("じゃらん")) labelClass = "label-jalan";
-
-                    couponHtml += `
-                    <a href="${url}" class="coupon-card">
-                        <div class="coupon-label ${labelClass}">${discount || 'COUPON'}</div>
-                        <div class="coupon-main">
-                            <div class="coupon-title">${title}</div>
-                            <div class="coupon-code">${descOrCode}</div>
-                        </div>
-                    </a>`;
+                if (type === 'SALE') {
+                    html.sale += `<a href="${url}" class="limited-sale-card"><div class="sale-badge-big"><span style="font-size:10px;">MAX</span><span style="font-size:20px;">${discount}</span></div><div class="sale-content"><div class="sale-title">${title}</div><div class="sale-desc">${desc}</div></div></a>`;
+                } else if (type === 'COUPON') {
+                    let cClass = title.includes("楽天") ? "label-rakuten" : title.includes("じゃらん") ? "label-jalan" : "";
+                    html.coupon += `<a href="${url}" class="coupon-card"><div class="coupon-label ${cClass}">${discount}</div><div class="coupon-main"><div class="coupon-title">${title}</div><div class="coupon-code">${desc}</div></div></a>`;
+                } else if (type === 'TIPS') {
+                    const content = fullText || desc;
+                    html.tips += `<div class="tips-card" onclick="openModal(\`${title}\`, \`${content}\`)"><i class="fa-solid fa-circle-info"></i><div class="tips-text">${title}</div></div>`;
                 }
             }
         }
-        document.getElementById('sale-area').innerHTML = saleHtml || '<p style="font-size:11px; color:#555;">現在開催中のセールはありません</p>';
-        document.getElementById('coupon-area').innerHTML = couponHtml || '<p style="font-size:11px; color:#555;">現在有効なクーポンはありません</p>';
-
-    } catch (e) { console.error("Load Error", e); }
+        document.getElementById('sale-area').innerHTML = html.sale || '<p style="color:#555;font-size:11px;">開催なし</p>';
+        document.getElementById('coupon-area').innerHTML = html.coupon || '<p style="color:#555;font-size:11px;">有効なし</p>';
+        document.getElementById('tips-area').innerHTML = html.tips || '<p style="color:#555;font-size:11px;">新着なし</p>';
+    } catch (e) { console.error(e); }
 }
 
-function setupTimer(id, end) {
-    setInterval(() => {
-        const now = new Date();
-        const diff = end - now;
-        if (diff <= 0) {
-            const el = document.getElementById(id);
-            if(el) el.closest('.limited-sale-card').style.display = 'none';
-            return;
-        }
-        const h = Math.floor(diff / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        const el = document.getElementById(id);
-        if(el) el.innerHTML = `<i class="fa-solid fa-clock"></i> 残り ${h}h ${m}m ${s}s`;
-    }, 1000);
+function openModal(title, text) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalBody').innerText = text;
+    document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').style.display = 'none';
 }
 
 updateDashboard();
