@@ -11,7 +11,7 @@
             --rakuten-green: #28a745; --jalan-orange: #ff9900; --other-gray: #455a64;
             --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; --header-h: 60px;
         }
-        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", Roboto, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 60px; }
+        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 60px; }
         
         .biz-header { position: fixed; top: 0; width: 100%; height: var(--header-h); background: rgba(13,15,17,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #333; z-index: 2000; display: flex; align-items: center; padding: 0 15px; box-sizing: border-box; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 2px; }
@@ -19,6 +19,7 @@
         .intel-hub { margin-top: calc(var(--header-h) + 15px); padding: 0 12px; }
         .intel-tagline { font-size: 10px; color: var(--accent-gold); font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
         .intel-tagline::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent-gold), transparent); }
+        
         .main-monitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .monitor-card { background: var(--biz-card); border-radius: 12px; padding: 15px; text-decoration: none; color: inherit; border: 1px solid #2d3436; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .monitor-label { font-size: 10px; color: var(--text-sub); display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
@@ -43,40 +44,41 @@
             background: rgba(255, 255, 255, 0.2); transform: rotate(30deg); animation: shine 5s infinite;
         }
         @keyframes shine { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
-        .sale-badge-big { background: var(--accent-gold); color: #000; width: 85px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; line-height: 1; text-align: center; border-right: 1px solid rgba(0,0,0,0.2); }
-        .sale-content { padding: 18px; flex: 1; z-index: 1; }
-        .sale-title { font-size: 15px; font-weight: 900; }
-        .sale-desc { font-size: 12px; color: #ffd700; font-weight: bold; }
+        .sale-badge-big { background: var(--accent-gold); color: #000; width: 70px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; line-height: 1; text-align: center; }
+        .sale-content { padding: 15px; flex: 1; z-index: 1; }
+        .sale-title { font-size: 14px; font-weight: 900; }
+        .sale-desc { font-size: 11px; color: #ffd700; font-weight: bold; }
 
-        /* ボーディングパス風クーポン */
+        /* 2列ボーディングパス風クーポン */
         .coupon-group { margin-bottom: 25px; padding: 0 12px; }
         .group-label { font-size: 10px; font-weight: 900; margin-bottom: 8px; color: var(--accent-gold); letter-spacing: 1px; }
+        .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .coupon-card { 
-            display: flex; background: #eceff1; border-radius: 8px; overflow: hidden; 
-            margin-bottom: 12px; text-decoration: none; border: 1px solid #cfd8dc;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4); position: relative;
+            display: flex; background: #eceff1; border-radius: 6px; overflow: hidden; 
+            text-decoration: none; border: 1px solid #cfd8dc; height: 100px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4); position: relative;
         }
-        /* パンチ穴演出 */
+        /* パンチ穴演出 (2列用に小さく調整) */
         .coupon-card::before, .coupon-card::after {
-            content: ""; position: absolute; width: 16px; height: 16px; background: var(--biz-bg); border-radius: 50%; right: calc(30% - 8px); z-index: 10;
+            content: ""; position: absolute; width: 12px; height: 12px; background: var(--biz-bg); border-radius: 50%; right: calc(35% - 6px); z-index: 10;
         }
-        .coupon-card::before { top: -8px; }
-        .coupon-card::after { bottom: -8px; }
+        .coupon-card::before { top: -6px; }
+        .coupon-card::after { bottom: -6px; }
 
         .coupon-main { 
-            flex: 7; padding: 15px; border-right: 2px dotted #b0bec5; position: relative; color: #263238;
+            flex: 6.5; padding: 10px; border-right: 1.5px dotted #b0bec5; position: relative; color: #263238; display: flex; flex-direction: column; justify-content: center;
         }
-        .coupon-brand { font-size: 9px; font-weight: 900; color: #546e7a; text-transform: uppercase; margin-bottom: 4px; }
-        .coupon-title { font-size: 18px; font-weight: 900; margin: 2px 0; line-height: 1.2; }
-        .coupon-info { font-size: 8px; color: #90a4ae; font-family: monospace; text-transform: uppercase; margin-top: 5px; }
+        .coupon-brand { font-size: 8px; font-weight: 900; color: #546e7a; text-transform: uppercase; margin-bottom: 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .coupon-title { font-size: 13px; font-weight: 900; margin: 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .coupon-info { font-size: 7px; color: #90a4ae; font-family: monospace; margin-top: 4px; }
 
         .coupon-stub { 
-            flex: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 10px; color: #fff; text-align: center;
+            flex: 3.5; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 5px; color: #fff; text-align: center;
         }
-        .stub-label { font-size: 8px; font-weight: bold; opacity: 0.9; margin-bottom: 4px; }
-        .stub-code { font-size: 12px; font-weight: 900; font-family: monospace; }
+        .stub-label { font-size: 7px; font-weight: bold; opacity: 0.8; margin-bottom: 2px; }
+        .stub-code { font-size: 10px; font-weight: 900; font-family: monospace; word-break: break-all; }
 
         /* ブランド別カラー */
         .rakuten .coupon-stub { background: var(--rakuten-green); }
@@ -87,7 +89,6 @@
 
         .tips-grid { padding: 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .tips-card-new { background: #f4f1ea; border-radius: 2px; padding: 15px; border: 1px solid #dcd9d0; position: relative; cursor: pointer; box-shadow: 6px 6px 0px rgba(0,0,0,0.5); }
-        .tips-card-new::after { content: "INTEL"; position: absolute; top: -8px; right: 10px; background: #1a1a1a; color: #fff; font-size: 8px; padding: 2px 6px; }
         .tips-title-new { color: #1a1a1a; font-family: serif; font-size: 13px; font-weight: 900; border-top: 1.5px solid #1a1a1a; padding: 5px 0; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
@@ -103,12 +104,12 @@
     <div class="intel-tagline">Intelligence Hub</div>
     <div class="main-monitor-grid">
         <a href="https://traininfo.jr-central.co.jp/shinkansen/pc/ja/index.html" target="_blank" class="monitor-card">
-            <div class="monitor-label"><i class="fa-solid fa-train"></i> Transit Status</div>
-            <div class="monitor-val">東海道新幹線<br>平常運転</div>
+            <div class="monitor-label"><i class="fa-solid fa-train"></i> Transit</div>
+            <div class="monitor-val">新幹線平常運転</div>
         </a>
         <div class="monitor-card">
-            <div class="monitor-label"><i class="fa-solid fa-cloud-sun"></i> Tokyo Weather</div>
-            <div class="monitor-val">12°C<br>Cloudy</div>
+            <div class="monitor-label"><i class="fa-solid fa-cloud-sun"></i> Tokyo</div>
+            <div class="monitor-val">12°C Cloudy</div>
         </div>
     </div>
     <div class="quick-action-grid">
@@ -122,10 +123,10 @@
 <div class="section-title"><i class="fa-solid fa-fire"></i> Priority Sales</div>
 <div id="sale-area" class="sale-container"></div>
 
-<div class="section-title"><i class="fa-solid fa-ticket"></i> Boarding Pass Coupons</div>
+<div class="section-title"><i class="fa-solid fa-ticket"></i> Premium Pass</div>
 <div id="coupon-root"></div>
 
-<div class="section-title"><i class="fa-solid fa-newspaper"></i> Business Briefing</div>
+<div class="section-title"><i class="fa-solid fa-newspaper"></i> Business Intelligence</div>
 <div id="tips-area" class="tips-grid"></div>
 
 <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
@@ -156,17 +157,17 @@ async function updateDashboard() {
 
             if (now >= new Date(start) && now <= new Date(end)) {
                 if (type === 'SALE') {
-                    saleHtml += `<a href="${url}" class="limited-sale-card"><div class="sale-badge-big"><span style="font-size:10px;">MAX</span><div style="font-size:22px;">${discount}</div></div><div class="sale-content"><div class="sale-title">${title}</div><div class="sale-desc">${desc}</div></div></a>`;
+                    saleHtml += `<a href="${url}" class="limited-sale-card"><div class="sale-badge-big"><span style="font-size:9px;">MAX</span><div style="font-size:18px;">${discount}</div></div><div class="sale-content"><div class="sale-title">${title}</div><div class="sale-desc">${desc}</div></div></a>`;
                 } else if (type === 'COUPON') {
                     const cClass = title.includes("楽天")?"rakuten":title.includes("じゃらん")?"jalan":"other";
-                    const brandName = cClass === "rakuten" ? "RAKUTEN TRAVEL" : (cClass === "jalan" ? "JALAN.NET" : "HOTEL COUPON");
+                    const brandShort = cClass === "rakuten" ? "RAKUTEN" : (cClass === "jalan" ? "JALAN" : "PASS");
                     
                     const card = `
                         <a href="${url}" class="coupon-card ${cClass}">
                             <div class="coupon-main">
-                                <div class="coupon-brand">${brandName}</div>
+                                <div class="coupon-brand">${brandShort} BOARDING</div>
                                 <div class="coupon-title">${discount}</div>
-                                <div class="coupon-info">PASSENGER: GUEST / VALID: LMTD</div>
+                                <div class="coupon-info">CLASS: BIZ / GATE: ONL</div>
                             </div>
                             <div class="coupon-stub">
                                 <div class="stub-label">CODE</div>
@@ -185,12 +186,13 @@ async function updateDashboard() {
         const groups = [{id:'rakuten', name:'RAKUTEN TRAVEL'}, {id:'jalan', name:'JALAN.NET'}, {id:'other', name:'OTHERS'}];
         groups.forEach(g => {
             if(couponData[g.id].length > 0) {
-                let gHtml = `<div class="coupon-group"><div class="group-label">${g.name}</div>`;
+                let gHtml = `<div class="coupon-group"><div class="group-label">${g.name}</div><div class="coupon-grid">`;
                 couponData[g.id].forEach((card, idx) => {
-                    if(idx === 4) gHtml += `<div id="more-${g.id}" style="display:none;">`;
+                    if(idx === 4) gHtml += `<div id="more-${g.id}" style="display:none; contents;">`;
                     gHtml += card;
                 });
-                if(couponData[g.id].length > 4) gHtml += `</div><button style="width:100%; background: #222; color: #888; border: 1px solid #333; padding: 8px; border-radius: 6px; font-size: 9px; margin-bottom:15px;" onclick="document.getElementById('more-${g.id}').style.display='block';this.style.display='none'">+ VIEW MORE TICKETS</button>`;
+                if(couponData[g.id].length > 4) gHtml += `</div><button style="width:100%; background: #222; color: #888; border: 1px solid #333; padding: 8px; border-radius: 6px; font-size: 9px; margin-top:10px;" onclick="document.getElementById('more-${g.id}').style.display='contents';this.style.display='none'">+ VIEW MORE</button>`;
+                else gHtml += `</div>`;
                 gHtml += `</div>`;
                 couponRoot.innerHTML += gHtml;
             }
