@@ -8,16 +8,14 @@
     <style>
         :root {
             --biz-bg: #0d0f11; --biz-card: #161a1d; --biz-blue: #007aff;
-            --rakuten-green: #28a745; --jalan-orange: #ff9900; --other-gray: #333333;
+            --rakuten-green: #28a745; --jalan-orange: #ff9900; --other-gray: #455a64;
             --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; --header-h: 60px;
         }
-        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 60px; }
+        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", Roboto, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 60px; }
         
-        /* ヘッダー */
         .biz-header { position: fixed; top: 0; width: 100%; height: var(--header-h); background: rgba(13,15,17,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #333; z-index: 2000; display: flex; align-items: center; padding: 0 15px; box-sizing: border-box; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 2px; }
 
-        /* インテリジェンス・ハブ */
         .intel-hub { margin-top: calc(var(--header-h) + 15px); padding: 0 12px; }
         .intel-tagline { font-size: 10px; color: var(--accent-gold); font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
         .intel-tagline::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent-gold), transparent); }
@@ -33,7 +31,7 @@
 
         .section-title { padding: 15px 15px 8px; font-size: 11px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
 
-        /* セール（キラキラ黄金・立体） */
+        /* セール（キラキラ黄金） */
         .sale-container { padding: 0 12px; }
         .limited-sale-card { 
             background: linear-gradient(135deg, #1e1b10 0%, #161a1d 100%); border: 2px solid var(--accent-gold); 
@@ -50,38 +48,43 @@
         .sale-title { font-size: 15px; font-weight: 900; }
         .sale-desc { font-size: 12px; color: #ffd700; font-weight: bold; }
 
-        /* ブランド別チケットデザイン */
+        /* ボーディングパス風クーポン */
         .coupon-group { margin-bottom: 25px; padding: 0 12px; }
-        .group-label { font-size: 11px; font-weight: 900; margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: center; gap: 8px; }
-        .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .group-label { font-size: 10px; font-weight: 900; margin-bottom: 8px; color: var(--accent-gold); letter-spacing: 1px; }
         
         .coupon-card { 
-            background: #fff; border-radius: 8px; overflow: hidden; text-decoration: none; color: #333; 
-            display: flex; flex-direction: column; height: 135px; position: relative;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            display: flex; background: #eceff1; border-radius: 8px; overflow: hidden; 
+            margin-bottom: 12px; text-decoration: none; border: 1px solid #cfd8dc;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4); position: relative;
         }
+        /* パンチ穴演出 */
         .coupon-card::before, .coupon-card::after {
-            content: ""; position: absolute; width: 14px; height: 14px; background: var(--biz-bg); border-radius: 50%; top: 40px; z-index: 10;
+            content: ""; position: absolute; width: 16px; height: 16px; background: var(--biz-bg); border-radius: 50%; right: calc(30% - 8px); z-index: 10;
         }
-        .coupon-card::before { left: -7px; }
-        .coupon-card::after { right: -7px; }
+        .coupon-card::before { top: -8px; }
+        .coupon-card::after { bottom: -8px; }
 
-        .coupon-label { padding: 10px 5px; text-align: center; font-size: 11px; font-weight: 900; color: #fff; background: var(--other-gray); }
-        .coupon-main { padding: 12px 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; border-top: 2px dashed #eee; background: #fff; }
-        .coupon-title { font-size: 11px; font-weight: 800; line-height: 1.3; color: #1a1a1a; }
-        .coupon-code { font-family: 'Courier New', monospace; font-size: 10px; padding: 5px; text-align: center; font-weight: bold; border-radius: 4px; }
+        .coupon-main { 
+            flex: 7; padding: 15px; border-right: 2px dotted #b0bec5; position: relative; color: #263238;
+        }
+        .coupon-brand { font-size: 9px; font-weight: 900; color: #546e7a; text-transform: uppercase; margin-bottom: 4px; }
+        .coupon-title { font-size: 18px; font-weight: 900; margin: 2px 0; line-height: 1.2; }
+        .coupon-info { font-size: 8px; color: #90a4ae; font-family: monospace; text-transform: uppercase; margin-top: 5px; }
 
-        /* 楽天グリーン設定 */
-        .coupon-card.rakuten .coupon-label { background: var(--rakuten-green); }
-        .coupon-card.rakuten .coupon-code { border: 1.5px solid #d4edda; color: #155724; background: #f0fff4; }
-        
-        /* じゃらんオレンジ設定 */
-        .coupon-card.jalan .coupon-label { background: var(--jalan-orange); }
-        .coupon-card.jalan .coupon-code { border: 1.5px solid #ffe0b2; color: #e65100; background: #fffcf5; }
+        .coupon-stub { 
+            flex: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 10px; color: #fff; text-align: center;
+        }
+        .stub-label { font-size: 8px; font-weight: bold; opacity: 0.9; margin-bottom: 4px; }
+        .stub-code { font-size: 12px; font-weight: 900; font-family: monospace; }
 
-        .coupon-card.other .coupon-code { border: 1.5px solid #eee; color: #444; background: #f8f8f8; }
+        /* ブランド別カラー */
+        .rakuten .coupon-stub { background: var(--rakuten-green); }
+        .rakuten .coupon-title { color: #1b5e20; }
+        .jalan .coupon-stub { background: var(--jalan-orange); }
+        .jalan .coupon-title { color: #e65100; }
+        .other .coupon-stub { background: var(--other-gray); }
 
-        /* TIPS */
         .tips-grid { padding: 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .tips-card-new { background: #f4f1ea; border-radius: 2px; padding: 15px; border: 1px solid #dcd9d0; position: relative; cursor: pointer; box-shadow: 6px 6px 0px rgba(0,0,0,0.5); }
         .tips-card-new::after { content: "INTEL"; position: absolute; top: -8px; right: 10px; background: #1a1a1a; color: #fff; font-size: 8px; padding: 2px 6px; }
@@ -119,7 +122,7 @@
 <div class="section-title"><i class="fa-solid fa-fire"></i> Priority Sales</div>
 <div id="sale-area" class="sale-container"></div>
 
-<div class="section-title"><i class="fa-solid fa-ticket"></i> Premium Tickets</div>
+<div class="section-title"><i class="fa-solid fa-ticket"></i> Boarding Pass Coupons</div>
 <div id="coupon-root"></div>
 
 <div class="section-title"><i class="fa-solid fa-newspaper"></i> Business Briefing</div>
@@ -156,7 +159,20 @@ async function updateDashboard() {
                     saleHtml += `<a href="${url}" class="limited-sale-card"><div class="sale-badge-big"><span style="font-size:10px;">MAX</span><div style="font-size:22px;">${discount}</div></div><div class="sale-content"><div class="sale-title">${title}</div><div class="sale-desc">${desc}</div></div></a>`;
                 } else if (type === 'COUPON') {
                     const cClass = title.includes("楽天")?"rakuten":title.includes("じゃらん")?"jalan":"other";
-                    const card = `<a href="${url}" class="coupon-card ${cClass}"><div class="coupon-label">${discount}</div><div class="coupon-main"><div class="coupon-title">${title}</div><div class="coupon-code">${desc}</div></div></a>`;
+                    const brandName = cClass === "rakuten" ? "RAKUTEN TRAVEL" : (cClass === "jalan" ? "JALAN.NET" : "HOTEL COUPON");
+                    
+                    const card = `
+                        <a href="${url}" class="coupon-card ${cClass}">
+                            <div class="coupon-main">
+                                <div class="coupon-brand">${brandName}</div>
+                                <div class="coupon-title">${discount}</div>
+                                <div class="coupon-info">PASSENGER: GUEST / VALID: LMTD</div>
+                            </div>
+                            <div class="coupon-stub">
+                                <div class="stub-label">CODE</div>
+                                <div class="stub-code">${desc}</div>
+                            </div>
+                        </a>`;
                     couponData[cClass].push(card);
                 } else if (type === 'TIPS') {
                     tipsHtml += `<div class="tips-card-new" onclick="openModal(\`${title}\`, \`${fullText || desc}\`)"><div class="tips-title-new">${title}</div></div>`;
@@ -168,18 +184,16 @@ async function updateDashboard() {
         couponRoot.innerHTML = '';
         const groups = [{id:'rakuten', name:'RAKUTEN TRAVEL'}, {id:'jalan', name:'JALAN.NET'}, {id:'other', name:'OTHERS'}];
         groups.forEach(g => {
-            let gHtml = `<div class="coupon-group"><div class="group-label">${g.name}</div><div class="coupon-grid">`;
             if(couponData[g.id].length > 0) {
+                let gHtml = `<div class="coupon-group"><div class="group-label">${g.name}</div>`;
                 couponData[g.id].forEach((card, idx) => {
-                    if(idx === 4) gHtml += `<div id="more-${g.id}" style="display:none; contents;">`;
+                    if(idx === 4) gHtml += `<div id="more-${g.id}" style="display:none;">`;
                     gHtml += card;
                 });
-                if(couponData[g.id].length > 4) gHtml += `</div><button style="grid-column: span 2; background: #222; color: #888; border: none; padding: 10px; border-radius: 8px; font-size: 10px; margin-top: 10px;" onclick="document.getElementById('more-${g.id}').style.display='contents';this.style.display='none'">+ VIEW MORE</button>`;
-            } else {
-                gHtml += `<a href="#" class="action-btn" style="grid-column: span 2; display:block; width:100%; box-sizing:border-box;">SITE CHECK</a>`;
+                if(couponData[g.id].length > 4) gHtml += `</div><button style="width:100%; background: #222; color: #888; border: 1px solid #333; padding: 8px; border-radius: 6px; font-size: 9px; margin-bottom:15px;" onclick="document.getElementById('more-${g.id}').style.display='block';this.style.display='none'">+ VIEW MORE TICKETS</button>`;
+                gHtml += `</div>`;
+                couponRoot.innerHTML += gHtml;
             }
-            gHtml += `</div></div>`;
-            couponRoot.innerHTML += gHtml;
         });
         document.getElementById('sale-area').innerHTML = saleHtml || '<p style="padding:15px;color:#555;">NO SALES</p>';
         document.getElementById('tips-area').innerHTML = tipsHtml || '<p style="padding:15px;color:#555;">NO UPDATES</p>';
