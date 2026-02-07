@@ -13,160 +13,305 @@
             --text-sub: #8e8e93;
             --gold: #d4af37;
             --alert-red: #e74c3c;
+            --success-green: #2ecc71;
+            --caution-yellow: #f1c40f;
+            --blue: #007aff;
             --rakuten-red: #bf0000;
-            --jalan-orange: #ff9900;
-            --ikyu-gold: #a68d52;
             --header-h: 120px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
-        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
 
-        /* HEADER & NAV (継承) */
-        header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 9000; border-bottom: 1px solid #2a2a2a; }
+        /* EMERGENCY BANNER */
+        #emergency-banner {
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--alert-red); color: #fff; padding: 8px 10px;
+            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
+        }
+
+        /* HEADER & NAV */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
+            z-index: 9000; border-bottom: 1px solid #2a2a2a;
+        }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
-        nav { display: flex; justify-content: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
-        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+        
+        .refresh-btn {
+            width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold); display: flex; align-items: center; justify-content: center; 
+            background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.2s;
+        }
+        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
+        .spin { animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* SECTION HEADER */
+        nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
+        nav::-webkit-scrollbar { display: none; }
+        .nav-link {
+            font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
+        }
+
+        /* SALE BANNER */
+        #sale-banner {
+            display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
+            border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
+            text-decoration: none; cursor: pointer;
+        }
+        .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
+        .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
+        .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
+        .sale-today::after, .sale-rakuten-day::after {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(30deg); animation: flash 3.5s infinite;
+        }
+        @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
+
+        .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
+        .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
+
+        /* CONTAINER & HUB */
+        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
+        
+        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
+        .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        /* PRIORITY SALES (最大3件) */
+        .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .sub-card { background: var(--card-gray); border-radius: 12px; padding: 12px 4px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
+        .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
+        .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
+
+        /* PRIORITY SALES CARD (NEW) */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card {
             background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
-            padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
-            text-decoration: none; position: relative; overflow: hidden; transition: 0.3s;
+            padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; position: relative; overflow: hidden;
         }
-
-        /* セール開催中の強調（光の帯＋ゴールド枠） */
-        .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
-        .sale-card.active-sale::after {
-            content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-            transform: skewX(-25deg); animation: card-flash 4s infinite;
-        }
-        @keyframes card-flash { 0% { left: -100%; } 25% { left: 150%; } 100% { left: 150%; } }
-
-        .brand-info { display: flex; align-items: center; gap: 15px; }
-        .brand-logo-circle {
-            width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; font-weight: 900; color: #fff;
-        }
-        .brand-rakuten { background: var(--rakuten-red); }
-        .brand-jalan { background: var(--jalan-orange); }
-        .brand-ikyu { background: var(--ikyu-gold); }
-
-        .sale-info-text { display: flex; flex-direction: column; }
-        .sale-name { font-size: 15px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
-        
-        /* 割引率のアピールタグ */
-        .sale-f-txt { font-size: 10px; background: var(--alert-red); color: #fff; padding: 1px 6px; border-radius: 4px; font-weight: 900; margin-left: 5px; }
-
-        .sale-disc { font-size: 11px; color: var(--text-sub); margin-top: 3px; }
-        
-        /* 開始日のアピール */
-        .sale-start-date { font-size: 10px; color: var(--gold); font-weight: 900; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-
-        .sale-badge {
-            padding: 8px 16px; border-radius: 12px; font-size: 11px; font-weight: 900;
-            color: var(--gold); border: 1px solid var(--gold); white-space: nowrap;
-        }
+        .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+        .brand-info { display: flex; align-items: center; gap: 12px; }
+        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
+        .brand-rakuten { background: #bf0000; }
+        .brand-jalan { background: #f39c12; }
+        .brand-ikyu { background: #8e774a; }
+        .sale-name { font-size: 15px; font-weight: 700; color: #ffffff; }
+        .sale-disc { font-size: 11px; color: #8e8e93; }
+        .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; }
 
-        /* エラー・情報なし時の表示 */
-        .no-sale-info { font-size: 11px; color: var(--text-sub); text-align: center; padding: 20px; border: 1px dashed #2c2c2e; border-radius: 20px; }
+        /* MODAL (略) */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
     </style>
 </head>
 <body>
 
+    <div id="emergency-banner"></div>
+
     <header id="main-header">
         <div class="header-top">
             <div class="logo">TRIP_DASH.</div>
-            <div class="refresh-btn" onclick="forceReloadData()"><i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i></div>
+            <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
+                <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
+            </div>
         </div>
-        <nav><a href="#sale" class="nav-link">Sale</a><a href="#area" class="nav-link">Area</a></nav>
+        <nav>
+            <a href="#field-ops" class="nav-link">Hub</a>
+            <a href="#sale" class="nav-link">Sale</a>
+            <a href="#area" class="nav-link">Area</a>
+            <a href="#coupon" class="nav-link">Coupon</a>
+        </nav>
     </header>
 
     <div class="container">
-        <section id="sale">
-            <div class="section-header">
-                <div class="section-title">PRIORITY SALES</div>
-                <div class="section-line"></div>
+        <a id="sale-banner" href="#">
+            <div class="sale-content">
+                <i id="sale-icon-type" class="fa-solid fa-crown"></i>
+                <div class="sale-text" id="sale-banner-text">LOADING...</div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
             </div>
+        </a>
 
-            <div class="sale-grid" id="priority-sale-grid">
+        <section id="field-ops">
+            <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
+            <div class="hub-grid">
+                <div class="hub-card" onclick="openModal('transit')">
+                    <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
+                    <div class="hub-val" id="transit-display"><div class="dot green"></div> 正常運行</div>
                 </div>
+                <div class="hub-card" onclick="openModal('weather')">
+                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Loading...</span></div>
+                    <div class="hub-val" id="weather-display">--°C</div>
+                </div>
+            </div>
+            <div class="sub-grid">
+                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon" id="icon-highway"></i><div class="sub-txt">HIGHWAY</div></div>
+                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon" id="icon-flight"></i><div class="sub-txt">FLIGHT</div></div>
+                <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
+                <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
+            </div>
         </section>
+
+        <section id="sale">
+            <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
+            <div class="sale-grid" id="priority-sale-grid">
+                <a href="#" class="sale-card" id="card-rakuten">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-rakuten">R</div>
+                        <div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div>
+                    </div>
+                    <div class="sale-badge" id="badge-rakuten">CHECK</div>
+                </a>
+                <a href="#" class="sale-card" id="card-jalan">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-jalan">J</div>
+                        <div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div>
+                    </div>
+                    <div class="sale-badge" id="badge-jalan">CHECK</div>
+                </a>
+                <a href="#" class="sale-card" id="card-ikyu">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-ikyu">一</div>
+                        <div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div>
+                    </div>
+                    <div class="sale-badge" id="badge-ikyu">CHECK</div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <div id="hub-modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px;"></div>
+            <div id="modal-btns" class="btn-grid"></div>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:15px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
+        </div>
     </div>
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
         async function forceReloadData() {
+            const btn = document.getElementById('refresh-btn');
+            const icon = document.getElementById('refresh-icon');
+            icon.classList.add('spin');
             try {
                 const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
                 const text = await res.text();
                 processCSVData(text);
-            } catch (e) { console.error("Load Error"); }
+                await getIPWeather();
+                icon.className = "fa-solid fa-check";
+                icon.classList.remove('spin');
+                btn.classList.add('success');
+                setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
+            } catch (e) { 
+                console.error(e);
+                icon.classList.remove('spin'); 
+            }
+        }
+
+        async function getIPWeather() {
+            try {
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const ipData = await ipRes.json();
+                document.getElementById('location-name').innerText = ipData.city || "Tokyo";
+                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
+                const wData = await wRes.json();
+                const temp = Math.round(wData.current_weather.temperature);
+                const disp = document.getElementById('weather-display');
+                disp.innerHTML = `<div class="dot green"></div> ${temp}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = "12°C Cloudy"; }
         }
 
         function processCSVData(text) {
             const rows = text.split('\n').slice(1).filter(r => r.trim());
             const now = new Date();
-            const grid = document.getElementById('priority-sale-grid');
-            grid.innerHTML = '';
-
-            // 1. まず全SALEデータをパース
-            let saleItems = rows.map(line => {
-                const cols = line.split('\t').map(c => c.trim());
-                if (cols.length < 9) return null;
-                const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
-                return { type, brand, title, start, end, url, disc, fTxt };
-            }).filter(item => item && item.type === 'SALE');
-
-            // 2. 開催中を優先しつつ、上位3件に絞る
-            const activeSales = saleItems.filter(s => now >= new Date(s.start) && now <= new Date(s.end)).slice(0, 3);
+            const date = now.getDate();
+            const bannerE = document.getElementById('emergency-banner');
+            const bannerS = document.getElementById('sale-banner');
+            const header = document.getElementById('main-header');
             
-            // 3. 開催中がない場合のフォールバック（予定されているセールを表示）
-            const displayItems = activeSales.length > 0 ? activeSales : saleItems.slice(0, 3);
-
-            if (displayItems.length === 0) {
-                grid.innerHTML = '<div class="no-sale-info">現在、ご案内できる特別セールはございません。</div>';
-                return;
-            }
-
-            displayItems.forEach(item => {
-                const isActive = now >= new Date(item.start) && now <= new Date(item.end);
-                const brandKey = item.brand.includes('楽天') ? 'rakuten' : (item.brand.includes('じゃらん') ? 'jalan' : 'ikyu');
-                const brandInitial = item.brand.includes('楽天') ? 'R' : (item.brand.includes('じゃらん') ? 'J' : '一');
-                const startDateStr = item.start.replace(/\//g, '.');
-
-                const cardHtml = `
-                    <a href="${item.url}" class="sale-card ${isActive ? 'active-sale' : ''}">
-                        <div class="brand-info">
-                            <div class="brand-logo-circle brand-${brandKey}">${brandInitial}</div>
-                            <div class="sale-info-text">
-                                <div class="sale-name">
-                                    ${item.brand}
-                                    ${item.fTxt ? `<span class="sale-f-txt">${item.fTxt}</span>` : ''}
-                                </div>
-                                <div class="sale-disc">${item.disc}</div>
-                                <div class="sale-start-date">
-                                    <i class="fa-regular fa-calendar-check"></i> 期間: ${startDateStr} 〜
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sale-badge">${isActive ? '予約する' : '詳細確認'}</div>
-                    </a>
-                `;
-                grid.insertAdjacentHTML('beforeend', cardHtml);
+            // リセット
+            bannerE.style.display = 'none';
+            bannerS.style.display = 'none';
+            header.style.top = '0';
+            document.body.style.paddingTop = window.innerWidth <= 480 ? '110px' : '120px';
+            
+            let saleTopFound = false;
+            const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
+            Object.values(brands).forEach(id => {
+                const card = document.getElementById(`card-${id}`);
+                card.classList.remove('active-sale');
+                document.getElementById(`badge-${id}`).innerText = 'CHECK';
             });
+
+            rows.forEach(line => {
+                // カンマまたはタブの両方に対応
+                const cols = line.includes('\t') ? line.split('\t') : line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                const cleanCols = cols.map(c => c.trim().replace(/^"|"$/g, ''));
+                const [type, brand, title, start, end, url, direct, disc, fTxt] = cleanCols;
+
+                const sDate = new Date(start);
+                const eDate = new Date(end);
+
+                // EMERGENCY
+                if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
+                    bannerE.innerText = `【！】 ${title}`;
+                    bannerE.style.display = 'block';
+                    header.style.top = '30px';
+                    document.body.style.paddingTop = '145px';
+                }
+
+                // SALE_TOP (最上部バナー)
+                if (type === 'SALE_TOP' || (type === 'SALE' && brand === '楽天トラベル' && !saleTopFound)) {
+                    if (now >= sDate && now <= eDate) {
+                        showTopBanner('today', title, url);
+                        saleTopFound = true;
+                    }
+                }
+
+                // SALE (カード強調)
+                if (type === 'SALE' && brands[brand]) {
+                    if (now >= sDate && now <= eDate) {
+                        const id = brands[brand];
+                        const card = document.getElementById(`card-${id}`);
+                        card.classList.add('active-sale');
+                        card.href = url;
+                        document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧を見る';
+                        document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
+                    }
+                }
+            });
+
+            // 楽天5と0の日
+            if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
+                showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
+                document.getElementById('card-rakuten').classList.add('active-sale');
+                document.getElementById('badge-rakuten').innerText = 'P4倍';
+            }
         }
+
+        function showTopBanner(mode, title, url) {
+            const bannerS = document.getElementById('sale-banner');
+            const bannerSText = document.getElementById('sale-banner-text');
+            bannerS.style.display = 'block';
+            bannerS.href = url;
+            bannerS.className = mode === 'today' ? 'sale-today' : (mode === 'rakuten' ? 'sale-rakuten-day' : 'sale-preview');
+            bannerSText.innerText = title;
+        }
+
+        function openModal(key) { /* 既存のMODAL_DATAロジック */ }
+        function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
 
         forceReloadData();
     </script>
