@@ -14,8 +14,6 @@
             --gold: #d4af37;
             --alert-red: #e74c3c;
             --success-green: #2ecc71;
-            --caution-yellow: #f1c40f;
-            --blue: #007aff;
             --rakuten-red: #bf0000;
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
@@ -97,104 +95,79 @@
         .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
-        /* COUPON SECTION (NEW in 1.26) */
-        .coupon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        /* FIXED LINK TILES (Top) */
+        .coupon-tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .coupon-tile {
             background: var(--card-gray); border-radius: 16px; border: 1px solid #2a2a2a;
-            padding: 15px 10px; text-decoration: none; text-align: center;
-            transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px;
+            padding: 12px 5px; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
-        .coupon-tile i { font-size: 20px; }
-        .coupon-tile .coupon-name { font-size: 10px; font-weight: 900; color: #fff; }
-        .coupon-tile .coupon-sub { font-size: 8px; color: var(--text-sub); }
+        .coupon-tile i { font-size: 18px; }
+        .coupon-tile span { font-size: 9px; font-weight: 900; color: #fff; }
         .tile-r { border-bottom: 3px solid var(--rakuten-red); }
         .tile-j { border-bottom: 3px solid var(--jalan-orange); }
         .tile-i { border-bottom: 3px solid var(--ikyu-gold); }
-        .coupon-tile:active { transform: scale(0.95); background: rgba(255,255,255,0.05); }
 
-        /* PRIORITY SALES */
-        .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .sale-card {
-            background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
-            padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
-            text-decoration: none; position: relative; overflow: hidden;
+        /* DYNAMIC COUPON CARDS (NEW 1.27) */
+        .dynamic-coupon-container { display: flex; flex-direction: column; gap: 10px; }
+        .coupon-brand-group { display: none; } /* Show only if coupons exist */
+        .coupon-card {
+            background: #fff; color: #000; border-radius: 12px; display: flex; overflow: hidden;
+            text-decoration: none; position: relative; margin-bottom: 8px;
         }
-        .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
-        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
-        .brand-rakuten { background: var(--rakuten-red); }
-        .brand-jalan { background: var(--jalan-orange); }
-        .brand-ikyu { background: var(--ikyu-gold); }
-        .sale-info-text { margin-left: 12px; flex-grow: 1; }
-        .sale-name { font-size: 15px; font-weight: 700; color: #ffffff; }
-        .sale-disc { font-size: 11px; color: #8e8e93; }
-        .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
-        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
+        /* Ticket punch holes */
+        .coupon-card::before, .coupon-card::after {
+            content: ''; position: absolute; left: 75px; width: 14px; height: 14px;
+            background: var(--bg-black); border-radius: 50%; z-index: 2;
+        }
+        .coupon-card::before { top: -7px; }
+        .coupon-card::after { bottom: -7px; }
 
-        /* AREA SECTION (Carousel style) */
+        .coupon-left {
+            width: 82px; background: #f8f8f8; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; border-right: 1px dashed #ccc;
+            padding: 10px; position: relative; flex-shrink: 0;
+        }
+        .coupon-val-big { font-size: 18px; font-weight: 900; line-height: 1; }
+        .coupon-unit { font-size: 9px; font-weight: 900; margin-top: 2px; }
+        .coupon-brand-tag { font-size: 8px; font-weight: 900; margin-top: 8px; padding: 2px 6px; border-radius: 4px; color: #fff; }
+
+        .coupon-right { flex-grow: 1; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; }
+        .coupon-title { font-size: 11px; font-weight: 900; line-height: 1.3; margin-bottom: 4px; }
+        .coupon-expiry { font-size: 8px; color: #666; font-weight: 700; }
+        
+        /* Show more button */
+        .show-more-btn {
+            width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px dashed #444;
+            border-radius: 10px; color: var(--text-sub); font-size: 10px; font-weight: 900; 
+            margin-top: 5px; cursor: pointer; display: none;
+        }
+
+        /* AREA SECTION */
         #area-section {
-            margin-top: 30px;
-            position: relative;
+            margin: 30px 0; position: relative;
             background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            border-radius: 24px;
-            padding: 25px 0;
-            overflow: hidden;
+            background-size: cover; background-position: center; border-radius: 24px; padding: 25px 0; overflow: hidden;
         }
-        #area-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9));
-            z-index: 1;
-        }
+        #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
         .area-section-header { padding: 0 20px; display: flex; align-items: center; margin-bottom: 15px; }
-
-        .area-swipe-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 12px;
-            padding: 0 20px 15px;
-            scrollbar-width: none;
-        }
+        .area-swipe-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
         .area-swipe-container::-webkit-scrollbar { display: none; }
-
-        .area-column {
-            flex: 0 0 85%;
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .area-column.single { flex: 0 0 85%; }
-
-        .area-card { 
-            background: rgba(28, 33, 38, 0.85); 
-            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 16px; display: flex; flex-direction: column; gap: 12px; 
-            backdrop-filter: blur(8px);
-        }
-        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
-        .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
-        .area-keyword { font-size: 9px; color: var(--gold); font-weight: 700; }
-        
+        .area-column { flex: 0 0 85%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 12px; }
+        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); }
+        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px; }
+        .area-name-main { font-size: 13px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .area-btn { 
-            border: none; color: #fff; text-decoration: none;
-            padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .area-btn { border: none; color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
         .btn-r { background: var(--rakuten-red); }
         .btn-j { background: var(--jalan-orange); }
         .btn-i { background: var(--ikyu-gold); }
 
         /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; letter-spacing: 0.5px; }
+        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -210,9 +183,9 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#coupon" class="nav-link">Coupon</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#area-section" class="nav-link">Area</a>
+            <a href="#dynamic-coupons" class="nav-link">Coupon</a>
         </nav>
     </header>
 
@@ -242,27 +215,6 @@
                 <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon"></i><div class="sub-txt">FLIGHT</div></div>
                 <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
                 <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
-            </div>
-        </section>
-
-        <section id="coupon">
-            <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
-            <div class="coupon-grid">
-                <a href="https://travel.rakuten.co.jp/coupon/" target="_blank" class="coupon-tile tile-r">
-                    <i class="fa-solid fa-ticket" style="color:var(--rakuten-red)"></i>
-                    <div class="coupon-name">楽天クーポン</div>
-                    <div class="coupon-sub">配布中一覧</div>
-                </a>
-                <a href="https://www.jalan.net/theme/coupon/20200415/" target="_blank" class="coupon-tile tile-j">
-                    <i class="fa-solid fa-receipt" style="color:var(--jalan-orange)"></i>
-                    <div class="coupon-name">じゃらん</div>
-                    <div class="coupon-sub">クーポン祭</div>
-                </a>
-                <a href="https://www.ikyu.com/special/01/hotel_coupon/" target="_blank" class="coupon-tile tile-i">
-                    <i class="fa-solid fa-tags" style="color:var(--ikyu-gold)"></i>
-                    <div class="coupon-name">一休.com</div>
-                    <div class="coupon-sub">今すぐ割引</div>
-                </a>
             </div>
         </section>
 
@@ -298,73 +250,46 @@
                         <div class="area-card">
                             <div class="area-header">
                                 <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> TOKYO / 東京</div>
-                                <div class="area-keyword">東京駅</div>
                             </div>
                             <div class="area-actions">
                                 <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a>
                                 <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn btn-i">一休</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F" target="_blank" class="area-btn btn-i">一休</a>
                             </div>
                         </div>
                         <div class="area-card">
                             <div class="area-header">
                                 <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> OSAKA / 梅田</div>
-                                <div class="area-keyword">大阪 梅田</div>
                             </div>
                             <div class="area-actions">
                                 <a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn btn-r">楽天</a>
                                 <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-header">
-                                <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> SHIZUOKA / 名古屋</div>
-                                <div class="area-keyword">名古屋駅</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-header">
-                                <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> FUKUOKA / 博多</div>
-                                <div class="area-keyword">博多駅</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column single">
-                        <div class="area-card" style="border: 1px solid var(--gold); height: 100%; justify-content: center;">
-                            <div class="area-header">
-                                <div class="area-name-main" style="color:var(--gold)"><i class="fa-solid fa-magnifying-glass" style="font-size:10px;"></i> OTHER AREAS</div>
-                                <div class="area-keyword">ALL AREAS</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F%3Fadc%3D1%26are%3D35090111%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F" target="_blank" class="area-btn btn-i">一休</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section id="dynamic-coupons">
+            <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
+            
+            <div class="coupon-tile-grid">
+                <a href="https://travel.rakuten.co.jp/coupon/" target="_blank" class="coupon-tile tile-r"><i class="fa-solid fa-ticket" style="color:var(--rakuten-red)"></i><span>楽天一覧</span></a>
+                <a href="https://www.jalan.net/theme/coupon/20200415/" target="_blank" class="coupon-tile tile-j"><i class="fa-solid fa-receipt" style="color:var(--jalan-orange)"></i><span>じゃらん祭</span></a>
+                <a href="https://www.ikyu.com/special/01/hotel_coupon/" target="_blank" class="coupon-tile tile-i"><i class="fa-solid fa-tags" style="color:var(--ikyu-gold)"></i><span>一休割引</span></a>
+            </div>
+
+            <div id="coupon-list" class="dynamic-coupon-container">
+                </div>
+        </section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px; letter-spacing:1px;"></div>
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px;"></div>
             <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
@@ -372,61 +297,12 @@
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
         const MODAL_DATA = {
-            transit: {
-                t: "RAILWAY STATUS",
-                b: [
-                    {n: "JR東日本 運行情報", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},
-                    {n: "東京メトロ 運行情報", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},
-                    {n: "都営交通 運行情報", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},
-                    {n: "小田急 運行情報", l: "https://www.odakyu.jp/cgi-bin/user/emg/emergency_bbs.cgi", c: "#004b87"},
-                    {n: "東急電鉄 運行情報", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},
-                    {n: "Yahoo! 路線情報", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}
-                ]
-            },
-            weather: {
-                t: "WEATHER DETAILS",
-                b: [
-                    {n: "日本気象協会 (tenki.jp)", l: "https://tenki.jp/", c: "#007aff"},
-                    {n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},
-                    {n: "気象庁 防災情報", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},
-                    {n: "気象庁 (港区の予報)", l: "https://www.jma.go.jp/bosai/forecast/#area_code=1310300", c: "#34495e"}
-                ]
-            },
-            highway: {
-                t: "HIGHWAY TRAFFIC",
-                b: [
-                    {n: "ドラぷら (NEXCO東日本)", l: "https://www.driveplaza.com/", c: "#28a745"},
-                    {n: "iHighway (NEXCO西日本)", l: "https://ihighway.jp/", c: "#007aff"},
-                    {n: "首都高 技術情報", l: "https://www.shutoko.jp/traff/", c: "#e67e22"},
-                    {n: "JARTIC 渋滞情報", l: "https://www.jartic.or.jp/", c: "#34495e"}
-                ]
-            },
-            flight: {
-                t: "FLIGHT STATUS",
-                b: [
-                    {n: "JAL 運航情報", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},
-                    {n: "ANA 運航情報", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},
-                    {n: "スカイマーク 運航情報", l: "https://www.skymark.co.jp/ja/res_status/", c: "#f1c40f"},
-                    {n: "Flightradar24", l: "https://www.flightradar24.com/", c: "#34495e"}
-                ]
-            },
-            rain: {
-                t: "RAIN RADAR",
-                b: [
-                    {n: "雨雲レーダー (Yahoo!)", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},
-                    {n: "高解像度降水ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#34495e"},
-                    {n: "キキクル (危険度分布)", l: "https://www.jma.go.jp/bosai/risk/", c: "#34495e"}
-                ]
-            },
-            news: {
-                t: "LATEST NEWS",
-                b: [
-                    {n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},
-                    {n: "NHK ニュース速報", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},
-                    {n: "日経電子版", l: "https://www.nikkei.com/", c: "#34495e"},
-                    {n: "朝日新聞デジタル", l: "https://www.asahi.com/", c: "#e67e22"}
-                ]
-            }
+            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"}] },
+            weather: { t: "WEATHER", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"}] },
+            highway: { t: "HIGHWAY", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"}] },
+            flight: { t: "FLIGHT", b: [{n: "JAL", l: "https://www.jal.co.jp/", c: "#e74c3c"}] },
+            rain: { t: "RAIN", b: [{n: "雨雲レーダー", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"}] },
+            news: { t: "NEWS", b: [{n: "Yahoo!ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"}] }
         };
 
         async function forceReloadData() {
@@ -438,8 +314,7 @@
                 const text = await res.text();
                 processCSVData(text);
                 await getIPWeather();
-                icon.className = "fa-solid fa-check";
-                icon.classList.remove('spin');
+                icon.className = "fa-solid fa-check"; icon.classList.remove('spin');
                 btn.classList.add('success');
                 setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
             } catch (e) { icon.classList.remove('spin'); }
@@ -452,8 +327,7 @@
                 document.getElementById('location-name').innerText = ipData.city || "Tokyo";
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
-                const temp = Math.round(wData.current_weather.temperature);
-                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${temp}°C Current`;
+                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${Math.round(wData.current_weather.temperature)}°C Current`;
             } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> 12°C Cloudy`; }
         }
 
@@ -461,96 +335,93 @@
             const rows = text.split('\n').slice(1).filter(r => r.trim());
             const now = new Date();
             const date = now.getDate();
-            const bannerE = document.getElementById('emergency-banner');
-            const bannerS = document.getElementById('sale-banner');
-            const header = document.getElementById('main-header');
-            
-            bannerE.style.display = 'none';
-            bannerS.style.display = 'none';
-            header.style.top = '0';
-            document.body.style.paddingTop = window.innerWidth <= 480 ? '110px' : '120px';
-            
-            let saleTopFound = false;
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
+            const brandColors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
             
+            let couponsByBrand = { rakuten: [], jalan: [], ikyu: [] };
+            let saleTopFound = false;
+
+            // Reset UI
+            document.getElementById('coupon-list').innerHTML = '';
             Object.values(brands).forEach(id => {
                 document.getElementById(`card-${id}`).classList.remove('active-sale');
                 document.getElementById(`badge-${id}`).innerText = 'CHECK';
             });
 
             rows.forEach(line => {
-                const cols = line.includes('\t') ? line.split('\t') : line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                const cleanCols = cols.map(c => c.trim().replace(/^"|"$/g, ''));
+                const cleanCols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cleanCols;
                 const sDate = new Date(start);
                 const eDate = new Date(end);
 
-                if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
-                    bannerE.innerText = `【！】 ${title}`;
-                    bannerE.style.display = 'block';
-                    header.style.top = '30px';
-                    document.body.style.paddingTop = '145px';
-                    document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
+                if (now < sDate || now > eDate) return;
+
+                if (type === 'COUPON' && brands[brand]) {
+                    couponsByBrand[brands[brand]].push({ title, url, disc, fTxt });
                 }
-                if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
-                    showTopBanner('today', title, url);
-                    saleTopFound = true;
-                }
-                if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
+                if (type === 'SALE' && brands[brand]) {
                     const id = brands[brand];
-                    const card = document.getElementById(`card-${id}`);
-                    card.classList.add('active-sale');
-                    card.href = url;
+                    document.getElementById(`card-${id}`).classList.add('active-sale');
+                    document.getElementById(`card-${id}`).href = url;
                     document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧を見る';
                     document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                 }
+                if (type === 'SALE_TOP') { showTopBanner('today', title, url); saleTopFound = true; }
             });
 
-            if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
-                showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
-                activateCard('rakuten', 'P4倍');
-                saleTopFound = true;
-            }
-            if (!saleTopFound && date === 9) {
-                showTopBanner('today', "一休.com｜本日は「一休の日」最大20%還元！", "https://www.ikyu.com/special/01/ikyunohi/");
-                activateCard('ikyu', 'MAX20%');
-                saleTopFound = true;
-            } else if (!saleTopFound && date === 8) {
-                showTopBanner('preview', "一休.com｜明日9日は「一休の日」事前エントリー受付中", "https://www.ikyu.com/special/01/ikyunohi/");
-                activateCard('ikyu', '明日開催');
-                saleTopFound = true;
-            }
+            // Auto-detect specific days
+            if (!saleTopFound && [5,10,15,20,25,30].includes(date)) showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 P4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
+
+            // Render Coupons
+            Object.keys(couponsByBrand).forEach(bId => {
+                const list = couponsByBrand[bId];
+                if (list.length === 0) return;
+
+                const group = document.createElement('div');
+                group.className = 'coupon-brand-group';
+                group.style.display = 'block';
+
+                list.forEach((c, idx) => {
+                    const card = `
+                        <a href="${c.url}" target="_blank" class="coupon-card" style="${idx >= 4 ? 'display:none' : ''}" data-brand="${bId}">
+                            <div class="coupon-left">
+                                <div class="coupon-val-big">${c.fTxt || '特割'}</div>
+                                <div class="coupon-unit">${c.fTxt?.includes('%') ? 'OFF' : 'OFFER'}</div>
+                                <div class="coupon-brand-tag" style="background:${brandColors[bId]}">${bId.toUpperCase()}</div>
+                            </div>
+                            <div class="coupon-right">
+                                <div class="coupon-title">${c.title}</div>
+                                <div class="coupon-expiry"><i class="fa-regular fa-clock"></i> ${c.disc || '期間限定配布中'}</div>
+                            </div>
+                        </a>`;
+                    group.innerHTML += card;
+                });
+
+                if (list.length > 4) {
+                    const moreBtn = document.createElement('button');
+                    moreBtn.className = 'show-more-btn';
+                    moreBtn.style.display = 'block';
+                    moreBtn.innerHTML = `<i class="fa-solid fa-chevron-down"></i> OTHER ${list.length - 4} COUPONS`;
+                    moreBtn.onclick = () => {
+                        group.querySelectorAll('.coupon-card').forEach(card => card.style.display = 'flex');
+                        moreBtn.style.display = 'none';
+                    };
+                    group.appendChild(moreBtn);
+                }
+                document.getElementById('coupon-list').appendChild(group);
+            });
         }
 
         function showTopBanner(mode, title, url) {
-            const bannerS = document.getElementById('sale-banner');
-            const iconE = document.getElementById('sale-icon-type');
+            const banner = document.getElementById('sale-banner');
             document.getElementById('sale-banner-text').innerText = title;
-            bannerS.style.display = 'block';
-            bannerS.href = url;
-            if (mode === 'today') {
-                bannerS.className = 'sale-today';
-                iconE.className = 'fa-solid fa-crown';
-            } else if (mode === 'rakuten') {
-                bannerS.className = 'sale-rakuten-day';
-                iconE.className = 'fa-solid fa-tags';
-            } else {
-                bannerS.className = 'sale-preview';
-                iconE.className = 'fa-solid fa-calendar-check';
-            }
-        }
-
-        function activateCard(id, badgeText) {
-            const card = document.getElementById(`card-${id}`);
-            if (card) {
-                card.classList.add('active-sale');
-                document.getElementById(`badge-${id}`).innerText = badgeText;
-            }
+            banner.style.display = 'block';
+            banner.href = url;
+            banner.className = mode === 'today' ? 'sale-today' : 'sale-rakuten-day';
         }
 
         function openModal(key) {
             const data = MODAL_DATA[key];
-            if (!data) return;
             document.getElementById('modal-title').innerText = data.t;
             document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
             document.getElementById('hub-modal').style.display = 'flex';
