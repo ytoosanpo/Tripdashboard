@@ -97,6 +97,21 @@
         .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
+        /* COUPON SECTION (NEW in 1.26) */
+        .coupon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .coupon-tile {
+            background: var(--card-gray); border-radius: 16px; border: 1px solid #2a2a2a;
+            padding: 15px 10px; text-decoration: none; text-align: center;
+            transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .coupon-tile i { font-size: 20px; }
+        .coupon-tile .coupon-name { font-size: 10px; font-weight: 900; color: #fff; }
+        .coupon-tile .coupon-sub { font-size: 8px; color: var(--text-sub); }
+        .tile-r { border-bottom: 3px solid var(--rakuten-red); }
+        .tile-j { border-bottom: 3px solid var(--jalan-orange); }
+        .tile-i { border-bottom: 3px solid var(--ikyu-gold); }
+        .coupon-tile:active { transform: scale(0.95); background: rgba(255,255,255,0.05); }
+
         /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card {
@@ -171,11 +186,9 @@
             padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center;
             display: flex; align-items: center; justify-content: center;
         }
-        /* ブランド別カラー */
         .btn-r { background: var(--rakuten-red); }
         .btn-j { background: var(--jalan-orange); }
         .btn-i { background: var(--ikyu-gold); }
-        .area-btn:active { opacity: 0.8; transform: scale(0.95); }
 
         /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
@@ -197,6 +210,7 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
+            <a href="#coupon" class="nav-link">Coupon</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#area-section" class="nav-link">Area</a>
         </nav>
@@ -231,6 +245,27 @@
             </div>
         </section>
 
+        <section id="coupon">
+            <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
+            <div class="coupon-grid">
+                <a href="https://travel.rakuten.co.jp/coupon/" target="_blank" class="coupon-tile tile-r">
+                    <i class="fa-solid fa-ticket" style="color:var(--rakuten-red)"></i>
+                    <div class="coupon-name">楽天クーポン</div>
+                    <div class="coupon-sub">配布中一覧</div>
+                </a>
+                <a href="https://www.jalan.net/theme/coupon/20200415/" target="_blank" class="coupon-tile tile-j">
+                    <i class="fa-solid fa-receipt" style="color:var(--jalan-orange)"></i>
+                    <div class="coupon-name">じゃらん</div>
+                    <div class="coupon-sub">クーポン祭</div>
+                </a>
+                <a href="https://www.ikyu.com/special/01/hotel_coupon/" target="_blank" class="coupon-tile tile-i">
+                    <i class="fa-solid fa-tags" style="color:var(--ikyu-gold)"></i>
+                    <div class="coupon-name">一休.com</div>
+                    <div class="coupon-sub">今すぐ割引</div>
+                </a>
+            </div>
+        </section>
+
         <section id="sale">
             <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
             <div class="sale-grid">
@@ -258,7 +293,6 @@
                     <div class="section-title" style="color:#fff">AREA EXPLORER</div>
                     <div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div>
                 </div>
-                
                 <div class="area-swipe-container">
                     <div class="area-column">
                         <div class="area-card">
@@ -284,7 +318,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="area-column">
                         <div class="area-card">
                             <div class="area-header">
@@ -309,7 +342,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="area-column single">
                         <div class="area-card" style="border: 1px solid var(--gold); height: 100%; justify-content: center;">
                             <div class="area-header">
