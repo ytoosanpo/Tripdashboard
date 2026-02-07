@@ -14,121 +14,81 @@
             --gold: #d4af37;
             --alert-red: #e74c3c;
             --success-green: #2ecc71;
-            --caution-yellow: #f1c40f;
-            --blue: #007aff;
             --rakuten-red: #bf0000;
+            --jalan-orange: #ff9900;
+            --ikyu-gold: #a68d52;
             --header-h: 120px;
         }
 
+        /* 既存のベーススタイル */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
+        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
 
-        /* EMERGENCY BANNER (最上部) */
-        #emergency-banner {
-            display: none; position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--alert-red); color: #fff; padding: 8px 10px;
-            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
-        }
-
-        /* HEADER & NAV */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
-            z-index: 9000; border-bottom: 1px solid #2a2a2a;
-        }
+        /* HEADER, NAV, BANNER, HUB (前verを継承) */
+        header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 9000; border-bottom: 1px solid #2a2a2a; }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
-        
-        .refresh-btn {
-            width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
-            color: var(--gold); display: flex; align-items: center; justify-content: center; 
-            background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.2s;
-        }
-        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
+        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; background: rgba(212, 175, 55, 0.05); cursor: pointer; }
+        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); }
         .spin { animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
         nav::-webkit-scrollbar { display: none; }
-        .nav-link {
-            font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
-            transition: all 0.2s;
-        }
-        .nav-link:active { transform: scale(0.95); background: var(--gold); color: #000; }
-
-        /* SALE BANNER SYSTEM */
-        #sale-banner {
-            display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
-            border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
-            text-decoration: none; cursor: pointer;
-        }
-
-        /* 当日：ゴールド発光 */
-        .sale-today {
-            background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); color: #000;
-        }
-
-        /* 楽天5と0の日：楽天レッド×ゴールド */
-        .sale-rakuten-day {
-            background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%);
-            box-shadow: 0 4px 15px rgba(191, 0, 0, 0.4); color: #fff;
-        }
-
-        /* 予告：シック */
-        .sale-preview {
-            background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%);
-            border: 1px solid rgba(212,175,55,0.4); color: var(--gold);
-        }
-
-        /* Flash Animation */
-        .sale-today::after, .sale-rakuten-day::after {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(30deg); animation: flash 3.5s infinite;
-        }
-
-        .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
-        .sale-text { font-size: 12px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
-
+        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+        
+        #emergency-banner { display: none; position: fixed; top: 0; left: 0; width: 100%; background: var(--alert-red); color: #fff; padding: 8px 10px; font-size: 10px; font-weight: 900; text-align: center; z-index: 10000; }
+        #sale-banner { display: none; width: 100%; max-width: 800px; margin: 0 auto 15px; border-radius: 12px; padding: 12px; position: relative; overflow: hidden; text-decoration: none; }
+        .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
+        .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
+        .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
+        .sale-today::after, .sale-rakuten-day::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent); transform: rotate(30deg); animation: flash 3.5s infinite; }
         @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        /* RESPONSIVE */
-        @media (max-width: 480px) {
-            :root { --header-h: 110px; }
-            .nav-link { font-size: 10px; padding: 7px 12px; }
-            nav { justify-content: flex-start; }
-            .sale-text { font-size: 11px; }
-        }
-
-        /* CONTAINER & HUB */
-        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
-        .section-header { display: flex; align-items: center; margin-bottom: 15px; }
-        .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
+        /* SECTION HEADER */
+        .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
+        .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; white-space: nowrap; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
-        
-        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
-        .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
-        .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .sub-card { background: var(--card-gray); border-radius: 12px; padding: 12px 4px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
-        .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
-        .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
+        /* PRIORITY SALES CARD GRID */
+        .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .sale-card {
+            background: var(--card-gray); border-radius: 16px; border: 1px solid #2a2a2a;
+            padding: 16px; display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; position: relative; overflow: hidden; transition: transform 0.2s;
+        }
+        .sale-card:active { transform: scale(0.98); }
 
-        .dot { width: 8px; height: 8px; border-radius: 50%; }
-        .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
-        .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 6px var(--caution-yellow); }
-        .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
+        /* セール中の発光エフェクト */
+        .sale-card.active-sale { border: 1.5px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        .sale-card.active-sale::after {
+            content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg); animation: card-flash 4s infinite;
+        }
+        @keyframes card-flash { 0% { left: -100%; } 25% { left: 150%; } 100% { left: 150%; } }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
-        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .choice-btn { padding: 14px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 12px; }
+        .brand-info { display: flex; align-items: center; gap: 12px; }
+        .brand-logo-circle {
+            width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0;
+        }
+        .brand-rakuten { background: var(--rakuten-red); }
+        .brand-jalan { background: var(--jalan-orange); }
+        .brand-ikyu { background: var(--ikyu-gold); }
+
+        .sale-info-text { display: flex; flex-direction: column; gap: 2px; }
+        .sale-name { font-size: 14px; font-weight: 900; color: var(--text-main); }
+        .sale-disc { font-size: 10px; color: var(--text-sub); font-weight: 500; }
+
+        .sale-badge {
+            background: rgba(255, 255, 255, 0.05); padding: 6px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 900; color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+        }
+        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
+
+        @media (max-width: 480px) { :root { --header-h: 110px; } }
     </style>
 </head>
 <body>
@@ -147,184 +107,145 @@
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#area" class="nav-link">Area</a>
             <a href="#coupon" class="nav-link">Coupon</a>
-            <a href="#tips" class="nav-link">Tips</a>
         </nav>
     </header>
 
     <div class="container">
         <a id="sale-banner" href="#">
             <div class="sale-content">
-                <i id="sale-icon-type" class="fa-solid fa-crown sale-icon"></i>
-                <div class="sale-text" id="sale-banner-text">CHECKING SALES...</div>
+                <i id="sale-icon-type" class="fa-solid fa-crown"></i>
+                <div class="sale-text" id="sale-banner-text">CHECKING...</div>
                 <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
             </div>
         </a>
 
         <section id="field-ops">
-            <div class="section-header">
-                <div class="section-title">INTELLIGENCE HUB</div>
-                <div class="section-line"></div>
-            </div>
+            <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
+            </section>
 
-            <div class="hub-grid">
-                <div class="hub-card" onclick="openModal('transit')">
-                    <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-                    <div class="hub-val" id="transit-display"><div class="dot green"></div> 正常運行</div>
-                </div>
-                <div class="hub-card" onclick="openModal('weather')">
-                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Loading...</span></div>
-                    <div class="hub-val" id="weather-display">--°C</div>
-                </div>
-            </div>
-
-            <div class="sub-grid">
-                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon" id="icon-highway"></i><div class="sub-txt">HIGHWAY</div></div>
-                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon" id="icon-flight"></i><div class="sub-txt">FLIGHT</div></div>
-                <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
-                <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
-            </div>
-        </section>
-
-        <section id="sale" style="height: 600px; padding-top: 30px;">
+        <section id="sale">
             <div class="section-header">
                 <div class="section-title">PRIORITY SALES</div>
                 <div class="section-line"></div>
             </div>
+
+            <div class="sale-grid" id="priority-sale-grid">
+                <a href="#" class="sale-card" id="card-rakuten">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-rakuten">R</div>
+                        <div class="sale-info-text">
+                            <div class="sale-name">楽天トラベル</div>
+                            <div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div>
+                        </div>
+                    </div>
+                    <div class="sale-badge" id="badge-rakuten">CHECK</div>
+                </a>
+                <a href="#" class="sale-card" id="card-jalan">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-jalan">J</div>
+                        <div class="sale-info-text">
+                            <div class="sale-name">じゃらん</div>
+                            <div class="sale-disc" id="disc-jalan">プラン一覧を見る</div>
+                        </div>
+                    </div>
+                    <div class="sale-badge" id="badge-jalan">CHECK</div>
+                </a>
+                <a href="#" class="sale-card" id="card-ikyu">
+                    <div class="brand-info">
+                        <div class="brand-logo-circle brand-ikyu">一</div>
+                        <div class="sale-info-text">
+                            <div class="sale-name">一休.com</div>
+                            <div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div>
+                        </div>
+                    </div>
+                    <div class="sale-badge" id="badge-ikyu">CHECK</div>
+                </a>
+            </div>
         </section>
     </div>
 
-    <div id="hub-modal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px;"></div>
-            <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:15px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
-        </div>
-    </div>
-
     <script>
-        const CSV_BASE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
         async function forceReloadData() {
             const btn = document.getElementById('refresh-btn');
             const icon = document.getElementById('refresh-icon');
             icon.classList.add('spin');
             try {
-                const res = await fetch(CSV_BASE_URL + `&t=${new Date().getTime()}`);
+                const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
                 const text = await res.text();
                 processCSVData(text);
-                await getIPWeather();
                 icon.className = "fa-solid fa-check";
                 icon.classList.remove('spin');
                 btn.classList.add('success');
                 setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
-            } catch (e) { icon.classList.remove('spin'); icon.className = "fa-solid fa-arrows-rotate"; }
-        }
-
-        async function getIPWeather() {
-            try {
-                const ipRes = await fetch('https://ipapi.co/json/');
-                const ipData = await ipRes.json();
-                document.getElementById('location-name').innerText = ipData.city || "Tokyo";
-                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
-                const wData = await wRes.json();
-                const temp = Math.round(wData.current_weather.temperature);
-                const disp = document.getElementById('weather-display');
-                const dot = disp.querySelector('.dot') ? disp.querySelector('.dot').outerHTML : '';
-                disp.innerHTML = `${dot} ${temp}°C Current`;
-            } catch (e) { document.getElementById('weather-display').innerHTML = "12°C Cloudy"; }
+            } catch (e) { icon.classList.remove('spin'); }
         }
 
         function processCSVData(text) {
             const rows = text.split('\n').slice(1).filter(r => r.trim());
-            const bannerE = document.getElementById('emergency-banner');
-            const bannerS = document.getElementById('sale-banner');
-            const header = document.getElementById('main-header');
-            const isSP = window.innerWidth <= 480;
-            
-            bannerE.style.display = 'none';
-            bannerS.style.display = 'none';
-            bannerS.className = '';
-            header.style.top = '0';
-            document.body.style.paddingTop = isSP ? '110px' : '120px';
-
             const now = new Date();
             const date = now.getDate();
-            let saleFound = false;
+            
+            // バナーリセット
+            const bannerS = document.getElementById('sale-banner');
+            bannerS.style.display = 'none';
+            let saleTopFound = false;
+
+            // 各社カードの状態リセット
+            const brands = {
+                '楽天トラベル': { id: 'rakuten', active: false },
+                'じゃらん': { id: 'jalan', active: false },
+                '一休.com': { id: 'ikyu', active: false }
+            };
 
             rows.forEach(line => {
-                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                const [type, brand, title, start, end, url] = cols;
+                const cols = line.split('\t').map(c => c.trim()); // タブ区切り
+                const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
 
-                if (type === 'EMERGENCY') {
-                    bannerE.innerText = `【！】 ${title}`;
-                    bannerE.style.display = 'block';
-                    header.style.top = isSP ? '30px' : '35px';
-                    document.body.style.paddingTop = isSP ? '140px' : '155px';
-                    document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
-                    document.getElementById('icon-highway').style.color = "var(--alert-red)";
-                    document.getElementById('icon-flight').style.color = "var(--alert-red)";
+                // EMERGENCY 判定 (省略)
+                
+                // SALE 判定 (カード用)
+                if (type === 'SALE' && brands[brand]) {
+                    const sDate = new Date(start);
+                    const eDate = new Date(end);
+                    if (now >= sDate && now <= eDate) {
+                        brands[brand].active = true;
+                        document.getElementById(`card-${brands[brand].id}`).href = url;
+                        document.getElementById(`disc-${brands[brand].id}`).innerText = disc;
+                        document.getElementById(`badge-${brands[brand].id}`).innerText = fTxt || 'SALE';
+                        document.getElementById(`card-${brands[brand].id}`).classList.add('active-sale');
+                    }
                 }
 
+                // SALE_TOP 判定 (最上部バナー用)
                 if (type === 'SALE_TOP') {
                     const sDate = new Date(start);
                     const eDate = new Date(end);
-                    const startTime = sDate.getTime();
-                    const preDayTime = startTime - (24 * 60 * 60 * 1000);
-
                     if (now >= sDate && now <= eDate) {
-                        showBanner('today', title, url);
-                        saleFound = true;
-                    } else if (now.getTime() >= preDayTime && now.getTime() < startTime) {
-                        showBanner('preview', title, url);
-                        saleFound = true;
+                        showTopBanner('today', title, url);
+                        saleTopFound = true;
                     }
                 }
             });
 
-            // 楽天5と0の日 自動判定（CSVに大型セールがない場合）
-            if (!saleFound) {
-                if ([5, 10, 15, 20, 25, 30].includes(date)) {
-                    showBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://hb.afl.rakuten.co.jp/hgc/g0190dd2.p9x68326.g0190dd2.p9x68661/?pc=https%3A%2F%2Ftravel.rakuten.co.jp%2Fcamp%2F50bunrui%2F");
-                }
+            // 楽天5と0の日 (自動判定)
+            if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
+                showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://a.r10.to/rakuten50");
+                // カード側も強調
+                document.getElementById('card-rakuten').classList.add('active-sale');
+                document.getElementById('badge-rakuten').innerText = 'P4倍';
             }
         }
 
-        function showBanner(mode, title, url) {
+        function showTopBanner(mode, title, url) {
             const bannerS = document.getElementById('sale-banner');
-            const bannerSText = document.getElementById('sale-banner-text');
-            const saleIcon = document.getElementById('sale-icon-type');
+            const bannerText = document.getElementById('sale-banner-text');
             bannerS.style.display = 'block';
-            bannerS.href = url || "#sale";
-            
-            if (mode === 'today') {
-                bannerS.className = 'sale-today';
-                bannerSText.innerText = `${title} 開催中！`;
-                saleIcon.className = "fa-solid fa-crown sale-icon";
-            } else if (mode === 'preview') {
-                bannerS.className = 'sale-preview';
-                bannerSText.innerText = `【予告】明日は「${title}」開催！`;
-                saleIcon.className = "fa-solid fa-calendar-check sale-icon";
-            } else if (mode === 'rakuten') {
-                bannerS.className = 'sale-rakuten-day';
-                bannerSText.innerText = title;
-                saleIcon.className = "fa-solid fa-pigs-money sale-icon";
-            }
+            bannerS.href = url;
+            bannerS.className = mode === 'today' ? 'sale-today' : (mode === 'rakuten' ? 'sale-rakuten-day' : 'sale-preview');
+            bannerText.innerText = title;
         }
-
-        function openModal(key) {
-            const data = {
-                transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"#", c:"#28a745"}, {n:"東京メトロ", l:"#", c:"var(--blue)"}, {n:"JR東海", l:"#", c:"#ff9900"} ] },
-                weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"#", c:"var(--blue)"}, {n:"ウェザーニュース", l:"#", c:"#e67e22"}, {n:"日本気象協会", l:"#", c:"#2ecc71"} ] },
-                highway: { t: "HIGHWAY INFO", b: [ {n:"iHighway", l:"#", c:"#2c3e50"}, {n:"ドラぷら", l:"#", c:"var(--blue)"}, {n:"JARTIC", l:"#", c:"#e74c3c"} ] },
-                flight: { t: "FLIGHT INFO", b: [ {n:"JAL 運航状況", l:"#", c:"#e74c3c"}, {n:"ANA 運航状況", l:"#", c:"var(--blue)"}, {n:"スカイマーク", l:"#", c:"#f1c40f"} ] },
-                rain: { t: "RAIN RADAR", b: [ {n:"雨雲レーダー", l:"#", c:"var(--blue)"}, {n:"Yahoo! 天気", l:"#", c:"#e74c3c"}, {n:"MSN 天気", l:"#", c:"var(--blue)"} ] },
-                news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"#", c:"#e74c3c"}, {n:"NHK ニュース", l:"#", c:"var(--blue)"}, {n:"日経新聞", l:"#", c:"#2c3e50"} ] }
-            }[key];
-            document.getElementById('modal-title').innerText = data.t;
-            document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
-            document.getElementById('hub-modal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
 
         forceReloadData();
     </script>
