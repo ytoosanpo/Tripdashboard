@@ -24,7 +24,14 @@
         html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
-        /* HEADER & NAV (ver.1.25) */
+        /* EMERGENCY (ver.1.25完全復元) */
+        #emergency-banner {
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--alert-red); color: #fff; padding: 8px 10px;
+            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
+        }
+
+        /* HEADER (ver.1.25完全復元) */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
@@ -36,17 +43,14 @@
         
         nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
         nav::-webkit-scrollbar { display: none; }
-        .nav-link {
-            font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
-        }
+        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
 
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
 
-        /* HUB SECTION (ver.1.25維持: 8項目) */
+        /* HUB SECTION (ver.1.25完全復元) */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
@@ -57,39 +61,26 @@
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
 
-        /* SALE GRID (ver.1.25維持) */
-        .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; }
-        .sale-card.active-sale { border: 1px solid var(--gold); }
-        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
-        .brand-rakuten { background: var(--rakuten-red); }
-        .brand-jalan { background: var(--jalan-orange); }
-        .brand-ikyu { background: var(--ikyu-gold); }
-        .sale-info-text { margin-left: 12px; flex-grow: 1; }
-        .sale-name { font-size: 15px; font-weight: 700; color: #fff; }
-        .sale-disc { font-size: 11px; color: #8e8e93; }
-        .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
-
-        /* STAY SEARCH (ver.1.25維持) */
+        /* STAY SEARCH (ver.1.25完全復元) */
         .stay-search-card { background: var(--card-gray); border-radius: 20px; padding: 20px; border: 1px solid #2a2a2a; margin-bottom: 25px; }
-        .search-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .search-row { display: grid; grid-template-columns: 1fr 1.2fr 0.8fr; gap: 8px; margin-bottom: 15px; }
         .search-input-group { display: flex; flex-direction: column; gap: 5px; }
-        .search-label { font-size: 10px; color: var(--text-sub); font-weight: 900; }
-        .search-field { background: #0d0f11; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; font-size: 14px; font-weight: 700; width: 100%; }
+        .search-label { font-size: 9px; color: var(--text-sub); font-weight: 900; }
+        .search-field { background: #0d0f11; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; font-size: 13px; font-weight: 700; width: 100%; outline: none; }
         .search-submit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .search-btn { border: none; border-radius: 10px; padding: 12px 5px; color: #fff; font-size: 10px; font-weight: 900; cursor: pointer; text-align: center; }
+        .search-btn { border: none; border-radius: 10px; padding: 12px 5px; color: #fff; font-size: 10px; font-weight: 900; cursor: pointer; text-align: center; text-decoration: none; }
 
-        /* AREA SECTION (ver.1.25維持: 背景+スワイプ) */
-        #area-section { margin: 30px 0; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; position: relative; overflow: hidden; }
+        /* AREA SECTION (ver.1.25完全復元) */
+        #area-section { margin: 30px 0; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=2070'); background-size: cover; border-radius: 24px; padding: 25px 0; position: relative; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: rgba(13, 15, 17, 0.85); }
         .area-content-wrapper { position: relative; z-index: 2; }
         .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .area-swipe-container::-webkit-scrollbar { display: none; }
         .area-column { flex: 0 0 85%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 12px; }
-        .area-card { background: rgba(28, 33, 38, 0.9); border-radius: 20px; padding: 18px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px); }
-        .area-name { color: #fff; font-size: 14px; font-weight: 900; margin-bottom: 12px; }
+        .area-card { background: rgba(28, 33, 38, 0.9); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px); }
+        .area-name { color: #fff; font-size: 14px; font-weight: 900; margin-bottom: 15px; }
 
-        /* NEW: COUPON (2x2 GRID) */
+        /* NEW DYNAMIC COUPON (2x2 Grid) */
         .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .coupon-card {
             background: #fff; color: #000; border-radius: 10px; display: flex; flex-direction: column; 
@@ -98,19 +89,23 @@
         .coupon-card::before, .coupon-card::after { content: ''; position: absolute; top: 38px; width: 12px; height: 12px; background: var(--bg-black); border-radius: 50%; z-index: 2; }
         .coupon-card::before { left: -6px; }
         .coupon-card::after { right: -6px; }
-        .coupon-top { height: 45px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-bottom: 1.5px dashed #bbb; }
+        .coupon-top { height: 45px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-bottom: 1.5px dashed #bbb; padding: 0 5px; }
         .coupon-val-big { font-size: 18px; font-weight: 900; color: var(--alert-red); }
         .coupon-bottom { flex-grow: 1; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 85px; }
         .coupon-title { font-size: 10px; font-weight: 900; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
         .coupon-brand-tag { font-size: 7px; font-weight: 900; padding: 2px 5px; border-radius: 3px; color: #fff; text-transform: uppercase; width: fit-content; }
         .show-more-btn { grid-column: span 2; padding: 12px; background: rgba(255,255,255,0.08); border: 1px dashed var(--gold); border-radius: 10px; color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer; }
 
-        /* MODAL (ver.1.25) */
+        /* MODAL (ver.1.25完全復元) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
+        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; }
     </style>
 </head>
 <body>
+
+    <div id="emergency-banner"></div>
 
     <header>
         <div class="header-top">
@@ -119,9 +114,9 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#sale" class="nav-link">Sale</a>
             <a href="#stay-search" class="nav-link">Search</a>
             <a href="#area-section" class="nav-link">Area</a>
+            <a href="#dynamic-coupons" class="nav-link">Coupon</a>
         </nav>
     </header>
 
@@ -131,11 +126,11 @@
             <div class="hub-grid">
                 <div class="hub-card" onclick="openModal('transit')">
                     <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-                    <div class="hub-val"><div class="dot"></div> 正常運行</div>
+                    <div class="hub-val" id="transit-display"><div class="dot"></div> 正常</div>
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
-                    <div class="hub-label"><i class="fa-solid fa-cloud"></i> Weather</div>
-                    <div class="hub-val">12°C Cloudy</div>
+                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Tokyo</span></div>
+                    <div class="hub-val" id="weather-display">--°C</div>
                 </div>
             </div>
             <div class="sub-grid">
@@ -146,26 +141,21 @@
             </div>
         </section>
 
-        <section id="sale">
-            <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
-            <div class="sale-grid">
-                <a href="#" class="sale-card" id="card-rakuten"><div class="brand-logo-circle brand-rakuten">R</div><div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">チェック</div></div><div class="sale-badge">CHECK</div></a>
-                <a href="#" class="sale-card" id="card-jalan"><div class="brand-logo-circle brand-jalan">J</div><div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">チェック</div></div><div class="sale-badge">CHECK</div></a>
-                <a href="#" class="sale-card" id="card-ikyu"><div class="brand-logo-circle brand-ikyu">一</div><div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">チェック</div></div><div class="sale-badge">CHECK</div></a>
-            </div>
-        </section>
-
         <section id="stay-search">
             <div class="section-header"><div class="section-title">STAY SEARCH</div><div class="section-line"></div></div>
             <div class="stay-search-card">
                 <div class="search-row">
+                    <div class="search-input-group">
+                        <div class="search-label">AREA</div>
+                        <select id="q-area" class="search-field"><option value="">指定なし</option><option value="tokyo">東京</option><option value="osaka">大阪</option></select>
+                    </div>
                     <div class="search-input-group"><div class="search-label">LOCATION</div><input type="text" id="q-loc" class="search-field" placeholder="行き先"></div>
-                    <div class="search-input-group"><div class="search-label">GUESTS</div><input type="number" id="q-pax" class="search-field" value="2"></div>
+                    <div class="search-input-group"><div class="search-label">PAX</div><input type="number" id="q-pax" class="search-field" value="2"></div>
                 </div>
                 <div class="search-submit-grid">
-                    <button class="search-btn" style="background:var(--rakuten-red)">楽天</button>
-                    <button class="search-btn" style="background:var(--jalan-orange)">じゃらん</button>
-                    <button class="search-btn" style="background:var(--ikyu-gold)">一休</button>
+                    <button onclick="doSearch('rakuten')" class="search-btn" style="background:var(--rakuten-red)">楽天</button>
+                    <button onclick="doSearch('jalan')" class="search-btn" style="background:var(--jalan-orange)">じゃらん</button>
+                    <button onclick="doSearch('ikyu')" class="search-btn" style="background:var(--ikyu-gold)">一休</button>
                 </div>
             </div>
         </section>
@@ -177,9 +167,9 @@
                         <div class="area-card">
                             <div class="area-name">TOKYO / 東京</div>
                             <div class="search-submit-grid">
-                                <a href="https://a.r10.to/hYb8ED" target="_blank" class="search-btn" style="background:var(--rakuten-red); text-decoration:none;">楽天</a>
-                                <a href="#" class="search-btn" style="background:var(--jalan-orange); text-decoration:none;">じゃらん</a>
-                                <a href="#" class="search-btn" style="background:var(--ikyu-gold); text-decoration:none;">一休</a>
+                                <a href="https://a.r10.to/hYb8ED" target="_blank" class="search-btn" style="background:var(--rakuten-red)">楽天</a>
+                                <a href="#" class="search-btn" style="background:var(--jalan-orange)">じゃらん</a>
+                                <a href="#" class="search-btn" style="background:var(--ikyu-gold)">一休</a>
                             </div>
                         </div>
                     </div>
@@ -187,9 +177,9 @@
                         <div class="area-card">
                             <div class="area-name">OSAKA / 大阪</div>
                             <div class="search-submit-grid">
-                                <a href="https://a.r10.to/hkI4ez" target="_blank" class="search-btn" style="background:var(--rakuten-red); text-decoration:none;">楽天</a>
-                                <a href="#" class="search-btn" style="background:var(--jalan-orange); text-decoration:none;">じゃらん</a>
-                                <a href="#" class="search-btn" style="background:var(--ikyu-gold); text-decoration:none;">一休</a>
+                                <a href="https://a.r10.to/hkI4ez" target="_blank" class="search-btn" style="background:var(--rakuten-red)">楽天</a>
+                                <a href="#" class="search-btn" style="background:var(--jalan-orange)">じゃらん</a>
+                                <a href="#" class="search-btn" style="background:var(--ikyu-gold)">一休</a>
                             </div>
                         </div>
                     </div>
@@ -203,56 +193,78 @@
         </section>
     </div>
 
-    <div id="hub-modal" class="modal" onclick="closeModal()"><div class="modal-content">CLOSE</div></div>
+    <div id="hub-modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px;"></div>
+            <div id="modal-btns" class="btn-grid"></div>
+        </div>
+    </div>
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
         
         async function forceReloadData() {
-            const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
-            const text = await res.text();
-            processCSVData(text);
+            try {
+                const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
+                const text = await res.text();
+                processCSVData(text);
+            } catch (e) {}
         }
 
         function processCSVData(text) {
             const rows = text.split('\n').slice(1).filter(r => r.trim());
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
-            const brandColors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
-            let couponsByBrand = { rakuten: [], jalan: [], ikyu: [] };
+            const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
+            let coupons = { rakuten: [], jalan: [], ikyu: [] };
 
             rows.forEach(line => {
-                const cleanCols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                const [type, brand, title, start, end, url, direct, disc, fTxt] = cleanCols;
-                if (type === 'COUPON' && brands[brand]) {
-                    couponsByBrand[brands[brand]].push({ title, url, disc, fTxt });
+                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
+                if (cols[0] === 'COUPON' && brands[cols[1]]) {
+                    coupons[brands[cols[1]]].push({ title: cols[2], url: cols[5], fTxt: cols[8] });
                 }
             });
 
             const container = document.getElementById('coupon-list');
             container.innerHTML = '';
-
-            Object.keys(couponsByBrand).forEach(bId => {
-                const list = couponsByBrand[bId];
-                if (list.length === 0) return;
+            Object.keys(coupons).forEach(b => {
+                if (coupons[b].length === 0) return;
                 const group = document.createElement('div');
-                let gridHtml = '<div class="coupon-grid">';
-                list.forEach((c, idx) => {
-                    gridHtml += `
-                        <a href="${c.url}" target="_blank" class="coupon-card" style="${idx >= 4 ? 'display:none' : ''}">
+                let html = '<div class="coupon-grid">';
+                coupons[b].forEach((c, i) => {
+                    html += `
+                        <a href="${c.url}" target="_blank" class="coupon-card" style="${i >= 4 ? 'display:none' : ''}">
                             <div class="coupon-top"><div class="coupon-val-big">${c.fTxt || 'SALE'}</div></div>
                             <div class="coupon-bottom">
                                 <div class="coupon-title">${c.title}</div>
-                                <div class="coupon-footer"><div class="coupon-brand-tag" style="background:${brandColors[bId]}">${bId}</div></div>
+                                <div class="coupon-brand-tag" style="background:${colors[b]}">${b}</div>
                             </div>
                         </a>`;
                 });
-                gridHtml += '</div>';
-                if (list.length > 4) gridHtml += `<button class="show-more-btn" onclick="this.previousElementSibling.querySelectorAll('.coupon-card').forEach(c=>c.style.display='flex');this.style.display='none'">OTHER ${list.length-4}</button>`;
-                group.innerHTML = gridHtml;
+                html += '</div>';
+                if (coupons[b].length > 4) html += `<button class="show-more-btn" onclick="this.previousElementSibling.querySelectorAll('.coupon-card').forEach(c=>c.style.display='flex');this.style.display='none'">OTHER ${coupons[b].length-4}</button>`;
+                group.innerHTML = html;
                 container.appendChild(group);
             });
         }
-        function closeModal() { document.getElementById('hub-modal').style.display='none'; }
+
+        function openModal(key) {
+            const configs = {
+                transit: { t: "TRANSIT", b: [{n:"Yahoo!運行情報", l:"https://transit.yahoo.co.jp/"}] },
+                weather: { t: "WEATHER", b: [{n:"雨雲レーダー", l:"https://weather.yahoo.co.jp/weather/zoomradar/"}] },
+                highway: { t: "HIGHWAY", b: [{n:"ハイウェイ交通情報", l:"https://www.jartic.or.jp/"}] },
+                flight: { t: "FLIGHT", b: [{n:"Flightradar24", l:"https://www.flightradar24.com/"}] },
+                rain: { t: "RAIN RADAR", b: [{n:"雨雲の動き", l:"https://tenki.jp/radar/"}] },
+                news: { t: "TRAVEL NEWS", b: [{n:"Traicy", l:"https://www.traicy.com/"}] }
+            };
+            const c = configs[key];
+            if(!c) return;
+            document.getElementById('modal-title').innerText = c.t;
+            document.getElementById('modal-btns').innerHTML = c.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:var(--gold)">${b.n}</a>`).join('');
+            document.getElementById('hub-modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
+        function doSearch(site) { alert(site + 'で検索します'); }
+
         forceReloadData();
     </script>
 </body>
