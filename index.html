@@ -11,27 +11,34 @@
             --rakuten-green: #28a745; --jalan-orange: #ff9900; --ikyu-gold: #a68b5e;
             --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; --header-h: 60px;
         }
-        * { box-sizing: border-box; }
-        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 60px; overflow-x: hidden; }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 0; overflow-x: hidden; }
         
+        /* HEADER & NAV */
         .biz-header { position: fixed; top: 0; width: 100%; height: var(--header-h); background: rgba(13,15,17,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #333; z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 2px; }
-        .biz-date { font-size: 12px; font-weight: 800; color: var(--text-sub); font-family: monospace; }
-        .container { width: 100%; max-width: 1000px; margin: calc(var(--header-h) + 15px) auto 0; padding: 0 12px; }
+        
+        .nav-bar { background: #161a1d; border-bottom: 1px solid #333; padding: 12px 0; display: flex; justify-content: center; gap: 20px; position: sticky; top: var(--header-h); z-index: 1000; }
+        .nav-link { color: var(--text-sub); text-decoration: none; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-link:hover { color: var(--accent-gold); }
+
+        .container { width: 100%; max-width: 1000px; margin: 20px auto 0; padding: 0 12px; min-height: 80vh; }
 
         #day-alert-banner { display: none; background: linear-gradient(90deg, #d4af37, #b8860b); color: #000; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; margin-bottom: 15px; border-radius: 4px; }
 
-        .section-title { padding: 25px 0 10px; font-size: 11px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .section-title { padding: 40px 0 10px; font-size: 11px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* SALE */
+        /* SALE (Flash) */
         .limited-sale-card { background: linear-gradient(135deg, #1e1b10 0%, #161a1d 100%); border: 1px solid var(--accent-gold); border-radius: 8px; text-decoration: none; color: inherit; display: flex; overflow: hidden; margin-bottom: 12px; position: relative; min-height: 85px; }
-        .sale-badge-big { background: var(--accent-gold); color: #000; width: 100px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; }
+        .limited-sale-card::after { content: ""; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255, 255, 255, 0.15); transform: rotate(30deg); animation: shine 4s infinite; }
+        @keyframes shine { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
+        .sale-badge-big { background: var(--accent-gold); color: #000; width: 100px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; z-index: 1; }
         .sale-content { padding: 12px 18px; flex: 1; z-index: 1; }
         .sale-brand { font-size: 9px; font-weight: 900; color: var(--accent-gold); margin-bottom: 2px; }
         .sale-title { font-size: 14px; font-weight: 900; color: #fff; }
 
-        /* HOTEL SEARCH 改良 */
-        .hotel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        /* HOTEL SEARCH */
+        .hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .hotel-card { position: relative; height: 130px; border-radius: 10px; overflow: hidden; background-size: cover; background-position: center; border: 1px solid #333; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; }
         .hotel-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9) 35%, rgba(0,0,0,0.1) 100%); }
         .hotel-city { position: relative; font-size: 13px; font-weight: 900; color: #fff; margin-bottom: 6px; z-index: 2; }
@@ -39,8 +46,10 @@
         .search-trigger-link { display: none; position: relative; z-index: 2; width: 100%; margin-top: 8px; padding: 8px; border-radius: 4px; color: #fff; font-size: 10px; font-weight: 900; text-decoration: none; text-align: center; }
 
         /* COUPON */
-        .coupon-group { margin-bottom: 15px; }
-        .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .coupon-group { margin-bottom: 20px; }
+        .coupon-grid, .more-coupons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 400px) { .coupon-grid, .more-coupons { grid-template-columns: 1fr; } }
+        .more-coupons { display: none; margin-top: 10px; }
         .coupon-card { display: flex; background: #1c1f23; border-radius: 6px; overflow: hidden; text-decoration: none; border: 1px solid #333; height: 90px; }
         .coupon-main { flex: 6.5; padding: 10px; border-right: 1px dotted #444; display: flex; flex-direction: column; justify-content: center; }
         .coupon-brand-label { font-size: 7px; color: var(--accent-gold); font-weight: 900; margin-bottom: 3px; }
@@ -48,30 +57,68 @@
         .coupon-stub { flex: 3.5; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5px; color: #fff; }
         .stub-code { font-size: 9px; font-weight: 900; font-family: monospace; background: rgba(0,0,0,0.2); padding: 4px 6px; border-radius: 3px; border: 1px dashed rgba(255,255,255,0.4); }
 
+        /* TIPS カードUI */
+        .tips-card-modern { background: #1c1f23; border-radius: 10px; padding: 20px; border: 1px solid #333; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; position: relative; }
+        .tips-card-modern:hover { border-color: var(--accent-gold); transform: translateY(-2px); }
+        .tips-card-modern::after { content: "\f105"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 20px; color: var(--accent-gold); font-size: 18px; }
+        .tips-icon { width: 45px; height: 45px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-gold); font-size: 20px; flex-shrink: 0; }
+
         .rakuten-bg { background: var(--rakuten-green) !important; } .jalan-bg { background: var(--jalan-orange) !important; } .ikyu-bg { background: var(--ikyu-gold) !important; }
-        .expand-ribbon { width: 100%; background: #252a2e; color: var(--accent-gold); border: 1px solid #333; padding: 10px; font-size: 10px; font-weight: 900; text-align: center; cursor: pointer; margin-top: 8px; border-radius: 4px; display: none; }
+        .expand-ribbon { width: 100%; background: #252a2e; color: var(--accent-gold); border: 1px solid #333; padding: 12px; font-size: 10px; font-weight: 900; text-align: center; cursor: pointer; margin-top: 10px; border-radius: 4px; }
+
+        /* FOOTER */
+        footer { margin-top: 80px; padding: 60px 15px; background: #080a0c; border-top: 1px solid #333; text-align: center; }
+        .footer-sns { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .footer-sns a { color: var(--text-main); font-size: 24px; text-decoration: none; transition: 0.3s; }
+        .footer-sns a:hover { color: var(--accent-gold); transform: scale(1.1); }
+        .footer-copy { font-size: 10px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header class="biz-header">
     <a href="#" class="biz-logo">TRIP_DASH.</a>
-    <div id="header-date" class="biz-date">---.--.-- ---</div>
+    <div id="header-date" style="font-size: 11px; font-weight: 800; color: var(--text-sub); font-family: monospace;">---.--.-- ---</div>
 </header>
+
+<div class="nav-bar">
+    <a href="#sale-section" class="nav-link">Sale</a>
+    <a href="#hotel-grid-root" class="nav-link">Hotel</a>
+    <a href="#coupon-section" class="nav-link">Coupon</a>
+    <a href="#tips-area" class="nav-link">Tips</a>
+</div>
 
 <div class="container">
     <div id="day-alert-banner"></div>
 
-    <div id="sale-section" style="display:none;"><div class="section-title">Now on Sale!!!</div><div id="sale-area"></div></div>
+    <section id="sale-section" style="display:none;"><div class="section-title">Now on Sale!!!</div><div id="sale-area"></div></section>
     
-    <div class="section-title">Hotel Search</div>
-    <div class="hotel-grid" id="hotel-grid-root"></div>
+    <section id="hotel-section">
+        <div class="section-title">Hotel Search</div>
+        <div class="hotel-grid" id="hotel-grid-root"></div>
+    </section>
 
-    <div id="coupon-section" style="display:none;"><div class="section-title">Premium Coupons</div><div id="coupon-root"></div></div>
+    <section id="coupon-section" style="display:none;"><div class="section-title">Premium Coupons</div><div id="coupon-root"></div></section>
 
-    <div class="section-title">Business Intelligence</div>
-    <div id="tips-area"></div>
+    <section id="tips-section">
+        <div class="section-title">Business Intelligence</div>
+        <div id="tips-area" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 40px;"></div>
+    </section>
 </div>
+
+<footer>
+    <div class="footer-sns">
+        <a href="https://www.instagram.com/hazusanai_mens" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/tokutabi_pro" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+    </div>
+    <div class="footer-nav" style="margin-bottom: 20px;">
+        <a href="#sale-section" class="nav-link" style="margin: 0 10px;">Sale</a>
+        <a href="#hotel-section" class="nav-link" style="margin: 0 10px;">Hotel</a>
+        <a href="#coupon-section" class="nav-link" style="margin: 0 10px;">Coupon</a>
+        <a href="#tips-section" class="nav-link" style="margin: 0 10px;">Tips</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 TRIP_DASH. All Rights Reserved.</p>
+</footer>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
@@ -116,7 +163,6 @@ function updateSearchLink(selectEl, idx) {
     if (site) {
         linkBtn.style.display = 'block';
         linkBtn.className = 'search-trigger-link ' + (site==='rakuten'?'rakuten-bg':site==='jalan'?'jalan-bg':'ikyu-bg');
-        // 直接URLをセット。これでJavaScriptの余計な処理を挟まず遷移可能に。
         linkBtn.href = area[site];
     } else { linkBtn.style.display = 'none'; }
 }
@@ -125,7 +171,6 @@ async function updateDashboard() {
     try {
         const response = await fetch(CSV_URL);
         const data = await response.text();
-        // URLに含まれる可能性のある改行コード等を一掃
         const rows = data.split(/\r?\n/).map(row => row.split(','));
         const now = new Date();
         let saleHtml = ''; let tipsHtml = '';
@@ -135,19 +180,17 @@ async function updateDashboard() {
             const row = rows[i].map(s => s?.trim());
             if(row.length < 6) continue;
             const [type, brand, title, start, end, url, desc, discount, fullText] = row;
-            // 安全策：URLのクリーニング
             const cleanUrl = url.replace(/['"]+/g, '');
             if(!type || !title || now < new Date(start) || now > new Date(end)) continue;
 
             const bKey = brand.includes("楽天")?"rakuten":brand.includes("じゃらん")?"jalan":brand.includes("一休")?"ikyu":"other";
-            const colorClass = bKey + "-bg";
-
+            
             if (type === 'SALE') {
                 saleHtml += `<a href="${cleanUrl}" target="_blank" class="limited-sale-card"><div class="sale-badge-big">MAX<div style="font-size:20px;">${discount}</div></div><div class="sale-content"><div class="sale-brand">${brand}</div><div class="sale-title">${title}</div><div style="font-size:10px; color:#ffd700;">${desc}</div></div></a>`;
             } else if (type === 'COUPON') {
-                coupons[bKey].push(`<a href="${cleanUrl}" target="_blank" class="coupon-card"><div class="coupon-main"><div class="coupon-brand-label">${brand}</div><div class="coupon-title">${title}</div><div style="font-size:9px; color:var(--text-sub); margin-top:2px;">${discount}</div></div><div class="coupon-stub ${colorClass}"><div class="stub-code">${desc}</div></div></a>`);
+                coupons[bKey].push(`<a href="${cleanUrl}" target="_blank" class="coupon-card"><div class="coupon-main"><div class="coupon-brand-label">${brand}</div><div class="coupon-title">${title}</div><div style="font-size:9px; color:var(--text-sub); margin-top:2px;">${discount}</div></div><div class="coupon-stub ${bKey}-bg"><div class="stub-code">${desc}</div></div></a>`);
             } else if (type === 'TIPS') {
-                tipsHtml += `<div class="tips-card-modern" onclick="alert('${fullText || desc}')"><div style="color:var(--accent-gold); font-size:20px;"><i class="fa-solid fa-bolt"></i></div><div><div style="font-size:13px; font-weight:800; color:#fff;">${title}</div><div style="font-size:9px; color:var(--text-sub);">CLICK TO READ</div></div></div>`;
+                tipsHtml += `<div class="tips-card-modern" onclick="alert('${fullText || desc}')"><div class="tips-icon"><i class="fa-solid fa-lightbulb"></i></div><div><div style="font-size:13px; font-weight:800; color:#fff;">${title}</div><div style="font-size:10px; color:var(--text-sub); margin-top:4px;">${desc}</div></div></div>`;
             }
         }
         if(saleHtml) { document.getElementById('sale-area').innerHTML = saleHtml; document.getElementById('sale-section').style.display = 'block'; }
@@ -159,7 +202,7 @@ async function updateDashboard() {
                 hasCp = true;
                 const visible = coupons[key].slice(0, 4).join('');
                 const hidden = coupons[key].length > 4 ? coupons[key].slice(4).join('') : '';
-                cpRoot += `<div class="coupon-group"><div class="coupon-grid">${visible}</div>${hidden ? `<div class="more-coupons" id="more-${key}">${hidden}</div><div class="expand-ribbon" style="display:block;" onclick="toggleMore('${key}', this)">+ VIEW ${coupons[key].length - 4} MORE DEALS</div>` : ''}</div>`;
+                cpRoot += `<div class="coupon-group"><div class="coupon-grid">${visible}</div>${hidden ? `<div class="more-coupons" id="more-${key}">${hidden}</div><div class="expand-ribbon" onclick="toggleMore('${key}', this)">+ VIEW ${coupons[key].length - 4} MORE DEALS</div>` : ''}</div>`;
             }
         }
         if(hasCp) { document.getElementById('coupon-root').innerHTML = cpRoot; document.getElementById('coupon-section').style.display = 'block'; }
