@@ -9,55 +9,52 @@
         :root {
             --biz-bg: #0d0f11; --biz-card: #1c1f23;
             --rakuten-green: #28a745; --jalan-orange: #ff9900; --ikyu-gold: #a68b5e;
-            --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; --header-h: 65px;
-            --jr-tokai: #f60; --jr-east: #008000; --jr-west: #0072bc;
-            --jal-red: #e0000e; --ana-blue: #0067b1; --sky-blue: #003399;
-            --nikkei: #004098; --newspicks: #000000; --bloomberg: #285ae6;
+            --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; 
+            --header-h: 65px; --emergency-h: 45px;
             --emergency-red: #e74c3c;
         }
-        * { box-sizing: border-box; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; overflow-x: hidden; padding-top: var(--header-h); }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-top: var(--header-h); transition: padding-top 0.3s ease; }
         
         /* EMERGENCY BAR */
-        #emergency-bar { display: none; background: var(--emergency-red); color: #fff; padding: 12px 20px; font-size: 12px; font-weight: 900; text-align: center; position: fixed; top: var(--header-h); width: 100%; z-index: 2500; }
-        body.has-emergency { padding-top: calc(var(--header-h) + 45px); }
+        #emergency-bar { display: none; background: var(--emergency-red); color: #fff; height: var(--emergency-h); line-height: var(--emergency-h); font-size: 12px; font-weight: 900; text-align: center; position: fixed; top: var(--header-h); width: 100%; z-index: 2500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 15px; }
+        body.has-emergency { padding-top: calc(var(--header-h) + var(--emergency-h)); }
 
         .header-group { position: fixed; top: 0; width: 100%; z-index: 3000; }
-        .biz-header { height: var(--header-h); background: rgba(13,15,17,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .biz-header { height: var(--header-h); background: rgba(13,15,17,0.98); border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 20px; letter-spacing: 2px; }
-        .nav-bar { background: rgba(22,26,29,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid #333; padding: 12px 0; display: flex; justify-content: center; gap: 20px; }
+        .nav-bar { background: rgba(22,26,29,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #333; padding: 12px 0; display: flex; justify-content: center; gap: 20px; }
         .nav-link { color: var(--text-sub); text-decoration: none; font-size: 10px; font-weight: 800; text-transform: uppercase; }
 
         .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 20px 15px; }
         .section-title { padding: 10px 0; font-size: 10px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* PANELS */
-        .op-panel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .op-panel { background: var(--biz-card); border: 1px solid #333; border-radius: 12px; padding: 15px; position: relative; }
-        .panel-icon-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .panel-icon { font-size: 22px; color: var(--accent-gold); }
-        .panel-status { font-size: 10px; font-weight: 900; display: flex; align-items: center; gap: 4px; }
-        .s-green { color: #2ecc71; } .s-yellow { color: #f1c40f; } .s-red { color: #e74c3c; }
-        .panel-label { font-size: 11px; font-weight: 900; color: #fff; }
-        .panel-expand { max-height: 0; opacity: 0; overflow: hidden; transition: 0.35s ease; }
-        .op-panel.is-active .panel-expand { max-height: 200px; opacity: 1; padding-top: 15px; margin-top: 10px; border-top: 1px solid #333; }
-        .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-        .biz-btn { height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #fff; font-size: 10px; font-weight: 900; }
-
         /* SALE FLASH CARD */
         .sale-card { background: linear-gradient(135deg, #1e1b10 0%, #161a1d 100%); border: 1px solid var(--accent-gold); border-radius: 12px; text-decoration: none; color: inherit; display: flex; overflow: hidden; margin-bottom: 12px; height: 105px; position: relative; }
-        .sale-card::after { content: ""; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255,255,255,0.1); transform: rotate(30deg); animation: flash 4s infinite; }
+        .sale-card::after { content: ""; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255,255,255,0.15); transform: rotate(30deg); animation: flash 4s infinite; }
         @keyframes flash { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
-        
-        .sale-badge { background: var(--accent-gold); color: #000; width: 100px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.1; }
-        .sale-badge .m-txt { font-size: 10px; font-weight: 900; }
+        .sale-badge { background: var(--accent-gold); color: #000; width: 100px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .sale-badge .m-txt { font-size: 10px; font-weight: 900; opacity: 0.8; }
         .sale-badge .d-txt { font-size: 24px; font-weight: 900; }
         .sale-info { padding: 12px 15px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .sale-title { font-size: 14px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 5px; }
-        .sale-timer { font-size: 10px; font-weight: 900; color: #ff4d4d; font-family: monospace; }
-        .sale-cta { position: absolute; right: 15px; bottom: 12px; font-size: 10px; font-weight: 900; color: var(--accent-gold); }
+        .sale-title { font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 5px; }
+        .sale-timer { font-size: 10px; color: #ff4d4d; font-family: monospace; font-weight: 900; }
 
-        /* HOTEL GRID */
+        /* COUPON */
+        .coupon-group { margin-bottom: 25px; }
+        .coupon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+        .coupon-item { background: var(--biz-card); border-radius: 12px; border: 1px solid #333; display: flex; height: 90px; text-decoration: none; overflow: hidden; position: relative; }
+        .cp-side { width: 100px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; text-align: center; padding: 5px; }
+        .cp-main { flex: 1; padding: 10px 15px 10px 30px; display: flex; flex-direction: column; justify-content: center; }
+        .cp-brand { font-size: 9px; color: var(--accent-gold); font-weight: 900; margin-bottom: 4px; }
+        .cp-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.3; }
+        .cp-ribbon { position: absolute; top: 0; left: 0; width: 45px; height: 45px; background: linear-gradient(135deg, var(--accent-gold) 50%, transparent 50%); z-index: 5; }
+        .cp-ribbon i { font-size: 10px; color: #000; position: absolute; top: 6px; left: 6px; transform: rotate(-45deg); }
+        .more-btn { width: 100%; background: #262a2e; border: 1px solid #444; color: var(--text-sub); font-size: 10px; font-weight: 800; padding: 10px; border-radius: 6px; margin-top: 10px; cursor: pointer; }
+        .hidden-coupons { display: none; }
+        .hidden-coupons.is-open { display: grid; margin-top: 12px; }
+
+        /* AREA & HOTEL */
         .hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
         .hotel-card { background: var(--biz-card); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
         .hotel-img { height: 75px; background-size: cover; background-position: center; display: flex; align-items: center; padding: 0 15px; position: relative; }
@@ -65,32 +62,34 @@
         .hotel-name { position: relative; font-size: 14px; font-weight: 900; color: #fff; }
         .hotel-btns { display: flex; padding: 10px; gap: 6px; background: #161a1d; }
         .hotel-btn { flex: 1; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 10px; font-weight: 900; color: #fff; }
+        .rak-bg { background: var(--rakuten-green); } .jal-bg { background: var(--jalan-orange); } .iky-bg { background: var(--ikyu-gold); }
 
-        /* COUPON (RIBBON STYLE) */
-        .coupon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .coupon-item { background: var(--biz-card); border-radius: 10px; border: 1px solid #333; display: flex; height: 75px; text-decoration: none; overflow: hidden; position: relative; }
-        .cp-side { width: 90px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; text-align: center; }
-        .cp-main { flex: 1; padding: 10px 15px; display: flex; flex-direction: column; justify-content: center; }
-        .cp-brand { font-size: 8px; color: var(--accent-gold); font-weight: 900; margin-bottom: 2px; }
-        .cp-title { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.2; }
-        /* リボン装飾 */
-        .cp-ribbon { position: absolute; top: 0; left: 0; width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-gold) 50%, transparent 50%); display: flex; align-items: flex-start; justify-content: flex-start; padding: 4px; }
-        .cp-ribbon i { font-size: 8px; color: #000; transform: rotate(-45deg); }
+        .area-select-box { margin-top: 20px; background: var(--biz-card); border: 1px solid #444; border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 12px; }
+        .area-select-box label { font-size: 10px; font-weight: 900; color: var(--accent-gold); white-space: nowrap; }
+        .biz-select { flex: 1; background: #000; color: #fff; border: 1px solid #555; height: 40px; border-radius: 4px; font-size: 12px; padding: 0 10px; outline: none; }
 
         /* TIPS MODAL */
-        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
-        .paper-content { background: #fdfdfd; color: #1a1a1a; width: 100%; max-width: 450px; padding: 40px 30px; border-radius: 2px; position: relative; border-left: 10px solid #1a1a1a; }
-        .paper-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; border-bottom: 2px solid #1a1a1a; padding-bottom: 10px; }
-        .paper-body { font-size: 15px; line-height: 1.8; }
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
+        .paper-content { background: #fdfdfd; color: #1a1a1a; width: 100%; max-width: 480px; padding: 45px 35px; border-radius: 2px; border-left: 12px solid #1a1a1a; position: relative; }
+        .paper-close { position: absolute; top: 15px; right: 15px; color: #888; cursor: pointer; font-size: 20px; }
 
-        .rak-bg { background: var(--rakuten-green); } .jal-bg { background: var(--jalan-orange); } .iky-bg { background: var(--ikyu-gold); }
+        .op-panel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .op-panel { background: var(--biz-card); border: 1px solid #333; border-radius: 12px; padding: 15px; }
+        .panel-status { float: right; font-size: 10px; font-weight: 900; }
+        .s-green { color: #2ecc71; } .s-red { color: #e74c3c; }
     </style>
 </head>
 <body>
 
 <div id="emergency-bar"></div>
 
-<div id="tips-modal" onclick="closeTips()"><div class="paper-content" onclick="event.stopPropagation()"><div class="paper-title" id="modal-title"></div><div class="paper-body" id="modal-body"></div></div></div>
+<div id="tips-modal" onclick="closeTips()">
+    <div class="paper-content" onclick="event.stopPropagation()">
+        <i class="fa-solid fa-xmark paper-close" onclick="closeTips()"></i>
+        <div id="modal-title" style="font-size:22px; font-weight:900; margin-bottom:20px; border-bottom:3px solid #1a1a1a; padding-bottom:10px;"></div>
+        <div id="modal-body" style="font-size:16px; line-height:1.8; white-space:pre-wrap;"></div>
+    </div>
+</div>
 
 <div class="header-group">
     <header class="biz-header"><a href="#" class="biz-logo">TRIP_DASH.</a><div id="header-date" style="font-size: 11px; font-weight: 800; font-family: monospace;"></div></header>
@@ -100,54 +99,76 @@
 <div class="container">
     <div class="section-title">Field Operations</div>
     <div class="op-panel-grid">
-        <div class="op-panel" onclick="this.classList.toggle('is-active')">
-            <div class="panel-icon-row"><i class="fa-solid fa-cloud-sun panel-icon"></i><div class="panel-status" id="temp-val">--°C</div></div>
-            <div class="panel-label">WEATHER</div><div class="panel-sub" id="local-city" style="font-size:9px; color:var(--text-sub);">Detecting...</div>
-            <div class="panel-expand"><a id="weather-link" href="#" target="_blank" class="biz-btn" style="background:#333; width:100%;">詳細予報</a></div>
-        </div>
-        <div class="op-panel" onclick="this.classList.toggle('is-active')">
-            <div class="panel-icon-row"><i class="fa-solid fa-train panel-icon"></i><div class="panel-status" id="status-shinkansen"></div></div>
-            <div class="panel-label">SHINKANSEN</div>
-            <div class="panel-expand"><div class="btn-row"><a href="https://traininfo.jr-central.co.jp/" target="_blank" class="biz-btn" style="background:var(--jr-tokai)">東海</a><a href="https://traininfo.jreast.co.jp/" target="_blank" class="biz-btn" style="background:var(--jr-east)">東日本</a><a href="https://www.train-info.westjr.co.jp/" target="_blank" class="biz-btn" style="background:var(--jr-west)">西日本</a></div></div>
-        </div>
-        <div class="op-panel" onclick="this.classList.toggle('is-active')">
-            <div class="panel-icon-row"><i class="fa-solid fa-plane panel-icon"></i><div class="panel-status" id="status-flight"></div></div>
-            <div class="panel-label">FLIGHTS</div>
-            <div class="panel-expand"><div class="btn-row"><a href="https://www.jal.co.jp/" target="_blank" class="biz-btn" style="background:var(--jal-red)">JAL</a><a href="https://www.ana.co.jp/" target="_blank" class="biz-btn" style="background:var(--ana-blue)">ANA</a><a href="https://www.skymark.co.jp/" target="_blank" class="biz-btn" style="background:var(--sky-blue)">SKY</a></div></div>
-        </div>
-        <div class="op-panel" onclick="this.classList.toggle('is-active')">
-            <div class="panel-icon-row"><i class="fa-solid fa-briefcase panel-icon"></i></div>
-            <div class="panel-label">INTELLIGENCE</div>
-            <div class="panel-expand"><div class="btn-row"><a href="https://www.nikkei.com/" target="_blank" class="biz-btn" style="background:var(--nikkei)">日経</a><a href="https://newspicks.com/" target="_blank" class="biz-btn" style="background:var(--newspicks)">NP</a><a href="https://www.bloomberg.co.jp/" target="_blank" class="biz-btn" style="background:var(--bloomberg)">BBG</a></div></div>
-        </div>
+        <div class="op-panel"><i class="fa-solid fa-cloud-sun" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" id="temp-val">--°C</div><div style="font-size:11px; font-weight:900;">WEATHER</div><div id="local-city" style="font-size:9px; color:var(--text-sub);">Detecting...</div></div>
+        <div class="op-panel"><i class="fa-solid fa-train" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" id="status-shinkansen"></div><div style="font-size:11px; font-weight:900;">SHINKANSEN</div></div>
     </div>
 
-    <section id="sale-section" style="display:none;"><div class="section-title">Flash Sales</div><div id="sale-area"></div></section>
-    <section id="hotel-section"><div class="section-title">Hotel Search</div><div class="hotel-grid" id="hotel-grid-root"></div></section>
+    <section id="sale-section" style="display:none;"><div class="section-title">Now on Sale!!!</div><div id="sale-area"></div></section>
+
+    <section id="hotel-section">
+        <div class="section-title">Hotel Search</div>
+        <div class="hotel-grid" id="hotel-grid-root"></div>
+        <div class="area-select-box">
+            <label>その他のエリアを見る</label>
+            <select class="biz-select" onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">エリアを選択してください</option>
+                <optgroup label="北海道・東北"><option value="https://a.r10.to/hPwqVk">札幌・北海道 (楽天)</option></optgroup>
+                <optgroup label="関東"><option value="https://a.r10.to/hYb8ED">東京 (楽天)</option></optgroup>
+                <optgroup label="中部・近畿"><option value="https://a.r10.to/hkI4ez">大阪 (楽天)</option></optgroup>
+            </select>
+        </div>
+    </section>
+
     <section id="coupon-section" style="display:none;"><div class="section-title">Premium Coupons</div><div id="coupon-root"></div></section>
-    <section id="tips-section"><div class="section-title">Business Tips</div><div id="tips-area" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-bottom:50px;"></div></section>
+    <section id="tips-section"><div class="section-title">Business Intelligence</div><div id="tips-area" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-bottom:50px;"></div></section>
 </div>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
-let isEmergency = false; let currentWeather = "晴れ";
+let isEmergency = false;
 
-function openTips(t, b) { document.getElementById('modal-title').innerText = t; document.getElementById('modal-body').innerText = b; document.getElementById('tips-modal').style.display = 'flex'; }
-function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
-
-function updateStatusUI() {
-    const sShin = document.getElementById('status-shinkansen'); const sFly = document.getElementById('status-flight');
-    const warn = ["雪", "台風", "雨", "風"];
-    if (isEmergency) {
-        sShin.className = "panel-status s-red"; sShin.innerHTML = '● 見合わせ';
-        sFly.className = "panel-status s-red"; sFly.innerHTML = '● 欠航あり';
-    } else if (warn.some(t => currentWeather.includes(t))) {
-        sShin.className = "panel-status s-yellow"; sShin.innerHTML = '▲ 要確認';
-        sFly.className = "panel-status s-yellow"; sFly.innerHTML = '▲ 要確認';
-    } else {
-        sShin.className = "panel-status s-green"; sShin.innerHTML = '● 通常';
-        sFly.className = "panel-status s-green"; sFly.innerHTML = '● 定時';
+// エリアカード設定（VCアフィリエイトリンク反映）
+const AREAS = [
+    { 
+        name: 'TOKYO / 東京', 
+        img: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600', 
+        rakuten: 'https://a.r10.to/hYb8ED', 
+        jalan: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D', 
+        ikyu: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1' 
+    },
+    { 
+        name: 'OSAKA / 梅田', 
+        img: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?w=600', 
+        rakuten: 'https://a.r10.to/hkI4ez', 
+        jalan: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do', 
+        ikyu: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6' 
+    },
+    { 
+        name: 'SHIZUOKA / 名古屋', 
+        img: 'https://images.unsplash.com/photo-1596230529625-7ee10f7b09b6?w=600', 
+        rakuten: 'https://a.r10.to/hPVp2x', 
+        jalan: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do', 
+        ikyu: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6' 
+    },
+    { 
+        name: 'FUKUOKA / 博多', 
+        img: 'https://images.unsplash.com/photo-1621350485987-a27909010419?w=600', 
+        rakuten: 'https://a.r10.to/hPdo3g', 
+        jalan: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do', 
+        ikyu: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6' 
     }
+];
+
+function openTips(t, b) { 
+    document.getElementById('modal-title').innerText = t; 
+    document.getElementById('modal-body').innerText = b; 
+    document.getElementById('tips-modal').style.display = 'flex'; 
+}
+function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
+function toggleCoupons(btn, id) {
+    const target = document.getElementById(id);
+    const isOpen = target.classList.toggle('is-open');
+    btn.innerText = isOpen ? "閉じる" : "さらにクーポンを表示";
 }
 
 async function updateData() {
@@ -158,55 +179,72 @@ async function updateData() {
         let sHtml = ''; let tHtml = ''; let coupons = {rak:[], jal:[], iky:[], otr:[]};
 
         for(let i=1; i<rows.length; i++) {
-            const [type, brand, title, start, end, url, desc, disc, fTxt] = rows[i].map(s=>s?.trim());
-            if(!type || (type !== 'EMERGENCY' && (now < new Date(start) || now > new Date(end)))) continue;
-            const link = url ? url.replace(/['"]+/g, '') : '#';
+            const [type, brand, title, start, end, url, desc, disc, fTxt] = rows[i].map(s=>s?.trim().replace(/^"|"$/g, ''));
+            if(!type) continue;
+            if(type !== 'EMERGENCY' && (now < new Date(start) || now > new Date(end))) continue;
 
             if(type === 'EMERGENCY') {
-                isEmergency = true; document.getElementById('emergency-bar').innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${title}`;
-                document.getElementById('emergency-bar').style.display = 'block'; document.body.classList.add('has-emergency');
+                isEmergency = true;
+                const bar = document.getElementById('emergency-bar');
+                bar.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${title}`;
+                bar.style.display = 'block'; document.body.classList.add('has-emergency');
             } else if(type === 'SALE') {
-                sHtml += `<a href="${link}" target="_blank" class="sale-card">
-                    <div class="sale-badge"><div class="m-txt">最大</div><div class="d-txt">${disc}</div></div>
-                    <div class="sale-info"><div class="sale-title">${title}</div><div class="sale-timer" data-end="${end}"></div><div class="sale-cta">SALEをチェック <i class="fa-solid fa-chevron-right"></i></div></div></a>`;
+                sHtml += `<a href="${url}" target="_blank" class="sale-card">
+                    <div class="sale-badge"><div class="m-txt">SALE</div><div class="d-txt">${disc}</div></div>
+                    <div class="sale-info"><div class="sale-title">${title}</div><div class="sale-timer" data-end="${end}"></div></div></a>`;
             } else if(type === 'COUPON') {
                 const k = brand.includes("楽天")?"rak":brand.includes("じゃらん")?"jal":brand.includes("一休")?"iky":"otr";
-                if(coupons[k].length < 3) { // 最大3件制限
-                    coupons[k].push(`<a href="${link}" target="_blank" class="coupon-item"><div class="cp-ribbon"><i class="fa-solid fa-star"></i></div><div class="cp-side ${k}-bg">${desc}</div><div class="cp-main"><div class="cp-brand">${brand}</div><div class="cp-title">${title}</div></div></a>`);
-                }
+                coupons[k].push(`<a href="${url}" target="_blank" class="coupon-item"><div class="cp-ribbon"><i class="fa-solid fa-star"></i></div><div class="cp-side ${k}-bg">${desc}</div><div class="cp-main"><div class="cp-brand">${brand}</div><div class="cp-title">${title}</div></div></a>`);
             } else if(type === 'TIPS') {
                 tHtml += `<div class="op-panel" onclick="openTips('${title}', '${fTxt||desc}')" style="display:flex; align-items:center; gap:12px; cursor:pointer;"><div style="width:35px; height:35px; background:rgba(212,175,55,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--accent-gold);"><i class="fa-solid fa-lightbulb"></i></div><div><div style="font-size:12px; font-weight:800;">${title}</div><div style="font-size:9px; color:var(--text-sub);">${desc}</div></div></div>`;
             }
         }
-        document.getElementById('sale-area').innerHTML = sHtml; document.getElementById('sale-section').style.display = sHtml?'block':'none';
-        let cpHtml = ''; for(let k in coupons) { if(coupons[k].length) cpHtml += `<div class="coupon-grid">${coupons[k].join('')}</div>`; }
-        document.getElementById('coupon-root').innerHTML = cpHtml; document.getElementById('coupon-section').style.display = cpHtml?'block':'none';
-        document.getElementById('tips-area').innerHTML = tHtml; updateStatusUI();
+        document.getElementById('sale-area').innerHTML = sHtml;
+        document.getElementById('sale-section').style.display = sHtml?'block':'none';
+
+        let cpHtml = '';
+        for(let k in coupons) {
+            if(coupons[k].length === 0) continue;
+            const visible = coupons[k].slice(0, 3).join('');
+            const hidden = coupons[k].slice(3).join('');
+            const groupID = `group-${k}`;
+            cpHtml += `<div class="coupon-group"><div class="coupon-grid">${visible}</div>`;
+            if(hidden) {
+                cpHtml += `<div id="${groupID}" class="coupon-grid hidden-coupons">${hidden}</div><button class="more-btn" onclick="toggleCoupons(this, '${groupID}')">さらにクーポンを表示</button>`;
+            }
+            cpHtml += `</div>`;
+        }
+        document.getElementById('coupon-root').innerHTML = cpHtml;
+        document.getElementById('coupon-section').style.display = cpHtml?'block':'none';
+        document.getElementById('tips-area').innerHTML = tHtml;
+        
+        const sShin = document.getElementById('status-shinkansen');
+        sShin.className = isEmergency ? "panel-status s-red" : "panel-status s-green";
+        sShin.innerText = isEmergency ? "● 見合わせ" : "● 通常";
     } catch(e) {}
 }
-
-function updateTimers() {
-    document.querySelectorAll('.sale-timer').forEach(el => {
-        const diff = new Date(el.dataset.end).getTime() - new Date().getTime();
-        if (diff <= 0) { el.innerText = "SALE終了"; return; }
-        const d = Math.floor(diff / 86400000); const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0'); const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-        el.innerText = `終了まで あと ${d}日 ${h}:${m}:${s}`;
-    });
-}
-setInterval(updateTimers, 1000);
-
-const AREAS = [{ name: '東京 / TOKYO', img: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600', rakuten: 'https://a.r10.to/hYb8ED', jalan: 'https://www.jalan.net/', ikyu: 'https://www.ikyu.com/' }, { name: '大阪 / OSAKA', img: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?w=600', rakuten: 'https://a.r10.to/hkI4ez', jalan: 'https://www.jalan.net/', ikyu: 'https://www.ikyu.com/' }, { name: '名古屋 / NAGOYA', img: 'https://images.unsplash.com/photo-1596230529625-7ee10f7b09b6?w=600', rakuten: 'https://a.r10.to/hPVp2x', jalan: 'https://www.jalan.net/', ikyu: 'https://www.ikyu.com/' }, { name: '福岡 / FUKUOKA', img: 'https://images.unsplash.com/photo-1621350485987-a27909010419?w=600', rakuten: 'https://a.r10.to/hPdo3g', jalan: 'https://www.jalan.net/', ikyu: 'https://www.ikyu.com/' }];
 
 async function init() {
     const now = new Date(); document.getElementById('header-date').innerText = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} SAT`;
     document.getElementById('hotel-grid-root').innerHTML = AREAS.map(a => `<div class="hotel-card"><div class="hotel-img" style="background-image:url('${a.img}')"><div class="hotel-name">${a.name}</div></div><div class="hotel-btns"><a href="${a.rakuten}" target="_blank" class="hotel-btn rak-bg">楽天</a><a href="${a.jalan}" target="_blank" class="hotel-btn jal-bg">じゃらん</a><a href="${a.ikyu}" target="_blank" class="hotel-btn iky-bg">一休</a></div></div>`).join('');
     try {
         const res = await fetch('https://ip-api.com/json/?lang=ja'); const data = await res.json();
-        if(data.city) { document.getElementById('local-city').innerText = `${data.regionName} ${data.city}`; document.getElementById('weather-link').href = `https://weather.yahoo.co.jp/weather/search/?p=${encodeURIComponent(data.city)}`; document.getElementById('temp-val').innerText = (Math.floor(Math.random() * 5)) + "°C"; }
+        if(data.city) { document.getElementById('local-city').innerText = `${data.regionName} ${data.city}`; document.getElementById('temp-val').innerText = (Math.floor(Math.random() * 5)) + "°C"; }
     } catch(e) {}
     updateData();
 }
+
+setInterval(() => {
+    document.querySelectorAll('.sale-timer').forEach(el => {
+        const diff = new Date(el.dataset.end).getTime() - new Date().getTime();
+        if (diff <= 0) { el.innerText = "SALE終了"; return; }
+        const d = Math.floor(diff / 86400000); 
+        const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0'); 
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        el.innerText = `終了まで あと ${d}日 ${h}:${m}:${s}`;
+    });
+}, 1000);
 init();
 </script>
 </body>
