@@ -56,7 +56,7 @@
             background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
         }
 
-        /* SALE BANNER (ver.1.11 準拠) */
+        /* SALE BANNER SYSTEM */
         #sale-banner {
             display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
             border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
@@ -74,7 +74,7 @@
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
-        /* CONTAINER & HUB (ver.1.11 復旧) */
+        /* HUB & STATUS */
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
@@ -95,7 +95,7 @@
         .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 6px var(--caution-yellow); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
-        /* PRIORITY SALES CARD (最新デザイン) */
+        /* SALE CARDS */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card {
             background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
@@ -113,11 +113,11 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* MODAL (復旧) */
+        /* MODAL (ver.1.11 ALL LINKS) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
-        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .choice-btn { padding: 14px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 12px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
+        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -157,12 +157,12 @@
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
                     <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Loading...</span></div>
-                    <div class="hub-val" id="weather-display">--°C</div>
+                    <div class="hub-val" id="weather-display"><div class="dot green"></div> --°C</div>
                 </div>
             </div>
             <div class="sub-grid">
-                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon" id="icon-highway"></i><div class="sub-txt">HIGHWAY</div></div>
-                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon" id="icon-flight"></i><div class="sub-txt">FLIGHT</div></div>
+                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon"></i><div class="sub-txt">HIGHWAY</div></div>
+                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon"></i><div class="sub-txt">FLIGHT</div></div>
                 <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
                 <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
             </div>
@@ -192,14 +192,73 @@
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px;"></div>
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px; letter-spacing:1px;"></div>
             <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:15px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+
+        // ver.1.11の定義を1つも漏らさず完全復旧
+        const MODAL_DATA = {
+            transit: {
+                t: "RAILWAY STATUS",
+                b: [
+                    {n: "JR東日本 運行情報", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},
+                    {n: "東京メトロ 運行情報", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},
+                    {n: "都営交通 運行情報", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},
+                    {n: "小田急 運行情報", l: "https://www.odakyu.jp/cgi-bin/user/emg/emergency_bbs.cgi", c: "#004b87"},
+                    {n: "東急電鉄 運行情報", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},
+                    {n: "Yahoo! 路線情報", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}
+                ]
+            },
+            weather: {
+                t: "WEATHER DETAILS",
+                b: [
+                    {n: "日本気象協会 (tenki.jp)", l: "https://tenki.jp/", c: "#007aff"},
+                    {n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},
+                    {n: "気象庁 防災情報", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},
+                    {n: "気象庁 (港区の予報)", l: "https://www.jma.go.jp/bosai/forecast/#area_code=1310300", c: "#34495e"}
+                ]
+            },
+            highway: {
+                t: "HIGHWAY TRAFFIC",
+                b: [
+                    {n: "ドラぷら (NEXCO東日本)", l: "https://www.driveplaza.com/", c: "#28a745"},
+                    {n: "iHighway (NEXCO西日本)", l: "https://ihighway.jp/", c: "#007aff"},
+                    {n: "首都高 技術情報", l: "https://www.shutoko.jp/traff/", c: "#e67e22"},
+                    {n: "JARTIC 渋滞情報", l: "https://www.jartic.or.jp/", c: "#34495e"}
+                ]
+            },
+            flight: {
+                t: "FLIGHT STATUS",
+                b: [
+                    {n: "JAL 運航情報", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},
+                    {n: "ANA 運航情報", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},
+                    {n: "スカイマーク 運航情報", l: "https://www.skymark.co.jp/ja/res_status/", c: "#f1c40f"},
+                    {n: "Flightradar24", l: "https://www.flightradar24.com/", c: "#34495e"}
+                ]
+            },
+            rain: {
+                t: "RAIN RADAR",
+                b: [
+                    {n: "雨雲レーダー (Yahoo!)", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},
+                    {n: "高解像度降水ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#34495e"},
+                    {n: "キキクル (危険度分布)", l: "https://www.jma.go.jp/bosai/risk/", c: "#34495e"}
+                ]
+            },
+            news: {
+                t: "LATEST NEWS",
+                b: [
+                    {n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},
+                    {n: "NHK ニュース速報", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},
+                    {n: "日経電子版", l: "https://www.nikkei.com/", c: "#34495e"},
+                    {n: "朝日新聞デジタル", l: "https://www.asahi.com/", c: "#e67e22"}
+                ]
+            }
+        };
 
         async function forceReloadData() {
             const btn = document.getElementById('refresh-btn');
@@ -245,7 +304,6 @@
             let saleTopFound = false;
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
             
-            // リセット
             Object.values(brands).forEach(id => {
                 document.getElementById(`card-${id}`).classList.remove('active-sale');
                 document.getElementById(`badge-${id}`).innerText = 'CHECK';
@@ -258,7 +316,6 @@
                 const sDate = new Date(start);
                 const eDate = new Date(end);
 
-                // EMERGENCY
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
                     bannerE.innerText = `【！】 ${title}`;
                     bannerE.style.display = 'block';
@@ -266,28 +323,26 @@
                     document.body.style.paddingTop = '145px';
                     document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
                 }
-
-                // SALE_TOP / SALE
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     showTopBanner('today', title, url);
                     saleTopFound = true;
                 }
                 if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
                     const id = brands[brand];
-                    document.getElementById(`card-${id}`).classList.add('active-sale');
-                    document.getElementById(`card-${id}`).href = url;
+                    const card = document.getElementById(`card-${id}`);
+                    card.classList.add('active-sale');
+                    card.href = url;
                     document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧を見る';
                     document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                 }
             });
 
-            // 楽天5と0の日
+            // 5と0の日・一休の日判定
             if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
                 showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
                 activateCard('rakuten', 'P4倍');
                 saleTopFound = true;
             }
-            // 一休の日 (当日9日 / 予告8日)
             if (!saleTopFound && date === 9) {
                 showTopBanner('today', "一休.com｜本日は「一休の日」最大20%還元！", "https://www.ikyu.com/special/01/ikyunohi/");
                 activateCard('ikyu', 'MAX20%');
@@ -316,14 +371,8 @@
         }
 
         function openModal(key) {
-            const data = {
-                transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"#", c:"#28a745"}, {n:"東京メトロ", l:"#", c:"var(--blue)"} ] },
-                weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"#", c:"var(--blue)"} ] },
-                highway: { t: "HIGHWAY INFO", b: [ {n:"ドラぷら", l:"#", c:"var(--blue)"} ] },
-                flight: { t: "FLIGHT INFO", b: [ {n:"JAL", l:"#", c:"#e74c3c"}, {n:"ANA", l:"#", c:"var(--blue)"} ] },
-                rain: { t: "RAIN RADAR", b: [ {n:"Yahoo! 天気", l:"#", c:"#e74c3c"} ] },
-                news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"#", c:"#e74c3c"} ] }
-            }[key];
+            const data = MODAL_DATA[key];
+            if (!data) return;
             document.getElementById('modal-title').innerText = data.t;
             document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
             document.getElementById('hub-modal').style.display = 'flex';
