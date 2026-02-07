@@ -113,41 +113,64 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* AREA SECTION (SEARCH ENHANCED) */
+        /* AREA SECTION (Carousel style) */
         #area-section {
             margin-top: 30px;
             position: relative;
             background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center;
-            border-radius: 24px; padding: 25px 15px; overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px;
+            padding: 25px 0; /* 左右のパディングはスワイプのために0 */
+            overflow: hidden;
         }
         #area-section::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.95)); z-index: 1;
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9));
+            z-index: 1;
         }
         .area-content-wrapper { position: relative; z-index: 2; }
-        .area-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .area-section-header { padding: 0 20px; display: flex; align-items: center; margin-bottom: 15px; }
+
+        /* スワイプコンテナ */
+        .area-swipe-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 12px;
+            padding: 0 20px 15px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .area-swipe-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+        /* 縦2段カードの構成 */
+        .area-column {
+            flex: 0 0 85%; /* 画面幅の85% */
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        /* 単体カード（OTHER AREA用） */
+        .area-column.single { flex: 0 0 85%; }
+
         .area-card { 
             background: rgba(28, 33, 38, 0.85); 
             border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 18px; display: flex; flex-direction: column; gap: 15px; 
+            padding: 16px; display: flex; flex-direction: column; gap: 12px; 
             backdrop-filter: blur(8px);
         }
-        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; }
         .area-keyword { font-size: 9px; color: var(--gold); font-weight: 700; }
-        
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .area-btn { 
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; text-decoration: none;
-            padding: 14px 4px; border-radius: 12px; font-size: 10px; font-weight: 900; text-align: center;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; text-decoration: none;
+            padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center;
         }
-        .area-btn i { font-size: 12px; color: var(--gold); opacity: 0.8; } /* 共通の検索アイコン用 */
-        
-        .area-btn:active { background: var(--gold); color: #000; transform: scale(0.92); border-color: var(--gold); }
-        .area-btn:active i { color: #000; }
+        .area-btn:active { background: var(--gold); color: #000; }
 
         /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
@@ -226,96 +249,73 @@
 
         <section id="area-section">
             <div class="area-content-wrapper">
-                <div class="section-header"><div class="section-title" style="color:#fff">AREA EXPLORER</div><div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div></div>
+                <div class="area-section-header">
+                    <div class="section-title" style="color:#fff">AREA EXPLORER</div>
+                    <div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div>
+                </div>
                 
-                <div class="area-grid">
-                    <div class="area-card">
-                        <div class="area-header">
-                            <div class="area-name-main">TOKYO / 東京</div>
-                            <div class="area-keyword">東京駅周辺</div>
+                <div class="area-swipe-container">
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-header">
+                                <div class="area-name-main">TOKYO / 東京</div>
+                                <div class="area-keyword">東京駅</div>
+                            </div>
+                            <div class="area-actions">
+                                <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn">楽天</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn">じゃらん</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn">一休</a>
+                            </div>
                         </div>
-                        <div class="area-actions">
-                            <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>楽天
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>じゃらん
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>一休
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="area-card">
-                        <div class="area-header">
-                            <div class="area-name-main">OSAKA / 梅田</div>
-                            <div class="area-keyword">大阪 梅田駅周辺</div>
-                        </div>
-                        <div class="area-actions">
-                            <a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>楽天
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>じゃらん
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>一休
-                            </a>
+                        <div class="area-card">
+                            <div class="area-header">
+                                <div class="area-name-main">OSAKA / 梅田</div>
+                                <div class="area-keyword">大阪 梅田</div>
+                            </div>
+                            <div class="area-actions">
+                                <a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn">楽天</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">じゃらん</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">一休</a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="area-card">
-                        <div class="area-header">
-                            <div class="area-name-main">NAGOYA / 名古屋</div>
-                            <div class="area-keyword">名古屋駅周辺</div>
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-header">
+                                <div class="area-name-main">SHIZUOKA / 名古屋</div>
+                                <div class="area-keyword">名古屋駅</div>
+                            </div>
+                            <div class="area-actions">
+                                <a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn">楽天</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">じゃらん</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">一休</a>
+                            </div>
                         </div>
-                        <div class="area-actions">
-                            <a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>楽天
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>じゃらん
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>一休
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="area-card">
-                        <div class="area-header">
-                            <div class="area-name-main">FUKUOKA / 博多</div>
-                            <div class="area-keyword">博多駅周辺</div>
-                        </div>
-                        <div class="area-actions">
-                            <a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>楽天
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>じゃらん
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>一休
-                            </a>
+                        <div class="area-card">
+                            <div class="area-header">
+                                <div class="area-name-main">FUKUOKA / 博多</div>
+                                <div class="area-keyword">博多駅</div>
+                            </div>
+                            <div class="area-actions">
+                                <a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn">楽天</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn">じゃらん</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">一休</a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="area-card" style="border: 1px solid var(--gold)">
-                        <div class="area-header">
-                            <div class="area-name-main" style="color:var(--gold)">OTHER AREAS</div>
-                            <div class="area-keyword">全国主要都市を検索</div>
-                        </div>
-                        <div class="area-actions">
-                            <a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>楽天
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>じゃらん
-                            </a>
-                            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F%3Fadc%3D1%26are%3D35090111%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>一休
-                            </a>
+                    <div class="area-column single">
+                        <div class="area-card" style="border: 1px solid var(--gold); height: 100%; justify-content: center;">
+                            <div class="area-header">
+                                <div class="area-name-main" style="color:var(--gold)">OTHER AREAS</div>
+                                <div class="area-keyword">ALL AREAS</div>
+                            </div>
+                            <div class="area-actions">
+                                <a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn">楽天</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn">じゃらん</a>
+                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F%3Fadc%3D1%26are%3D35090111%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">一休</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -493,7 +493,7 @@
             bannerS.href = url;
             if (mode === 'today') {
                 bannerS.className = 'sale-today';
-                iconE.className = 'fa-solid fa-magnifying-glass'; // 検索感を強めるためにセール時も虫眼鏡に変更可能
+                iconE.className = 'fa-solid fa-crown';
             } else if (mode === 'rakuten') {
                 bannerS.className = 'sale-rakuten-day';
                 iconE.className = 'fa-solid fa-tags';
