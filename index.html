@@ -16,35 +16,33 @@
             --success-green: #2ecc71;
             --caution-yellow: #f1c40f;
             --blue: #007aff;
-            --header-h: 135px;
+            --header-h: 120px; /* デフォルトPC想定 */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; padding-top: var(--header-h); }
+        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
         /* EMERGENCY BANNER */
         #emergency-banner {
             display: none; position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--alert-red); color: #fff; padding: 10px;
-            font-size: 11px; font-weight: 900; text-align: center; z-index: 10000;
-            letter-spacing: 1px;
+            background: var(--alert-red); color: #fff; padding: 8px 10px;
+            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
         }
 
-        /* HEADER & IMPROVED NAVIGATION */
+        /* HEADER & RESPONSIVE NAV */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
             z-index: 9000; border-bottom: 1px solid #2a2a2a;
-            transition: top 0.3s;
         }
-        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px 10px; }
-        .logo { font-weight: 900; color: var(--gold); font-size: 22px; letter-spacing: 2px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
+        .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
         
         .refresh-btn {
-            width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.3);
-            color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer;
-            background: rgba(212, 175, 55, 0.05); transition: 0.2s;
+            width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold); display: flex; align-items: center; justify-content: center; 
+            background: rgba(212, 175, 55, 0.05);
         }
         .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
         .spin { animation: spin 0.8s linear infinite; }
@@ -52,45 +50,53 @@
 
         nav {
             display: flex; justify-content: center; align-items: center;
-            gap: 10px; padding: 0 15px 15px; overflow-x: auto;
-            scrollbar-width: none;
+            gap: 8px; padding: 0 10px 12px; overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         nav::-webkit-scrollbar { display: none; }
+        
         .nav-link {
-            font-size: 13px; font-weight: 900; color: var(--text-main);
-            text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
-            background: rgba(255, 255, 255, 0.05); padding: 10px 18px;
-            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease; flex-shrink: 0;
+            font-size: 11px; font-weight: 900; color: var(--text-main);
+            text-decoration: none; text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05); padding: 8px 14px;
+            border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
-        .nav-link:active { transform: scale(0.95); background: var(--gold); color: #000; border-color: var(--gold); }
+
+        /* SP SPECIFIC ADJUSTMENTS */
+        @media (max-width: 480px) {
+            :root { --header-h: 110px; }
+            .logo { font-size: 18px; }
+            .nav-link { font-size: 10px; padding: 7px 12px; }
+            nav { justify-content: flex-start; } /* SPははみ出す可能性があるので左寄せスクロール可に */
+        }
 
         /* HUB CONTENT */
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-        .section-header { display: flex; align-items: center; margin-bottom: 20px; }
-        .section-title { font-size: 12px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; white-space: nowrap; }
-        .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 15px; opacity: 0.5; }
+        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
+        .section-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1px; }
+        .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
 
-        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-        .hub-card { background: var(--card-gray); border-radius: 16px; padding: 20px; border: 1px solid #2a2a2a; cursor: pointer; min-height: 110px; }
-        .hub-label { font-size: 11px; color: var(--text-sub); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .hub-val { font-size: 16px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; }
+        .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .sub-card { background: var(--card-gray); border-radius: 14px; padding: 15px 5px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .sub-icon { font-size: 18px; color: var(--gold); }
-        .sub-txt { font-size: 9px; color: var(--text-sub); font-weight: 900; }
+        .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .sub-card { background: var(--card-gray); border-radius: 12px; padding: 12px 4px; border: 1px solid #2a2a2a; text-align: center; }
+        .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
+        .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
 
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.green { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
-        .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 8px var(--caution-yellow); }
-        .dot.red { background: var(--alert-red); box-shadow: 0 0 8px var(--alert-red); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
+        .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 6px var(--caution-yellow); }
+        .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
         /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 24px; border: 1px solid var(--gold); padding: 30px 20px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .choice-btn { padding: 16px; border-radius: 12px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 13px; }
+        .choice-btn { padding: 14px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -104,7 +110,7 @@
                 <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
             </div>
         </div>
-        <nav>
+        <nav id="nav-bar">
             <a href="#field-ops" class="nav-link">Hub</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#area" class="nav-link">Area</a>
@@ -132,34 +138,21 @@
             </div>
 
             <div class="sub-grid">
-                <div class="sub-card" onclick="openModal('highway')">
-                    <i class="fa-solid fa-car sub-icon" id="icon-highway"></i>
-                    <div class="sub-txt">HIGHWAY</div>
-                </div>
-                <div class="sub-card" onclick="openModal('flight')">
-                    <i class="fa-solid fa-plane sub-icon" id="icon-flight"></i>
-                    <div class="sub-txt">FLIGHT</div>
-                </div>
-                <div class="sub-card" onclick="openModal('rain')">
-                    <i class="fa-solid fa-cloud-showers-heavy sub-icon"></i>
-                    <div class="sub-txt">RAIN</div>
-                </div>
-                <div class="sub-card" onclick="openModal('news')">
-                    <i class="fa-solid fa-rss sub-icon"></i>
-                    <div class="sub-txt">NEWS</div>
-                </div>
+                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon" id="icon-highway"></i><div class="sub-txt">HIGHWAY</div></div>
+                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon" id="icon-flight"></i><div class="sub-txt">FLIGHT</div></div>
+                <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
+                <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
             </div>
         </section>
 
-        <section id="sale" style="height: 400px; padding-top: 50px;"></section>
-        <section id="area" style="height: 400px; padding-top: 50px;"></section>
+        <section id="sale" style="height: 600px;"></section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:20px; font-size:14px;"></div>
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px;"></div>
             <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:12px; cursor:pointer;">CLOSE</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:15px; font-weight:900; font-size:11px;">CLOSE</button>
         </div>
     </div>
 
@@ -167,33 +160,28 @@
         const CSV_BASE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
         const MODAL_DATA = {
-            transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"https://traininfo.jreast.co.jp/train_info/service.aspx", c:"#28a745"}, {n:"東京メトロ", l:"https://www.tokyometro.jp/unkou/", c:"var(--blue)"}, {n:"JR東海", l:"https://traininfo.jr-central.co.jp/shinkansen/pc/ja/index.html", c:"#ff9900"} ] },
-            weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"https://www.jma.go.jp/jp/yoho/", c:"var(--blue)"}, {n:"ウェザーニュース", l:"https://weathernews.jp/onebox/", c:"#e67e22"}, {n:"日本気象協会", l:"https://tenki.jp/", c:"#2ecc71"} ] },
-            highway: { t: "HIGHWAY INFO", b: [ {n:"iHighway", l:"https://ihighway.jp/", c:"#2c3e50"}, {n:"ドラぷら", l:"https://www.driveplaza.com/", c:"var(--blue)"}, {n:"JARTIC", l:"https://www.jartic.or.jp/", c:"#e74c3c"} ] },
-            flight: { t: "FLIGHT INFO", b: [ {n:"JAL 運航状況", l:"https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c:"#e74c3c"}, {n:"ANA 運航状況", l:"https://www.ana.co.jp/fs/dom/jp/", c:"var(--blue)"}, {n:"スカイマーク", l:"https://www.skymark.co.jp/ja/fly/flight_status.html", c:"#f1c40f"} ] },
-            rain: { t: "RAIN RADAR", b: [ {n:"雨雲レーダー", l:"https://www.jma.go.jp/bosai/nowc/", c:"var(--blue)"}, {n:"Yahoo! 天気", l:"https://weather.yahoo.co.jp/weather/zoomradar/", c:"#e74c3c"}, {n:"MSN 天気", l:"https://www.msn.com/ja-jp/weather/maps/rain/", c:"var(--blue)"} ] },
-            news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"https://news.yahoo.co.jp/", c:"#e74c3c"}, {n:"NHK ニュース", l:"https://www3.nhk.or.jp/news/", c:"var(--blue)"}, {n:"日経新聞", l:"https://www.nikkei.com/", c:"#2c3e50"} ] }
+            transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"#", c:"#28a745"}, {n:"東京メトロ", l:"#", c:"var(--blue)"}, {n:"JR東海", l:"#", c:"#ff9900"} ] },
+            weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"#", c:"var(--blue)"}, {n:"ウェザーニュース", l:"#", c:"#e67e22"}, {n:"日本気象協会", l:"#", c:"#2ecc71"} ] },
+            highway: { t: "HIGHWAY INFO", b: [ {n:"iHighway", l:"#", c:"#2c3e50"}, {n:"ドラぷら", l:"#", c:"var(--blue)"}, {n:"JARTIC", l:"#", c:"#e74c3c"} ] },
+            flight: { t: "FLIGHT INFO", b: [ {n:"JAL 運航状況", l:"#", c:"#e74c3c"}, {n:"ANA 運航状況", l:"#", c:"var(--blue)"}, {n:"スカイマーク", l:"#", c:"#f1c40f"} ] },
+            rain: { t: "RAIN RADAR", b: [ {n:"雨雲レーダー", l:"#", c:"var(--blue)"}, {n:"Yahoo! 天気", l:"#", c:"#e74c3c"}, {n:"MSN 天気", l:"#", c:"var(--blue)"} ] },
+            news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"#", c:"#e74c3c"}, {n:"NHK ニュース", l:"#", c:"var(--blue)"}, {n:"日経新聞", l:"#", c:"#2c3e50"} ] }
         };
 
         async function forceReloadData() {
             const btn = document.getElementById('refresh-btn');
             const icon = document.getElementById('refresh-icon');
             icon.classList.add('spin');
-            
             try {
                 const res = await fetch(CSV_BASE_URL + `&t=${new Date().getTime()}`);
                 const text = await res.text();
                 processCSVData(text);
                 await getIPWeather();
-                
                 icon.classList.remove('spin');
                 icon.className = "fa-solid fa-check";
                 btn.classList.add('success');
-                setTimeout(() => {
-                    icon.className = "fa-solid fa-arrows-rotate";
-                    btn.classList.remove('success');
-                }, 2000);
-            } catch (e) { icon.classList.remove('spin'); icon.className = "fa-solid fa-arrows-rotate"; }
+                setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
+            } catch (e) { icon.classList.remove('spin'); }
         }
 
         async function getIPWeather() {
@@ -214,26 +202,22 @@
             const rows = text.split('\n').slice(1).filter(r => r.trim());
             const banner = document.getElementById('emergency-banner');
             const header = document.getElementById('main-header');
+            const isSP = window.innerWidth <= 480;
             
             banner.style.display = 'none';
             header.style.top = '0';
-            document.body.style.paddingTop = '135px';
-            document.getElementById('transit-display').innerHTML = `<div class="dot green"></div> 正常運行`;
-            document.getElementById('icon-highway').style.color = "var(--gold)";
-            document.getElementById('icon-flight').style.color = "var(--gold)";
+            document.body.style.paddingTop = isSP ? '110px' : '120px';
 
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 if (cols[0] === 'EMERGENCY') {
                     banner.innerText = `【！】 ${cols[2]}`;
                     banner.style.display = 'block';
-                    header.style.top = '35px';
-                    document.body.style.paddingTop = '170px';
-
+                    header.style.top = isSP ? '30px' : '35px';
+                    document.body.style.paddingTop = isSP ? '140px' : '155px';
                     document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${cols[2]}`;
                     document.getElementById('icon-highway').style.color = "var(--alert-red)";
                     document.getElementById('icon-flight').style.color = "var(--alert-red)";
-                    
                     const wDisp = document.getElementById('weather-display');
                     if(!wDisp.innerHTML.includes('dot')) wDisp.innerHTML = `<div class="dot yellow"></div>` + wDisp.innerHTML;
                 }
