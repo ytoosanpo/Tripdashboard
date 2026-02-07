@@ -15,163 +15,216 @@
             --alert-red: #e74c3c;
             --success-green: #2ecc71;
             --caution-yellow: #f1c40f;
-            --rakuten: #28a745;
-            --jalan: #ff9900;
-            --ikyu: #a68b5e;
             --blue: #007aff;
+            --header-h: 110px; /* ロゴ + ナビの高さ */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; padding: 20px; }
+        html { scroll-behavior: smooth; } /* アンカー遷移をスムーズに */
+        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
-        /* HEADER & SECTION TITLE */
-        .logo { font-weight: 900; color: var(--gold); font-size: 24px; letter-spacing: 3px; margin-bottom: 40px; }
-        .section-header { display: flex; align-items: center; margin-bottom: 20px; }
-        .section-title { font-size: 12px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; white-space: nowrap; }
+        /* HEADER & NAVIGATION */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(13, 15, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9000;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .header-top {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px 10px;
+        }
+        .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
+        
+        /* 更新ボタン */
+        .refresh-btn {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .refresh-btn:active { transform: scale(0.9); }
+        .spin { animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ナビゲーションバー */
+        nav {
+            display: flex; gap: 20px; padding: 0 20px 15px;
+            overflow-x: auto; white-space: nowrap;
+            scrollbar-width: none; /* Firefox */
+        }
+        nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .nav-link {
+            font-size: 10px; font-weight: 900; color: var(--text-sub);
+            text-decoration: none; text-transform: uppercase;
+            letter-spacing: 1px; transition: 0.3s;
+        }
+        .nav-link:hover, .nav-link:active { color: var(--gold); }
+
+        /* CONTAINER */
+        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .section-header { display: flex; align-items: center; margin-bottom: 20px; padding-top: 20px; }
+        .section-title { font-size: 12px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 15px; opacity: 0.5; }
 
-        /* INTELLIGENCE HUB GRID */
+        /* INTELLIGENCE HUB (Field Operations) */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-        .hub-card { background: var(--card-gray); border-radius: 16px; padding: 20px; border: 1px solid #2a2a2a; cursor: pointer; position: relative; min-height: 110px; transition: transform 0.1s; }
-        .hub-card:active { transform: scale(0.98); }
-
+        .hub-card { background: var(--card-gray); border-radius: 16px; padding: 20px; border: 1px solid #2a2a2a; cursor: pointer; min-height: 110px; }
         .hub-label { font-size: 11px; color: var(--text-sub); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .hub-val { font-size: 17px; font-weight: 900; line-height: 1.4; display: flex; align-items: center; gap: 8px; }
+        .hub-val { font-size: 17px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
 
-        /* SMALL CARDS GRID */
         .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .sub-card { background: var(--card-gray); border-radius: 14px; padding: 15px 5px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .sub-icon { font-size: 18px; color: var(--gold); }
+        .sub-card { background: var(--card-gray); border-radius: 14px; padding: 15px 5px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
+        .sub-icon { font-size: 18px; color: var(--gold); margin-bottom: 8px; }
         .sub-txt { font-size: 9px; color: var(--text-sub); font-weight: 900; }
 
-        /* STATUS DOTS */
-        .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot.green { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
         .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 8px var(--caution-yellow); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 8px var(--alert-red); }
 
-        /* MODAL */
+        /* MODAL (略 - 以前の定義と同一) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 24px; border: 1px solid var(--gold); padding: 30px 20px; }
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .choice-btn { padding: 16px; border-radius: 12px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 13px; border: none; cursor: pointer; }
+        .choice-btn { padding: 16px; border-radius: 12px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <div class="logo">TRIP_DASH.</div>
+    <header>
+        <div class="header-top">
+            <div class="logo">TRIP_DASH.</div>
+            <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </div>
+        </div>
+        <nav>
+            <a href="#field-ops" class="nav-link">Hub</a>
+            <a href="#sale" class="nav-link">Sale</a>
+            <a href="#area" class="nav-link">Area</a>
+            <a href="#coupon" class="nav-link">Coupon</a>
+            <a href="#tips" class="nav-link">Tips</a>
+        </nav>
+    </header>
 
-    <div class="section-header">
-        <div class="section-title">INTELLIGENCE HUB</div>
-        <div class="section-line"></div>
-    </div>
+    <div class="container">
+        <section id="field-ops">
+            <div class="section-header">
+                <div class="section-title">INTELLIGENCE HUB</div>
+                <div class="section-line"></div>
+            </div>
 
-    <div class="hub-grid">
-        <div class="hub-card" onclick="openModal('transit')">
-            <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-            <div class="hub-val" id="transit-display"><div class="dot green"></div> 新幹線平常運転</div>
-        </div>
-        <div class="hub-card" onclick="openModal('weather')">
-            <div class="hub-label"><i id="w-icon" class="fa-solid fa-cloud-sun"></i> <span id="location-name">Tokyo</span></div>
-            <div class="hub-val" id="weather-display">--°C Loading</div>
-        </div>
-    </div>
+            <div class="hub-grid">
+                <div class="hub-card" onclick="openModal('transit')">
+                    <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
+                    <div class="hub-val" id="transit-display"><div class="dot green"></div> 正常運行</div>
+                </div>
+                <div class="hub-card" onclick="openModal('weather')">
+                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Tokyo</span></div>
+                    <div class="hub-val" id="weather-display">--°C Loading</div>
+                </div>
+            </div>
 
-    <div class="sub-grid">
-        <div class="sub-card" onclick="openModal('highway')">
-            <i class="fa-solid fa-car sub-icon" id="icon-highway"></i>
-            <div class="sub-txt">渋滞</div>
-        </div>
-        <div class="sub-card" onclick="openModal('flight')">
-            <i class="fa-solid fa-plane sub-icon" id="icon-flight"></i>
-            <div class="sub-txt">空路</div>
-        </div>
-        <div class="sub-card" onclick="openModal('rain')">
-            <i class="fa-solid fa-cloud-showers-heavy sub-icon"></i>
-            <div class="sub-txt">雨雲</div>
-        </div>
-        <div class="sub-card" onclick="openModal('news')">
-            <i class="fa-solid fa-rss sub-icon"></i>
-            <div class="sub-txt">NEWS</div>
-        </div>
+            <div class="sub-grid">
+                <div class="sub-card" onclick="openModal('highway')">
+                    <i class="fa-solid fa-car sub-icon" id="icon-highway"></i>
+                    <div class="sub-txt">HIGHWAY</div>
+                </div>
+                <div class="sub-card" onclick="openModal('flight')">
+                    <i class="fa-solid fa-plane sub-icon" id="icon-flight"></i>
+                    <div class="sub-txt">FLIGHT</div>
+                </div>
+                <div class="sub-card" onclick="openModal('rain')">
+                    <i class="fa-solid fa-cloud-showers-heavy sub-icon"></i>
+                    <div class="sub-txt">RAIN</div>
+                </div>
+                <div class="sub-card" onclick="openModal('news')">
+                    <i class="fa-solid fa-rss sub-icon"></i>
+                    <div class="sub-txt">NEWS</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sale" style="height: 500px;"></section>
+        <section id="area" style="height: 500px;"></section>
+        <section id="coupon" style="height: 500px;"></section>
+        <section id="tips" style="height: 500px;"></section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:20px; font-size:15px; letter-spacing:1px;"></div>
+            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:20px; font-size:14px;"></div>
             <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:12px;">CLOSE</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:12px; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
     <script>
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+        const CSV_BASE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
         const MODAL_DATA = {
-            transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"https://traininfo.jreast.co.jp/train_info/service.aspx", c:"var(--rakuten)"}, {n:"東京メトロ", l:"https://www.tokyometro.jp/unkou/", c:"var(--blue)"}, {n:"JR東海", l:"https://traininfo.jr-central.co.jp/shinkansen/pc/ja/index.html", c:"var(--jalan)"} ] },
-            weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"https://www.jma.go.jp/jp/yoho/", c:"var(--blue)"}, {n:"ウェザーニュース", l:"https://weathernews.jp/onebox/", c:"#e67e22"}, {n:"日本気象協会", l:"https://tenki.jp/", c:"var(--success-green)"} ] },
-            highway: { t: "HIGHWAY INFO", b: [ {n:"iHighway", l:"https://ihighway.jp/", c:"#2c3e50"}, {n:"ドラぷら", l:"https://www.driveplaza.com/", c:"var(--blue)"}, {n:"JARTIC", l:"https://www.jartic.or.jp/", c:"var(--alert-red)"} ] },
-            flight: { t: "FLIGHT INFO", b: [ {n:"JAL 運航状況", l:"https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c:"var(--alert-red)"}, {n:"ANA 運航状況", l:"https://www.ana.co.jp/fs/dom/jp/", c:"var(--blue)"}, {n:"スカイマーク", l:"https://www.skymark.co.jp/ja/fly/flight_status.html", c:"#f1c40f"} ] },
-            rain: { t: "RAIN RADAR", b: [ {n:"雨雲レーダー(気象庁)", l:"https://www.jma.go.jp/bosai/nowc/", c:"var(--blue)"}, {n:"Yahoo! 天気", l:"https://weather.yahoo.co.jp/weather/zoomradar/", c:"var(--alert-red)"}, {n:"MSN 天気", l:"https://www.msn.com/ja-jp/weather/maps/rain/", c:"var(--blue)"} ] },
-            news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"https://news.yahoo.co.jp/", c:"var(--alert-red)"}, {n:"NHK ニュース", l:"https://www3.nhk.or.jp/news/", c:"var(--blue)"}, {n:"日経新聞", l:"https://www.nikkei.com/", c:"#2c3e50"} ] }
+            transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"https://traininfo.jreast.co.jp/train_info/service.aspx", c:"#28a745"}, {n:"東京メトロ", l:"https://www.tokyometro.jp/unkou/", c:"var(--blue)"}, {n:"JR東海", l:"https://traininfo.jr-central.co.jp/shinkansen/pc/ja/index.html", c:"#ff9900"} ] },
+            weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"https://www.jma.go.jp/jp/yoho/", c:"var(--blue)"}, {n:"ウェザーニュース", l:"https://weathernews.jp/onebox/", c:"#e67e22"}, {n:"日本気象協会", l:"https://tenki.jp/", c:"#2ecc71"} ] },
+            highway: { t: "HIGHWAY INFO", b: [ {n:"iHighway", l:"https://ihighway.jp/", c:"#2c3e50"}, {n:"ドラぷら", l:"https://www.driveplaza.com/", c:"var(--blue)"}, {n:"JARTIC", l:"https://www.jartic.or.jp/", c:"#e74c3c"} ] },
+            flight: { t: "FLIGHT INFO", b: [ {n:"JAL 運航状況", l:"https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c:"#e74c3c"}, {n:"ANA 運航状況", l:"https://www.ana.co.jp/fs/dom/jp/", c:"var(--blue)"}, {n:"スカイマーク", l:"https://www.skymark.co.jp/ja/fly/flight_status.html", c:"#f1c40f"} ] },
+            rain: { t: "RAIN RADAR", b: [ {n:"雨雲レーダー", l:"https://www.jma.go.jp/bosai/nowc/", c:"var(--blue)"}, {n:"Yahoo! 天気", l:"https://weather.yahoo.co.jp/weather/zoomradar/", c:"#e74c3c"}, {n:"MSN 天気", l:"https://www.msn.com/ja-jp/weather/maps/rain/", c:"var(--blue)"} ] },
+            news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"https://news.yahoo.co.jp/", c:"#e74c3c"}, {n:"NHK ニュース", l:"https://www3.nhk.or.jp/news/", c:"var(--blue)"}, {n:"日経新聞", l:"https://www.nikkei.com/", c:"#2c3e50"} ] }
         };
 
-        // 1. IPベースの動的天気取得
+        // キャッシュを回避してCSVを強制リロード
+        async function forceReloadData() {
+            const btn = document.getElementById('refresh-btn').firstElementChild;
+            btn.classList.add('spin');
+            
+            const cacheBuster = `&t=${new Date().getTime()}`;
+            try {
+                const res = await fetch(CSV_BASE_URL + cacheBuster);
+                const text = await res.text();
+                processCSVData(text);
+                await getIPWeather();
+                setTimeout(() => btn.classList.remove('spin'), 600);
+            } catch (e) {
+                btn.classList.remove('spin');
+            }
+        }
+
         async function getIPWeather() {
             try {
                 const ipRes = await fetch('https://ipapi.co/json/');
                 const ipData = await ipRes.json();
-                const city = ipData.city || "Tokyo";
-                document.getElementById('location-name').innerText = city;
-
+                document.getElementById('location-name').innerText = ipData.city || "Tokyo";
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
-                const temp = Math.round(wData.current_weather.temperature);
-                const code = wData.current_weather.weathercode;
-                
-                let status = "Clear";
-                if(code > 0) status = "Cloudy";
-                if(code > 50) status = "Rainy";
-                
-                document.getElementById('weather-display').innerHTML = `${temp}°C ${status}`;
+                document.getElementById('weather-display').innerHTML = `${Math.round(wData.current_weather.temperature)}°C Current`;
             } catch (e) {
                 document.getElementById('weather-display').innerHTML = "12°C Cloudy";
             }
         }
 
-        // 2. CSV読み込み & 🔴判定
-        async function loadHubStatus() {
-            try {
-                const res = await fetch(CSV_URL);
-                const text = await res.text();
-                const rows = text.split('\n').slice(1);
-                const weatherKw = ["雨", "雪", "台風", "荒天"];
+        function processCSVData(text) {
+            const rows = text.split('\n').slice(1);
+            const weatherKw = ["雨", "雪", "台風", "荒天"];
+            // 初期化
+            document.getElementById('transit-display').innerHTML = `<div class="dot green"></div> 正常運行`;
+            document.getElementById('icon-highway').style.color = "var(--gold)";
+            document.getElementById('icon-flight').style.color = "var(--gold)";
 
-                rows.forEach(line => {
-                    const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                    const [type, brand, title] = cols;
-
-                    if (type === 'EMERGENCY') {
-                        // 鉄道 🔴
-                        if (brand.includes("🔴") || brand.includes("停止")) {
-                            document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
-                        }
-                        // 高速 🔴
-                        if (brand.includes("高速🔴") || brand.includes("通行止")) {
-                            document.getElementById('icon-highway').style.color = "var(--alert-red)";
-                        }
-                        // 航空 🔴
-                        if (brand.includes("航空🔴") || brand.includes("欠航")) {
-                            document.getElementById('icon-flight').style.color = "var(--alert-red)";
-                        }
-                        // 天気 🟡 (Title判定)
-                        if (weatherKw.some(kw => title.includes(kw))) {
-                            const disp = document.getElementById('weather-display');
-                            disp.innerHTML = `<div class="dot yellow"></div> ` + disp.innerHTML;
-                        }
+            rows.forEach(line => {
+                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
+                if (cols[0] === 'EMERGENCY') {
+                    if (cols[1].includes("🔴") || cols[1].includes("停止")) document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${cols[2]}`;
+                    if (cols[1].includes("高速🔴")) document.getElementById('icon-highway').style.color = "var(--alert-red)";
+                    if (cols[1].includes("航空🔴")) document.getElementById('icon-flight').style.color = "var(--alert-red)";
+                    if (weatherKw.some(kw => cols[2].includes(kw))) {
+                        const disp = document.getElementById('weather-display');
+                        if(!disp.innerHTML.includes('yellow')) disp.innerHTML = `<div class="dot yellow"></div> ` + disp.innerHTML;
                     }
-                });
-            } catch (e) { console.error(e); }
+                }
+            });
         }
 
         function openModal(key) {
@@ -180,12 +233,11 @@
             document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
             document.getElementById('hub-modal').style.display = 'flex';
         }
-
         function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
 
-        // 初期化
+        // 初期実行
         getIPWeather();
-        loadHubStatus();
+        forceReloadData();
     </script>
 </body>
 </html>
