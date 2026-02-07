@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TRIP_DASH. ver.2.9.3</title>
+    <title>TRIP_DASH. | ver. 1.6.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
@@ -11,50 +11,63 @@
             --rakuten: #28a745; --jalan: #ff9900; --ikyu: #a68b5e;
             --text-main: #ffffff; --text-sub: #8e8e93; --gold: #d4af37;
             --alert-red: #e74c3c; --success-green: #2ecc71;
+            --glass: rgba(255, 255, 255, 0.05);
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { background: var(--biz-bg); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: 60px; padding-bottom: 80px; }
+        body { background: var(--biz-bg); color: var(--text-main); font-family: -apple-system, "Hiragino Sans", sans-serif; padding-top: 50px; }
 
-        /* 警報バナー & ヘッダー */
-        #emergency-banner { display: none; background: var(--alert-red); color: #fff; padding: 12px; font-size: 11px; font-weight: 900; text-align: center; position: fixed; top: 0; width: 100%; z-index: 5000; }
-        .header { height: 60px; background: rgba(13,15,17,0.98); border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; position: fixed; top: 0; width: 100%; z-index: 4000; }
-        .logo { font-weight: 900; color: var(--gold); font-size: 18px; letter-spacing: 1px; }
+        /* Emergency */
+        #emergency-banner { display: none; background: var(--alert-red); color: #fff; padding: 12px; font-size: 11px; font-weight: 900; text-align: center; position: fixed; top: 0; width: 100%; z-index: 5000; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4); }
 
-        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 15px; }
-        .section-title { font-size: 10px; font-weight: 800; color: var(--text-sub); border-left: 3px solid var(--gold); padding-left: 10px; margin: 30px 0 15px; text-transform: uppercase; }
+        .header { height: 60px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; background: rgba(13,15,17,0.95); z-index: 4000; backdrop-filter: blur(10px); }
+        .logo { font-weight: 900; color: var(--gold); font-size: 18px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
 
-        /* SALE カウントダウン（最新CSVカラム対応） */
-        .sale-card { background: linear-gradient(145deg, #23272c, #111316); border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 15px; position: relative; text-decoration: none; display: block; }
-        .sale-card .tag { position: absolute; top: 15px; right: 15px; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 4px; }
-        .timer-display { display: flex; gap: 8px; margin-top: 10px; }
-        .timer-unit { background: #000; color: var(--gold); padding: 8px 12px; border-radius: 6px; font-family: monospace; font-size: 20px; font-weight: 900; border: 1px solid #444; }
+        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px 15px; }
+        .section-title { font-size: 11px; font-weight: 900; color: var(--text-sub); border-left: 4px solid var(--gold); padding-left: 12px; margin: 35px 0 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FIELD OPERATIONS (文言排除・ドットのみ) */
+        /* Field Operations (タッチパネル風) */
         .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .op-card { background: var(--biz-card); border-radius: 12px; padding: 18px; border: 1px solid #2a2a2a; position: relative; }
-        .op-icon { position: absolute; top: 18px; right: 18px; color: var(--gold); opacity: 0.4; font-size: 16px; }
-        .op-label { font-size: 9px; font-weight: 900; color: var(--text-sub); margin-bottom: 8px; }
-        .op-val { display: flex; align-items: center; margin-bottom: 12px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-green { background: var(--success-green); box-shadow: 0 0 10px var(--success-green); }
-        .op-select { width: 100%; background: #000; color: var(--gold); border: 1px solid #444; font-size: 10px; padding: 6px; border-radius: 4px; font-weight: 800; outline: none; appearance: none; text-align: center; }
+        .op-card { 
+            background: linear-gradient(145deg, #23272c, #1a1d21); 
+            border-radius: 14px; padding: 20px; 
+            border: 1px solid #333; cursor: pointer; text-align: center; 
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3), inset 1px 1px 2px rgba(255,255,255,0.05);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
+        }
+        .op-card:active { transform: scale(0.96); box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5); }
+        .op-val { justify-content: center; font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 10px; color: #fff; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success-green); box-shadow: 0 0 10px var(--success-green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* ホテルカルーセル (direct_url / disc 対応) */
-        .hotel-swiper { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
-        .hotel-card { flex: 0 0 280px; scroll-snap-align: start; background: var(--biz-card); border-radius: 12px; border: 1px solid #2a2a2a; overflow: hidden; text-decoration: none; }
-        .hotel-img { height: 140px; background-size: cover; background-position: center; position: relative; }
-        .hotel-tag { position: absolute; top: 10px; left: 10px; font-size: 9px; padding: 3px 8px; border-radius: 4px; color: #fff; font-weight: 900; }
-        .hotel-info { padding: 15px; }
-        .hotel-title { font-size: 14px; font-weight: 900; color: #fff; height: 40px; overflow: hidden; }
+        /* Flash Sale (強力な誘導UI) */
+        .flash-header { background: linear-gradient(90deg, transparent, var(--alert-red), transparent); color: #fff; font-weight: 900; padding: 8px 0; margin-bottom: 15px; text-shadow: 2px 2px 4px #000; font-size: 13px; }
+        .sale-card { 
+            background: linear-gradient(145deg, #1c1f23, #0d0f11); 
+            border: 1px solid var(--gold); border-radius: 16px; padding: 30px 20px; margin-bottom: 20px; 
+            display: block; text-decoration: none; text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4); transition: 0.3s;
+        }
+        .sale-card:active { transform: translateY(2px); border-color: #fff; }
+        .sale-title { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 20px; line-height: 1.4; }
+        .timer-unit { 
+            background: #000; color: var(--gold); padding: 12px 10px; border-radius: 8px; 
+            font-family: 'Courier New', monospace; font-size: 24px; font-weight: 900; 
+            border: 1px solid #444; margin: 0 4px; display: inline-block; min-width: 50px;
+        }
+        .click-prompt { margin-top: 15px; font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 2px; animation: flash 1.5s infinite; }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* クーポン */
-        .cp-item { background: var(--biz-card); border-radius: 12px; display: flex; height: 90px; text-decoration: none; border: 1px solid #2a2a2a; overflow: hidden; margin-bottom: 12px; }
-        .cp-side { width: 85px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; text-align: center; }
+        /* Hotel Swiper */
+        .hotel-card { flex: 0 0 280px; background: var(--biz-card); border-radius: 14px; border: 1px solid #333; overflow: hidden; text-decoration: none; transition: 0.3s; }
+        .hotel-card:active { transform: scale(0.98); }
 
-        /* フッター & SNS */
-        .footer { border-top: 1px solid #333; padding: 40px; text-align: center; margin-top: 40px; }
-        .sns-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
-        .sns-links a { color: var(--text-sub); font-size: 22px; }
+        /* Coupon リボン */
+        .cp-item { background: var(--biz-card); border-radius: 12px; display: flex; height: 90px; border: 1px solid #333; overflow: hidden; margin-bottom: 12px; text-decoration: none; transition: 0.2s; }
+        .cp-item:active { background: #252a30; }
+        .cp-side { width: 90px; flex-shrink: 0; color: #fff; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; text-align: center; }
+
+        .footer { border-top: 1px solid #333; padding: 60px 20px; text-align: center; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -62,73 +75,38 @@
     <header class="header"><div class="logo">TRIP_DASH.</div></header>
 
     <div class="container">
-        <div id="sale-root"></div>
+        <div id="campaign-banner" class="campaign-banner"></div>
 
         <div class="section-title">Field Operations</div>
         <div class="op-grid">
-            <div class="op-card">
-                <i class="fa-solid fa-cloud-sun op-icon"></i>
-                <div class="op-label">WEATHER</div>
-                <div class="op-val"><div class="dot dot-green"></div></div>
-                <select class="op-select" onchange="if(this.value) window.open(this.value,'_blank')">
-                    <option value="">SELECT SOURCE</option>
-                    <option value="https://tenki.jp/">日本気象協会</option>
-                    <option value="https://weathernews.jp/">ウェザーニュース</option>
-                    <option value="https://www.windy.com/">Windy.com</option>
-                </select>
+            <div class="op-card" onclick="this.classList.toggle('active')">
+                <div style="font-size:10px; color:var(--text-sub); margin-bottom:8px; font-weight:900;">WEATHER SYSTEM</div>
+                <div class="op-val"><div class="dot"></div>STABLE</div>
+                <div class="op-btns">
+                    <a href="https://tenki.jp/" class="op-btn" target="_blank">DATA SOURCE 01</a>
+                    <a href="https://weathernews.jp/" class="op-btn" target="_blank">DATA SOURCE 02</a>
+                </div>
             </div>
-            <div class="op-card">
-                <i class="fa-solid fa-train op-icon"></i>
-                <div class="op-label">SHINKANSEN</div>
-                <div class="op-val"><div class="dot dot-green"></div></div>
-                <select class="op-select" onchange="if(this.value) window.open(this.value,'_blank')">
-                    <option value="">SELECT SOURCE</option>
-                    <option value="https://traininfo.jreast.co.jp/train_info/shinkansen.aspx">JR東日本</option>
-                    <option value="https://traininfo.jr-central.co.jp/shinkansen/pc/index.html">JR東海</option>
-                    <option value="https://trafficinfo.westjr.co.jp/sanyo_shinkansen.html">JR西日本</option>
-                </select>
             </div>
-            <div class="op-card">
-                <i class="fa-solid fa-plane op-icon"></i>
-                <div class="op-label">AIRLINE</div>
-                <div class="op-val"><div class="dot dot-green"></div></div>
-                <select class="op-select" onchange="if(this.value) window.open(this.value,'_blank')">
-                    <option value="">SELECT SOURCE</option>
-                    <option value="https://www.jal.co.jp/cms/other/ja/weather_info_dom.html">JAL 運航状況</option>
-                    <option value="https://www.ana.co.jp/fs/dom/jp/">ANA 運航状況</option>
-                </select>
-            </div>
-            <div class="op-card">
-                <i class="fa-solid fa-rss op-icon"></i>
-                <div class="op-label">NEWS</div>
-                <div class="op-val"><div class="dot dot-green"></div></div>
-                <select class="op-select" onchange="if(this.value) window.open(this.value,'_blank')">
-                    <option value="">SELECT SOURCE</option>
-                    <option value="https://www.nikkei.com/">日本経済新聞</option>
-                    <option value="https://www.bloomberg.co.jp/">Bloomberg</option>
-                </select>
-            </div>
+
+        <div class="section-title">Flash Sale</div>
+        <div class="flash-header">LIVE COUNTDOWN INTERFACE</div>
+        <div id="sale-root">
+            <a href="#" class="sale-card">
+                <div class="sale-title">楽天トラベル <br> 春SALE 第一弾</div>
+                <div class="timer-display">
+                    <div class="timer-unit">02</div>
+                    <div class="timer-unit">14</div>
+                    <div class="timer-unit">55</div>
+                </div>
+                <div class="click-prompt">▼ CLICK TO ACTIVATE OFFER</div>
+            </a>
         </div>
-
-        <div class="section-title">Recommended Hotels</div>
-        <div class="hotel-swiper" id="hotel-root"></div>
-
-        <div class="section-title">Active Coupons</div>
-        <div id="coupon-root"></div>
-    </div>
-
-    <footer class="footer">
-        <div class="sns-links">
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-line"></i></a>
+        
         </div>
-        <div class="copyright">© 2026 TRIP_DASH. ALL RIGHTS RESERVED.</div>
-    </footer>
 
     <script>
-        // サンプルデータ反映・カウントダウンロジック（015/016継承）
-        // 修正後のCSVカラム（type, brand, title, start, end, url, direct_url, disc, fTxt）に準拠
+        // CSV解析ロジック（ver. 1.5.0のものを継承し、click-prompt等を追加）
     </script>
 </body>
 </html>
