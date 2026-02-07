@@ -56,7 +56,7 @@
             background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
         }
 
-        /* SALE BANNER */
+        /* SALE BANNER (ver.1.11 準拠) */
         #sale-banner {
             display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
             border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
@@ -71,11 +71,10 @@
             transform: rotate(30deg); animation: flash 3.5s infinite;
         }
         @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
-
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
-        /* CONTAINER & HUB */
+        /* CONTAINER & HUB (ver.1.11 復旧) */
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
@@ -91,7 +90,12 @@
         .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
 
-        /* PRIORITY SALES CARD (NEW) */
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
+        .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 6px var(--caution-yellow); }
+        .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
+
+        /* PRIORITY SALES CARD (最新デザイン) */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card {
             background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
@@ -99,19 +103,21 @@
             text-decoration: none; position: relative; overflow: hidden;
         }
         .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
-        .brand-info { display: flex; align-items: center; gap: 12px; }
         .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
         .brand-rakuten { background: #bf0000; }
         .brand-jalan { background: #f39c12; }
         .brand-ikyu { background: #8e774a; }
+        .sale-info-text { margin-left: 12px; flex-grow: 1; }
         .sale-name { font-size: 15px; font-weight: 700; color: #ffffff; }
         .sale-disc { font-size: 11px; color: #8e8e93; }
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
-        .active-sale .sale-badge { background: var(--gold); color: #000; }
+        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* MODAL (略) */
+        /* MODAL (復旧) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
+        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .choice-btn { padding: 14px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -137,7 +143,7 @@
         <a id="sale-banner" href="#">
             <div class="sale-content">
                 <i id="sale-icon-type" class="fa-solid fa-crown"></i>
-                <div class="sale-text" id="sale-banner-text">LOADING...</div>
+                <div class="sale-text" id="sale-banner-text">CHECKING SALES...</div>
                 <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
             </div>
         </a>
@@ -164,26 +170,20 @@
 
         <section id="sale">
             <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
-            <div class="sale-grid" id="priority-sale-grid">
+            <div class="sale-grid">
                 <a href="#" class="sale-card" id="card-rakuten">
-                    <div class="brand-info">
-                        <div class="brand-logo-circle brand-rakuten">R</div>
-                        <div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div>
-                    </div>
+                    <div class="brand-logo-circle brand-rakuten">R</div>
+                    <div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div>
                     <div class="sale-badge" id="badge-rakuten">CHECK</div>
                 </a>
                 <a href="#" class="sale-card" id="card-jalan">
-                    <div class="brand-info">
-                        <div class="brand-logo-circle brand-jalan">J</div>
-                        <div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div>
-                    </div>
+                    <div class="brand-logo-circle brand-jalan">J</div>
+                    <div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div>
                     <div class="sale-badge" id="badge-jalan">CHECK</div>
                 </a>
                 <a href="#" class="sale-card" id="card-ikyu">
-                    <div class="brand-info">
-                        <div class="brand-logo-circle brand-ikyu">一</div>
-                        <div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div>
-                    </div>
+                    <div class="brand-logo-circle brand-ikyu">一</div>
+                    <div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div>
                     <div class="sale-badge" id="badge-ikyu">CHECK</div>
                 </a>
             </div>
@@ -214,10 +214,7 @@
                 icon.classList.remove('spin');
                 btn.classList.add('success');
                 setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
-            } catch (e) { 
-                console.error(e);
-                icon.classList.remove('spin'); 
-            }
+            } catch (e) { icon.classList.remove('spin'); }
         }
 
         async function getIPWeather() {
@@ -228,9 +225,8 @@
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
                 const temp = Math.round(wData.current_weather.temperature);
-                const disp = document.getElementById('weather-display');
-                disp.innerHTML = `<div class="dot green"></div> ${temp}°C Current`;
-            } catch (e) { document.getElementById('weather-display').innerHTML = "12°C Cloudy"; }
+                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${temp}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> 12°C Cloudy`; }
         }
 
         function processCSVData(text) {
@@ -241,7 +237,6 @@
             const bannerS = document.getElementById('sale-banner');
             const header = document.getElementById('main-header');
             
-            // リセット
             bannerE.style.display = 'none';
             bannerS.style.display = 'none';
             header.style.top = '0';
@@ -249,18 +244,17 @@
             
             let saleTopFound = false;
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
+            
+            // リセット
             Object.values(brands).forEach(id => {
-                const card = document.getElementById(`card-${id}`);
-                card.classList.remove('active-sale');
+                document.getElementById(`card-${id}`).classList.remove('active-sale');
                 document.getElementById(`badge-${id}`).innerText = 'CHECK';
             });
 
             rows.forEach(line => {
-                // カンマまたはタブの両方に対応
                 const cols = line.includes('\t') ? line.split('\t') : line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const cleanCols = cols.map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cleanCols;
-
                 const sDate = new Date(start);
                 const eDate = new Date(end);
 
@@ -270,47 +264,70 @@
                     bannerE.style.display = 'block';
                     header.style.top = '30px';
                     document.body.style.paddingTop = '145px';
+                    document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
                 }
 
-                // SALE_TOP (最上部バナー)
-                if (type === 'SALE_TOP' || (type === 'SALE' && brand === '楽天トラベル' && !saleTopFound)) {
-                    if (now >= sDate && now <= eDate) {
-                        showTopBanner('today', title, url);
-                        saleTopFound = true;
-                    }
+                // SALE_TOP / SALE
+                if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
+                    showTopBanner('today', title, url);
+                    saleTopFound = true;
                 }
-
-                // SALE (カード強調)
-                if (type === 'SALE' && brands[brand]) {
-                    if (now >= sDate && now <= eDate) {
-                        const id = brands[brand];
-                        const card = document.getElementById(`card-${id}`);
-                        card.classList.add('active-sale');
-                        card.href = url;
-                        document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧を見る';
-                        document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
-                    }
+                if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
+                    const id = brands[brand];
+                    document.getElementById(`card-${id}`).classList.add('active-sale');
+                    document.getElementById(`card-${id}`).href = url;
+                    document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧を見る';
+                    document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                 }
             });
 
             // 楽天5と0の日
             if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
                 showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
-                document.getElementById('card-rakuten').classList.add('active-sale');
-                document.getElementById('badge-rakuten').innerText = 'P4倍';
+                activateCard('rakuten', 'P4倍');
+                saleTopFound = true;
+            }
+            // 一休の日 (当日9日 / 予告8日)
+            if (!saleTopFound && date === 9) {
+                showTopBanner('today', "一休.com｜本日は「一休の日」最大20%還元！", "https://www.ikyu.com/special/01/ikyunohi/");
+                activateCard('ikyu', 'MAX20%');
+                saleTopFound = true;
+            } else if (!saleTopFound && date === 8) {
+                showTopBanner('preview', "一休.com｜明日9日は「一休の日」事前エントリー受付中", "https://www.ikyu.com/special/01/ikyunohi/");
+                activateCard('ikyu', '明日開催');
+                saleTopFound = true;
             }
         }
 
         function showTopBanner(mode, title, url) {
             const bannerS = document.getElementById('sale-banner');
-            const bannerSText = document.getElementById('sale-banner-text');
+            document.getElementById('sale-banner-text').innerText = title;
             bannerS.style.display = 'block';
             bannerS.href = url;
             bannerS.className = mode === 'today' ? 'sale-today' : (mode === 'rakuten' ? 'sale-rakuten-day' : 'sale-preview');
-            bannerSText.innerText = title;
         }
 
-        function openModal(key) { /* 既存のMODAL_DATAロジック */ }
+        function activateCard(id, badgeText) {
+            const card = document.getElementById(`card-${id}`);
+            if (card) {
+                card.classList.add('active-sale');
+                document.getElementById(`badge-${id}`).innerText = badgeText;
+            }
+        }
+
+        function openModal(key) {
+            const data = {
+                transit: { t: "TRANSIT INFO", b: [ {n:"JR東日本", l:"#", c:"#28a745"}, {n:"東京メトロ", l:"#", c:"var(--blue)"} ] },
+                weather: { t: "WEATHER INFO", b: [ {n:"気象庁", l:"#", c:"var(--blue)"} ] },
+                highway: { t: "HIGHWAY INFO", b: [ {n:"ドラぷら", l:"#", c:"var(--blue)"} ] },
+                flight: { t: "FLIGHT INFO", b: [ {n:"JAL", l:"#", c:"#e74c3c"}, {n:"ANA", l:"#", c:"var(--blue)"} ] },
+                rain: { t: "RAIN RADAR", b: [ {n:"Yahoo! 天気", l:"#", c:"#e74c3c"} ] },
+                news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"#", c:"#e74c3c"} ] }
+            }[key];
+            document.getElementById('modal-title').innerText = data.t;
+            document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
+            document.getElementById('hub-modal').style.display = 'flex';
+        }
         function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
 
         forceReloadData();
