@@ -3,78 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TRIP_DASH. | INTELLIGENCE HUB</title>
+    <title>TRIP_DASH. | OFFICIAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
-            --bg-black: #0d0f11;
-            --card-gray: #1c2126;
-            --text-main: #ffffff;
-            --text-sub: #8e8e93;
-            --gold: #d4af37;
-            --alert-red: #e74c3c;
-            --success-green: #2ecc71;
-            --caution-yellow: #f1c40f;
-            --blue: #007aff;
-            --header-h: 110px; /* ロゴ + ナビの高さ */
+            --bg-black: #0d0f11; --card-gray: #1c2126;
+            --text-main: #ffffff; --text-sub: #8e8e93;
+            --gold: #d4af37; --alert-red: #e74c3c;
+            --success-green: #2ecc71; --caution-yellow: #f1c40f; --blue: #007aff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; } /* アンカー遷移をスムーズに */
-        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: 140px; }
 
-        /* HEADER & NAVIGATION */
+        /* EMERGENCY BANNER (最上部) */
+        #emergency-banner {
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--alert-red); color: #fff; padding: 10px;
+            font-size: 11px; font-weight: 900; text-align: center; z-index: 10000;
+            letter-spacing: 1px;
+        }
+
+        /* HEADER & NAV */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(13, 15, 17, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 9000;
-            border-bottom: 1px solid #2a2a2a;
+            background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
+            z-index: 9000; border-bottom: 1px solid #2a2a2a;
+            transition: top 0.3s;
         }
-        .header-top {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px 10px;
-        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px 10px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
         
-        /* 更新ボタン */
         .refresh-btn {
-            width: 36px; height: 36px; border-radius: 10px;
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--gold);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s;
+            width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
-        .refresh-btn:active { transform: scale(0.9); }
+        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
         .spin { animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ナビゲーションバー */
-        nav {
-            display: flex; gap: 20px; padding: 0 20px 15px;
-            overflow-x: auto; white-space: nowrap;
-            scrollbar-width: none; /* Firefox */
-        }
-        nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-        .nav-link {
-            font-size: 10px; font-weight: 900; color: var(--text-sub);
-            text-decoration: none; text-transform: uppercase;
-            letter-spacing: 1px; transition: 0.3s;
-        }
-        .nav-link:hover, .nav-link:active { color: var(--gold); }
+        nav { display: flex; gap: 20px; padding: 0 20px 15px; overflow-x: auto; }
+        .nav-link { font-size: 10px; font-weight: 900; color: var(--text-sub); text-decoration: none; text-transform: uppercase; }
 
-        /* CONTAINER */
+        /* HUB CONTENT */
         .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-        .section-header { display: flex; align-items: center; margin-bottom: 20px; padding-top: 20px; }
-        .section-title { font-size: 12px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
+        .section-header { display: flex; align-items: center; margin: 20px 0; }
+        .section-title { font-size: 12px; font-weight: 900; color: var(--gold); }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 15px; opacity: 0.5; }
 
-        /* INTELLIGENCE HUB (Field Operations) */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .hub-card { background: var(--card-gray); border-radius: 16px; padding: 20px; border: 1px solid #2a2a2a; cursor: pointer; min-height: 110px; }
         .hub-label { font-size: 11px; color: var(--text-sub); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .hub-val { font-size: 17px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+        .hub-val { font-size: 16px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
 
         .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .sub-card { background: var(--card-gray); border-radius: 14px; padding: 15px 5px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
@@ -86,7 +67,7 @@
         .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 8px var(--caution-yellow); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 8px var(--alert-red); }
 
-        /* MODAL (略 - 以前の定義と同一) */
+        /* MODAL (以前の定義を維持) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 24px; border: 1px solid var(--gold); padding: 30px 20px; }
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -95,11 +76,13 @@
 </head>
 <body>
 
-    <header>
+    <div id="emergency-banner"></div>
+
+    <header id="main-header">
         <div class="header-top">
             <div class="logo">TRIP_DASH.</div>
             <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
-                <i class="fa-solid fa-arrows-rotate"></i>
+                <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
             </div>
         </div>
         <nav>
@@ -125,7 +108,7 @@
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
                     <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Tokyo</span></div>
-                    <div class="hub-val" id="weather-display">--°C Loading</div>
+                    <div class="hub-val" id="weather-display">--°C</div>
                 </div>
             </div>
 
@@ -148,11 +131,6 @@
                 </div>
             </div>
         </section>
-
-        <section id="sale" style="height: 500px;"></section>
-        <section id="area" style="height: 500px;"></section>
-        <section id="coupon" style="height: 500px;"></section>
-        <section id="tips" style="height: 500px;"></section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
@@ -175,21 +153,25 @@
             news: { t: "LATEST NEWS", b: [ {n:"Yahoo! ニュース", l:"https://news.yahoo.co.jp/", c:"#e74c3c"}, {n:"NHK ニュース", l:"https://www3.nhk.or.jp/news/", c:"var(--blue)"}, {n:"日経新聞", l:"https://www.nikkei.com/", c:"#2c3e50"} ] }
         };
 
-        // キャッシュを回避してCSVを強制リロード
         async function forceReloadData() {
-            const btn = document.getElementById('refresh-btn').firstElementChild;
-            btn.classList.add('spin');
+            const btn = document.getElementById('refresh-btn');
+            const icon = document.getElementById('refresh-icon');
+            icon.classList.add('spin');
             
-            const cacheBuster = `&t=${new Date().getTime()}`;
             try {
-                const res = await fetch(CSV_BASE_URL + cacheBuster);
+                const res = await fetch(CSV_BASE_URL + `&t=${new Date().getTime()}`);
                 const text = await res.text();
                 processCSVData(text);
                 await getIPWeather();
-                setTimeout(() => btn.classList.remove('spin'), 600);
-            } catch (e) {
-                btn.classList.remove('spin');
-            }
+                
+                icon.classList.remove('spin');
+                icon.className = "fa-solid fa-check";
+                btn.classList.add('success');
+                setTimeout(() => {
+                    icon.className = "fa-solid fa-arrows-rotate";
+                    btn.classList.remove('success');
+                }, 2000);
+            } catch (e) { icon.classList.remove('spin'); }
         }
 
         async function getIPWeather() {
@@ -199,29 +181,45 @@
                 document.getElementById('location-name').innerText = ipData.city || "Tokyo";
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
-                document.getElementById('weather-display').innerHTML = `${Math.round(wData.current_weather.temperature)}°C Current`;
-            } catch (e) {
-                document.getElementById('weather-display').innerHTML = "12°C Cloudy";
-            }
+                const temp = Math.round(wData.current_weather.temperature);
+                const disp = document.getElementById('weather-display');
+                const hasCaution = disp.innerHTML.includes('dot yellow') || disp.innerHTML.includes('dot red');
+                disp.innerHTML = (hasCaution ? disp.querySelector('.dot').outerHTML : '') + ` ${temp}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = "12°C Cloudy"; }
         }
 
         function processCSVData(text) {
-            const rows = text.split('\n').slice(1);
-            const weatherKw = ["雨", "雪", "台風", "荒天"];
-            // 初期化
+            const rows = text.split('\n').slice(1).filter(r => r.trim());
+            const banner = document.getElementById('emergency-banner');
+            const header = document.getElementById('main-header');
+            
+            // 初期状態リセット
+            banner.style.display = 'none';
+            header.style.top = '0';
+            document.body.style.paddingTop = '110px';
             document.getElementById('transit-display').innerHTML = `<div class="dot green"></div> 正常運行`;
             document.getElementById('icon-highway').style.color = "var(--gold)";
             document.getElementById('icon-flight').style.color = "var(--gold)";
 
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                if (cols[0] === 'EMERGENCY') {
-                    if (cols[1].includes("🔴") || cols[1].includes("停止")) document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${cols[2]}`;
-                    if (cols[1].includes("高速🔴")) document.getElementById('icon-highway').style.color = "var(--alert-red)";
-                    if (cols[1].includes("航空🔴")) document.getElementById('icon-flight').style.color = "var(--alert-red)";
-                    if (weatherKw.some(kw => cols[2].includes(kw))) {
-                        const disp = document.getElementById('weather-display');
-                        if(!disp.innerHTML.includes('yellow')) disp.innerHTML = `<div class="dot yellow"></div> ` + disp.innerHTML;
+                const [type, brand, title] = cols;
+
+                if (type === 'EMERGENCY') {
+                    // EMERGENCY発動：バナー表示
+                    banner.innerText = `【！】 ${title}`;
+                    banner.style.display = 'block';
+                    header.style.top = '35px'; // バナーの高さ分ヘッダーを下げる
+                    document.body.style.paddingTop = '145px';
+
+                    // 強制🔴/🟡転換
+                    document.getElementById('transit-display').innerHTML = `<div class="dot red"></div> ${title}`;
+                    document.getElementById('icon-highway').style.color = "var(--alert-red)";
+                    document.getElementById('icon-flight').style.color = "var(--alert-red)";
+                    
+                    const wDisp = document.getElementById('weather-display');
+                    if(!wDisp.innerHTML.includes('dot')) {
+                        wDisp.innerHTML = `<div class="dot yellow"></div>` + wDisp.innerHTML;
                     }
                 }
             });
@@ -235,8 +233,6 @@
         }
         function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
 
-        // 初期実行
-        getIPWeather();
         forceReloadData();
     </script>
 </body>
