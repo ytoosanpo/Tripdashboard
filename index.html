@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRIP_DASH. | ビジネス・インテリジェンス</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
             --biz-bg: #0d0f11; --biz-card: #161a1d; --biz-blue: #007aff;
@@ -14,19 +14,29 @@
         * { box-sizing: border-box; scroll-behavior: smooth; }
         body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-bottom: 0; overflow-x: hidden; }
         
-        /* HEADER & NAV */
+        /* HEADER */
         .biz-header { position: fixed; top: 0; width: 100%; height: var(--header-h); background: rgba(13,15,17,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #333; z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
         .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 2px; }
+        .biz-date { font-size: 11px; font-weight: 800; color: var(--text-sub); font-family: monospace; }
         
+        /* NAV BAR */
         .nav-bar { background: #161a1d; border-bottom: 1px solid #333; padding: 12px 0; display: flex; justify-content: center; gap: 20px; position: sticky; top: var(--header-h); z-index: 1000; }
         .nav-link { color: var(--text-sub); text-decoration: none; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
         .nav-link:hover { color: var(--accent-gold); }
 
-        .container { width: 100%; max-width: 1000px; margin: 20px auto 0; padding: 0 12px; min-height: 80vh; }
+        .container { width: 100%; max-width: 1000px; margin: 20px auto 0; padding: 0 12px; min-height: 70vh; }
 
+        /* BANNER */
         #day-alert-banner { display: none; background: linear-gradient(90deg, #d4af37, #b8860b); color: #000; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; margin-bottom: 15px; border-radius: 4px; }
 
         .section-title { padding: 40px 0 10px; font-size: 11px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* QUICK ACCESS */
+        .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .quick-item { background: #1c1f23; border: 1px solid #333; border-radius: 6px; padding: 12px; text-align: center; text-decoration: none; color: #fff; transition: 0.2s; }
+        .quick-item:hover { border-color: var(--accent-gold); background: #252a2e; }
+        .quick-item i { display: block; font-size: 18px; color: var(--accent-gold); margin-bottom: 6px; }
+        .quick-item span { font-size: 9px; font-weight: 800; text-transform: uppercase; }
 
         /* SALE (Flash) */
         .limited-sale-card { background: linear-gradient(135deg, #1e1b10 0%, #161a1d 100%); border: 1px solid var(--accent-gold); border-radius: 8px; text-decoration: none; color: inherit; display: flex; overflow: hidden; margin-bottom: 12px; position: relative; min-height: 85px; }
@@ -57,7 +67,7 @@
         .coupon-stub { flex: 3.5; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5px; color: #fff; }
         .stub-code { font-size: 9px; font-weight: 900; font-family: monospace; background: rgba(0,0,0,0.2); padding: 4px 6px; border-radius: 3px; border: 1px dashed rgba(255,255,255,0.4); }
 
-        /* TIPS カードUI */
+        /* TIPS UI */
         .tips-card-modern { background: #1c1f23; border-radius: 10px; padding: 20px; border: 1px solid #333; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; position: relative; }
         .tips-card-modern:hover { border-color: var(--accent-gold); transform: translateY(-2px); }
         .tips-card-modern::after { content: "\f105"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 20px; color: var(--accent-gold); font-size: 18px; }
@@ -78,14 +88,14 @@
 
 <header class="biz-header">
     <a href="#" class="biz-logo">TRIP_DASH.</a>
-    <div id="header-date" style="font-size: 11px; font-weight: 800; color: var(--text-sub); font-family: monospace;">---.--.-- ---</div>
+    <div id="header-date" class="biz-date">---.--.-- ---</div>
 </header>
 
 <div class="nav-bar">
     <a href="#sale-section" class="nav-link">Sale</a>
-    <a href="#hotel-grid-root" class="nav-link">Hotel</a>
+    <a href="#hotel-section" class="nav-link">Hotel</a>
     <a href="#coupon-section" class="nav-link">Coupon</a>
-    <a href="#tips-area" class="nav-link">Tips</a>
+    <a href="#tips-section" class="nav-link">Intelligence</a>
 </div>
 
 <div class="container">
@@ -102,20 +112,25 @@
 
     <section id="tips-section">
         <div class="section-title">Business Intelligence</div>
+        <div class="quick-grid">
+            <a href="https://weather.yahoo.co.jp/weather/" target="_blank" class="quick-item"><i class="fa-solid fa-cloud-sun"></i><span>Weather</span></a>
+            <a href="https://transit.yahoo.co.jp/traininfo/top" target="_blank" class="quick-item"><i class="fa-solid fa-train"></i><span>Transit</span></a>
+            <a href="https://news.yahoo.co.jp/categories/business" target="_blank" class="quick-item"><i class="fa-solid fa-newspaper"></i><span>News</span></a>
+        </div>
         <div id="tips-area" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 40px;"></div>
     </section>
 </div>
 
 <footer>
     <div class="footer-sns">
-        <a href="https://www.instagram.com/hazusanai_mens" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://x.com/tokutabi_pro" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://www.instagram.com/hazusanai_mens" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://x.com/tokutabi_pro" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
     </div>
     <div class="footer-nav" style="margin-bottom: 20px;">
         <a href="#sale-section" class="nav-link" style="margin: 0 10px;">Sale</a>
         <a href="#hotel-section" class="nav-link" style="margin: 0 10px;">Hotel</a>
         <a href="#coupon-section" class="nav-link" style="margin: 0 10px;">Coupon</a>
-        <a href="#tips-section" class="nav-link" style="margin: 0 10px;">Tips</a>
+        <a href="#tips-section" class="nav-link" style="margin: 0 10px;">Intelligence</a>
     </div>
     <p class="footer-copy">&copy; 2026 TRIP_DASH. All Rights Reserved.</p>
 </footer>
