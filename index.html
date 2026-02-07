@@ -74,12 +74,13 @@
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
-        /* HUB & STATUS */
+        /* CONTAINER & SECTIONS */
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
         
+        /* HUB GRID */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
@@ -92,10 +93,9 @@
 
         .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
-        .dot.yellow { background: var(--caution-yellow); box-shadow: 0 0 6px var(--caution-yellow); }
         .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
-        /* SALE CARDS */
+        /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card {
             background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
@@ -113,7 +113,22 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* MODAL (ver.1.11 ALL LINKS) */
+        /* AREA CARDS (Updated with your formatting) */
+        .area-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .area-card { background: var(--card-gray); border-radius: 20px; border: 1px solid #2a2a2a; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+        .area-name-main { font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+        .area-keyword { font-size: 10px; color: var(--text-sub); font-weight: 700; }
+        .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .area-btn { 
+            background: #0d0f11; border: 1px solid #3a3a3a; color: #fff; text-decoration: none;
+            padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center;
+            transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+        .area-btn:active { background: #1c1c1e; transform: scale(0.98); }
+        .area-btn i { font-size: 12px; }
+
+        /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
@@ -135,7 +150,6 @@
             <a href="#field-ops" class="nav-link">Hub</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#area" class="nav-link">Area</a>
-            <a href="#coupon" class="nav-link">Coupon</a>
         </nav>
     </header>
 
@@ -188,6 +202,97 @@
                 </a>
             </div>
         </section>
+
+        <section id="area">
+            <div class="section-header"><div class="section-title">AREA EXPLORER</div><div class="section-line"></div></div>
+            <div class="area-grid">
+                
+                <div class="area-card">
+                    <div class="area-header">
+                        <div class="area-name-main">TOKYO / 東京</div>
+                        <div class="area-keyword">駅名：東京駅</div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn" style="border-top: 2px solid var(--rakuten-red)">
+                            <i class="fa-solid fa-r"></i>楽天
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn" style="border-top: 2px solid #f39c12">
+                            <i class="fa-solid fa-j"></i>じゃらん
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn" style="border-top: 2px solid #8e774a">
+                            <i class="fa-solid fa-1"></i>一休
+                        </a>
+                    </div>
+                </div>
+
+                <div class="area-card">
+                    <div class="area-header">
+                        <div class="area-name-main">OSAKA / 梅田</div>
+                        <div class="area-keyword">駅名：大阪 梅田</div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn" style="border-top: 2px solid var(--rakuten-red)">
+                            <i class="fa-solid fa-r"></i>楽天
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn" style="border-top: 2px solid #f39c12">
+                            <i class="fa-solid fa-j"></i>じゃらん
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn" style="border-top: 2px solid #8e774a">
+                            <i class="fa-solid fa-1"></i>一休
+                        </a>
+                    </div>
+                </div>
+
+                <div class="area-card">
+                    <div class="area-header">
+                        <div class="area-name-main">SHIZUOKA / 名古屋</div>
+                        <div class="area-keyword">駅名：名古屋駅</div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn" style="border-top: 2px solid var(--rakuten-red)">
+                            <i class="fa-solid fa-r"></i>楽天
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn" style="border-top: 2px solid #f39c12">
+                            <i class="fa-solid fa-j"></i>じゃらん
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn" style="border-top: 2px solid #8e774a">
+                            <i class="fa-solid fa-1"></i>一休
+                        </a>
+                    </div>
+                </div>
+
+                <div class="area-card">
+                    <div class="area-header">
+                        <div class="area-name-main">FUKUOKA / 博多</div>
+                        <div class="area-keyword">駅名：博多駅</div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn" style="border-top: 2px solid var(--rakuten-red)">
+                            <i class="fa-solid fa-r"></i>楽天
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do" target="_blank" class="area-btn" style="border-top: 2px solid #f39c12">
+                            <i class="fa-solid fa-j"></i>じゃらん
+                        </a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn" style="border-top: 2px solid #8e774a">
+                            <i class="fa-solid fa-1"></i>一休
+                        </a>
+                    </div>
+                </div>
+
+                <div class="area-card" style="border-color: var(--gold);">
+                    <div class="area-header">
+                        <div class="area-name-main" style="color:var(--gold)">OTHER AREAS</div>
+                        <div class="area-keyword">全エリアから探す</div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn">楽天</a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn">じゃらん</a>
+                        <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F%3Fadc%3D1%26are%3D35090111%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn">一休</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
@@ -199,9 +304,9 @@
     </div>
 
     <script>
+        // JSロジックはver.1.18（セール自動判定含む）を完全継承
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
-        // ver.1.11の定義を1つも漏らさず完全復旧
         const MODAL_DATA = {
             transit: {
                 t: "RAILWAY STATUS",
@@ -337,7 +442,6 @@
                 }
             });
 
-            // 5と0の日・一休の日判定
             if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
                 showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
                 activateCard('rakuten', 'P4倍');
@@ -356,10 +460,20 @@
 
         function showTopBanner(mode, title, url) {
             const bannerS = document.getElementById('sale-banner');
+            const iconE = document.getElementById('sale-icon-type');
             document.getElementById('sale-banner-text').innerText = title;
             bannerS.style.display = 'block';
             bannerS.href = url;
-            bannerS.className = mode === 'today' ? 'sale-today' : (mode === 'rakuten' ? 'sale-rakuten-day' : 'sale-preview');
+            if (mode === 'today') {
+                bannerS.className = 'sale-today';
+                iconE.className = 'fa-solid fa-crown';
+            } else if (mode === 'rakuten') {
+                bannerS.className = 'sale-rakuten-day';
+                iconE.className = 'fa-solid fa-tags';
+            } else {
+                bannerS.className = 'sale-preview';
+                iconE.className = 'fa-solid fa-calendar-check';
+            }
         }
 
         function activateCard(id, badgeText) {
