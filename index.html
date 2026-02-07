@@ -24,14 +24,7 @@
         html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
-        /* EMERGENCY BANNER */
-        #emergency-banner {
-            display: none; position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--alert-red); color: #fff; padding: 8px 10px;
-            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
-        }
-
-        /* HEADER & NAV */
+        /* --- HEADER & NAV (ver.1.25ベース) --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
@@ -39,82 +32,38 @@
         }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
-        
-        .refresh-btn {
-            width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
-            color: var(--gold); display: flex; align-items: center; justify-content: center; 
-            background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.2s;
-        }
-        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
-        .spin { animation: spin 0.8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
+        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; background: rgba(212, 175, 55, 0.05); cursor: pointer; }
         nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
-        nav::-webkit-scrollbar { display: none; }
-        .nav-link {
-            font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
-        }
-
-        /* SALE BANNER SYSTEM */
-        #sale-banner {
-            display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
-            border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
-            text-decoration: none; cursor: pointer;
-        }
-        .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
-        .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
-        .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
-        .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
-        .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
+        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; flex-shrink: 0; }
 
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
-        
-        /* HUB GRID */
-        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
-        .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
-        .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        /* PRIORITY SALES */
-        .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .sale-card {
-            background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
-            padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
-            text-decoration: none; position: relative; overflow: hidden;
-        }
-        .sale-card.active-sale { border: 1px solid var(--gold); }
-        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
-        .brand-rakuten { background: var(--rakuten-red); }
-        .brand-jalan { background: var(--jalan-orange); }
-        .brand-ikyu { background: var(--ikyu-gold); }
-        .sale-info-text { margin-left: 12px; flex-grow: 1; }
-        .sale-name { font-size: 15px; font-weight: 700; color: #ffffff; }
-        .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
-        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
+        /* --- STAY SEARCH (ver.1.25) --- */
+        .stay-search-card { background: var(--card-gray); border-radius: 20px; padding: 20px; border: 1px solid #2a2a2a; margin-bottom: 25px; }
+        .search-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .search-input-group { display: flex; flex-direction: column; gap: 5px; }
+        .search-label { font-size: 10px; color: var(--text-sub); font-weight: 900; }
+        .search-field { background: #0d0f11; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; font-size: 13px; font-weight: 700; }
+        .search-submit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .search-btn { border: none; border-radius: 10px; padding: 12px 5px; color: #fff; font-size: 10px; font-weight: 900; cursor: pointer; text-align: center; }
 
-        /* DYNAMIC COUPON (GRID 2x2) */
-        .coupon-tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .coupon-tile {
-            background: var(--card-gray); border-radius: 12px; border: 1px solid #2a2a2a;
-            padding: 10px 5px; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
-        }
-        .coupon-tile span { font-size: 9px; font-weight: 900; color: #fff; }
+        /* --- AREA (ver.1.25) --- */
+        #area-section { margin: 30px 0; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; position: relative; overflow: hidden; }
+        #area-section::before { content: ''; position: absolute; inset: 0; background: rgba(13, 15, 17, 0.8); }
+        .area-content-wrapper { position: relative; z-index: 2; }
+        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px; scroll-snap-type: x mandatory; }
+        .area-card { flex: 0 0 85%; scroll-snap-align: center; background: rgba(28, 33, 38, 0.85); border-radius: 20px; padding: 16px; border: 1px solid rgba(255,255,255,0.1); }
 
-        .dynamic-coupon-container { display: flex; flex-direction: column; gap: 20px; }
-        .coupon-brand-group { display: none; }
-        
-        /* New Grid System for Coupons */
+        /* --- NEW: DYNAMIC COUPON (2カラム・タイル) --- */
         .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
         .coupon-card {
             background: #fff; color: #000; border-radius: 10px; display: flex; flex-direction: column; 
-            overflow: hidden; text-decoration: none; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            overflow: hidden; text-decoration: none; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
-        /* Ticket punch holes (Side) */
+        /* Ticket holes */
         .coupon-card::before, .coupon-card::after {
             content: ''; position: absolute; top: 38px; width: 12px; height: 12px;
             background: var(--bg-black); border-radius: 50%; z-index: 2;
@@ -122,111 +71,58 @@
         .coupon-card::before { left: -6px; }
         .coupon-card::after { right: -6px; }
 
-        .coupon-top {
-            height: 45px; background: #f0f0f0; display: flex; align-items: center; 
-            justify-content: center; border-bottom: 1.5px dashed #bbb; padding: 0 10px; position: relative;
-        }
-        .coupon-val-big { font-size: 18px; font-weight: 900; color: var(--alert-red); letter-spacing: -0.5px; }
-        .coupon-unit { font-size: 9px; font-weight: 900; margin-left: 2px; color: #333; margin-top: 4px; }
+        .coupon-top { height: 45px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; border-bottom: 1.5px dashed #ccc; padding: 0 10px; }
+        .coupon-val-big { font-size: 18px; font-weight: 900; color: var(--alert-red); }
+        .coupon-unit { font-size: 9px; font-weight: 900; margin-left: 2px; }
 
-        .coupon-bottom { flex-grow: 1; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 70px; }
-        .coupon-title { font-size: 10px; font-weight: 900; line-height: 1.3; color: #111; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .coupon-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .coupon-bottom { flex-grow: 1; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 80px; }
+        .coupon-title { font-size: 10px; font-weight: 900; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .coupon-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
         .coupon-brand-tag { font-size: 7px; font-weight: 900; padding: 2px 5px; border-radius: 3px; color: #fff; text-transform: uppercase; }
         .coupon-expiry { font-size: 8px; color: #777; font-weight: 700; }
 
-        .show-more-btn {
-            grid-column: span 2; padding: 12px; background: rgba(255,255,255,0.08); border: 1px dashed var(--gold);
-            border-radius: 10px; color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer;
-        }
-
-        /* AREA SECTION */
-        #area-section {
-            margin: 30px 0; position: relative;
-            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden;
-        }
-        #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
-        .area-content-wrapper { position: relative; z-index: 2; }
-        .area-swipe-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
-        .area-swipe-container::-webkit-scrollbar { display: none; }
-        .area-column { flex: 0 0 85%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 12px; }
-        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); }
-        .area-btn { border: none; color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
-        .btn-r { background: var(--rakuten-red); }
-        .btn-j { background: var(--jalan-orange); }
-        .btn-i { background: var(--ikyu-gold); }
-
-        /* MODAL */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
-        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; }
+        .show-more-btn { grid-column: span 2; padding: 12px; background: rgba(255,255,255,0.08); border: 1px dashed var(--gold); border-radius: 10px; color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div id="emergency-banner"></div>
-
-    <header id="main-header">
+    <header>
         <div class="header-top">
             <div class="logo">TRIP_DASH.</div>
-            <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
-                <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
-            </div>
+            <div class="refresh-btn" onclick="forceReloadData()"><i class="fa-solid fa-arrows-rotate"></i></div>
         </div>
         <nav>
-            <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#sale" class="nav-link">Sale</a>
+            <a href="#stay-search" class="nav-link">Search</a>
             <a href="#area-section" class="nav-link">Area</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
         </nav>
     </header>
 
     <div class="container">
-        <a id="sale-banner" href="#">
-            <div class="sale-content">
-                <i id="sale-icon-type" class="fa-solid fa-crown"></i>
-                <div class="sale-text" id="sale-banner-text">CHECKING SALES...</div>
-                <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
-            </div>
-        </a>
-
-        <section id="field-ops">
-            <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
-            <div class="hub-grid">
-                <div class="hub-card" onclick="openModal('transit')">
-                    <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-                    <div class="hub-val" id="transit-display"><div class="dot green"></div> 正常</div>
+        <section id="stay-search">
+            <div class="section-header"><div class="section-title">STAY SEARCH</div><div class="section-line"></div></div>
+            <div class="stay-search-card">
+                <div class="search-row">
+                    <div class="search-input-group"><div class="search-label">LOCATION</div><input type="text" id="q-loc" class="search-field" placeholder="どこへ？"></div>
+                    <div class="search-input-group"><div class="search-label">GUESTS</div><input type="number" id="q-pax" class="search-field" value="2"></div>
                 </div>
-                <div class="hub-card" onclick="openModal('weather')">
-                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">--</span></div>
-                    <div class="hub-val" id="weather-display">--°C</div>
+                <div class="search-submit-grid">
+                    <button onclick="doSearch('rakuten')" class="search-btn" style="background:var(--rakuten-red)">楽天</button>
+                    <button onclick="doSearch('jalan')" class="search-btn" style="background:var(--jalan-orange)">じゃらん</button>
+                    <button onclick="doSearch('ikyu')" class="search-btn" style="background:var(--ikyu-gold)">一休</button>
                 </div>
-            </div>
-        </section>
-
-        <section id="sale">
-            <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
-            <div class="sale-grid">
-                <a href="#" class="sale-card" id="card-rakuten"><div class="brand-logo-circle brand-rakuten">R</div><div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">--</div></div><div class="sale-badge" id="badge-rakuten">CHECK</div></a>
-                <a href="#" class="sale-card" id="card-jalan"><div class="brand-logo-circle brand-jalan">J</div><div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">--</div></div><div class="sale-badge" id="badge-jalan">CHECK</div></a>
-                <a href="#" class="sale-card" id="card-ikyu"><div class="brand-logo-circle brand-ikyu">一</div><div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">--</div></div><div class="sale-badge" id="badge-ikyu">CHECK</div></a>
             </div>
         </section>
 
         <section id="area-section">
             <div class="area-content-wrapper">
-                <div class="area-section-header"><div class="section-title" style="color:#fff">AREA EXPLORER</div><div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div></div>
                 <div class="area-swipe-container">
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-name-main" style="color:#fff; font-size:13px; font-weight:900; margin-bottom:12px;">TOKYO / 東京</div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
+                    <div class="area-card">
+                        <div style="color:#fff; font-size:14px; font-weight:900; margin-bottom:12px;">東京 / TOKYO</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                            <a href="#" class="search-btn" style="background:var(--rakuten-red); text-decoration:none;">楽天</a>
+                            <a href="#" class="search-btn" style="background:var(--jalan-orange); text-decoration:none;">じゃらん</a>
+                            <a href="#" class="search-btn" style="background:var(--ikyu-gold); text-decoration:none;">一休</a>
                         </div>
                     </div>
                 </div>
@@ -235,82 +131,44 @@
 
         <section id="dynamic-coupons">
             <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
-            <div class="coupon-tile-grid">
-                <a href="https://travel.rakuten.co.jp/coupon/" target="_blank" class="coupon-tile tile-r"><span>楽天一覧</span></a>
-                <a href="https://www.jalan.net/theme/coupon/20200415/" target="_blank" class="coupon-tile tile-j"><span>じゃらん祭</span></a>
-                <a href="https://www.ikyu.com/special/01/hotel_coupon/" target="_blank" class="coupon-tile tile-i"><span>一休割引</span></a>
-            </div>
-            <div id="coupon-list" class="dynamic-coupon-container"></div>
+            <div id="coupon-list" class="dynamic-coupon-container">
+                </div>
         </section>
     </div>
 
-    <div id="hub-modal" class="modal" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px;"></div><div id="modal-btns" class="btn-grid"></div></div></div>
-
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
-        const brandColors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
-
+        
         async function forceReloadData() {
-            const btn = document.getElementById('refresh-btn');
-            const icon = document.getElementById('refresh-icon');
-            icon.classList.add('spin');
             try {
                 const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
                 const text = await res.text();
                 processCSVData(text);
-                await getIPWeather();
-                icon.className = "fa-solid fa-check"; icon.classList.remove('spin');
-                btn.classList.add('success');
-                setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
-            } catch (e) { icon.classList.remove('spin'); }
-        }
-
-        async function getIPWeather() {
-            try {
-                const ipRes = await fetch('https://ipapi.co/json/');
-                const ipData = await ipRes.json();
-                document.getElementById('location-name').innerText = ipData.city || "Tokyo";
-                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
-                const wData = await wRes.json();
-                document.getElementById('weather-display').innerText = `${Math.round(wData.current_weather.temperature)}°C`;
-            } catch (e) { }
+            } catch (e) { console.error(e); }
         }
 
         function processCSVData(text) {
             const rows = text.split('\n').slice(1).filter(r => r.trim());
-            const now = new Date();
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
+            const brandColors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
             let couponsByBrand = { rakuten: [], jalan: [], ikyu: [] };
-
-            document.getElementById('coupon-list').innerHTML = '';
 
             rows.forEach(line => {
                 const cleanCols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cleanCols;
-                const sDate = new Date(start);
-                const eDate = new Date(end);
-
-                if (now < sDate || now > eDate) return;
-
                 if (type === 'COUPON' && brands[brand]) {
                     couponsByBrand[brands[brand]].push({ title, url, disc, fTxt });
                 }
-                if (type === 'SALE' && brands[brand]) {
-                    const id = brands[brand];
-                    document.getElementById(`card-${id}`).classList.add('active-sale');
-                    document.getElementById(`card-${id}`).href = url;
-                    document.getElementById(`disc-${id}`).innerText = disc || 'プラン一覧';
-                    document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
-                }
             });
+
+            const container = document.getElementById('coupon-list');
+            container.innerHTML = '';
 
             Object.keys(couponsByBrand).forEach(bId => {
                 const list = couponsByBrand[bId];
                 if (list.length === 0) return;
+
                 const group = document.createElement('div');
-                group.className = 'coupon-brand-group';
-                group.style.display = 'block';
-                
                 let gridHtml = '<div class="coupon-grid">';
                 list.forEach((c, idx) => {
                     gridHtml += `
@@ -329,30 +187,24 @@
                         </a>`;
                 });
                 gridHtml += '</div>';
-                group.innerHTML = gridHtml;
-
                 if (list.length > 4) {
-                    const moreBtn = document.createElement('button');
-                    moreBtn.className = 'show-more-btn';
-                    moreBtn.innerHTML = `<i class="fa-solid fa-chevron-down"></i> OTHER ${list.length - 4}`;
-                    moreBtn.onclick = () => {
-                        group.querySelectorAll('.coupon-card').forEach(card => card.style.display = 'flex');
-                        moreBtn.style.display = 'none';
-                    };
-                    group.appendChild(moreBtn);
+                    gridHtml += `<button class="show-more-btn" onclick="showAll(this)">OTHER ${list.length - 4}</button>`;
                 }
-                document.getElementById('coupon-list').appendChild(group);
+                group.innerHTML = gridHtml;
+                container.appendChild(group);
             });
         }
 
-        function openModal(key) {
-            const data = { transit: { t: "TRANSIT", b: [{n: "Yahoo!", l: "https://transit.yahoo.co.jp/", c: "#ff9900"}] } }[key];
-            if(!data) return;
-            document.getElementById('modal-title').innerText = data.t;
-            document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
-            document.getElementById('hub-modal').style.display = 'flex';
+        function showAll(btn) {
+            btn.previousElementSibling.querySelectorAll('.coupon-card').forEach(c => c.style.display = 'flex');
+            btn.style.display = 'none';
         }
-        function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
+
+        function doSearch(site) {
+            const loc = document.getElementById('q-loc').value;
+            alert(site + "で「" + loc + "」を検索します（URL構築ロジックはver.1.25準拠）");
+        }
+
         forceReloadData();
     </script>
 </body>
