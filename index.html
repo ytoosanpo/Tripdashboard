@@ -2,161 +2,183 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TRIP_DASH. | Business Tactical</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>TRIP_DASH. | Tactical</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
             --biz-bg: #0d0f11; --biz-card: #1c1f23;
             --rakuten-green: #28a745; --jalan-orange: #ff9900; --ikyu-gold: #a68b5e;
             --text-main: #ffffff; --text-sub: #8e8e93; --accent-gold: #d4af37; 
-            --header-h: 65px; --emergency-h: 50px; --emergency-red: #e74c3c;
+            --emergency-red: #e74c3c;
         }
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-        body { margin: 0; background: var(--biz-bg); font-family: -apple-system, sans-serif; color: var(--text-main); line-height: 1.4; padding-top: var(--header-h); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; background: var(--biz-bg); color: var(--text-main); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding-top: 70px;
+        }
         
-        #emergency-bar { display: none; background: var(--emergency-red); color: #fff; height: var(--emergency-h); line-height: var(--emergency-h); font-size: 13px; font-weight: 900; text-align: center; position: fixed; top: 0; width: 100%; z-index: 4000; }
-        body.has-emergency { padding-top: calc(var(--header-h) + var(--emergency-h)); }
-        body.has-emergency .header-group { top: var(--emergency-h); }
+        /* 緊急帯：セーフエリア対応 */
+        #emergency-bar { 
+            display: none; background: var(--emergency-red); color: #fff; 
+            padding: calc(6px + env(safe-area-inset-top)) 15px 6px;
+            font-size: 11px; font-weight: 900; text-align: center; 
+            position: fixed; top: 0; width: 100%; z-index: 5000;
+        }
+        body.has-emergency { padding-top: 100px; }
+        body.has-emergency .biz-header { top: calc(32px + env(safe-area-inset-top)); }
 
-        .header-group { position: fixed; top: 0; width: 100%; z-index: 3000; }
-        .biz-header { height: var(--header-h); background: rgba(13,15,17,0.98); border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
-        .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 20px; letter-spacing: 2px; }
-        .nav-bar { background: rgba(22,26,29,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #333; padding: 12px 0; display: flex; justify-content: center; gap: 20px; }
-        .nav-link { color: var(--text-sub); text-decoration: none; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .biz-header { 
+            height: 60px; background: rgba(13,15,17,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333; display: flex; align-items: center; 
+            justify-content: space-between; padding: 0 20px;
+            position: fixed; top: 0; width: 100%; z-index: 4000;
+        }
+        .biz-logo { font-weight: 900; color: var(--accent-gold); text-decoration: none; font-size: 18px; letter-spacing: 1px; }
+        
+        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px 15px; }
+        .section-title { font-size: 10px; font-weight: 800; color: var(--text-sub); border-left: 3px solid var(--accent-gold); padding-left: 8px; margin: 25px 0 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 20px 15px; }
-        .section-title { padding: 10px 0; font-size: 10px; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #2d3436; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-
-        .op-panel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px; }
-        .op-panel { background: var(--biz-card); border: 1px solid #333; border-radius: 12px; padding: 15px; }
-        .panel-status { float: right; font-size: 10px; font-weight: 900; }
-
-        .swipe-container { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 15px; scroll-snap-type: x mandatory; }
-        .hotel-card-mini { flex: 0 0 220px; background: var(--biz-card); border-radius: 10px; overflow: hidden; border: 1px solid #333; text-decoration: none; color: inherit; }
-        .mini-img { height: 120px; background-size: cover; background-position: center; position: relative; background-color: #333; }
-        .mini-brand { position: absolute; top: 8px; left: 8px; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 3px; color: #fff; }
+        /* HOTEL SWIPE */
+        .swipe-wrap { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 15px; scroll-snap-type: x mandatory; }
+        .swipe-wrap::-webkit-scrollbar { display: none; }
+        .hotel-card-mini { flex: 0 0 240px; background: var(--biz-card); border-radius: 12px; overflow: hidden; border: 1px solid #333; text-decoration: none; color: inherit; scroll-snap-align: start; }
+        .mini-img { height: 130px; background-size: cover; background-position: center; position: relative; background-color: #222; }
+        .mini-brand { position: absolute; top: 8px; left: 8px; font-size: 8px; font-weight: 900; padding: 3px 6px; border-radius: 4px; color: #fff; }
         .mini-info { padding: 12px; }
-        .mini-name { font-size: 13px; font-weight: 900; color: #fff; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .mini-name { font-size: 13px; font-weight: 900; color: #fff; height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.45; }
 
-        .sale-card { background: linear-gradient(135deg, #1e1b10 0%, #161a1d 100%); border: 1px solid var(--accent-gold); border-radius: 12px; text-decoration: none; color: inherit; display: flex; overflow: hidden; margin-bottom: 12px; height: 105px; position: relative; }
-        .sale-badge { background: var(--accent-gold); color: #000; width: 100px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .sale-badge .d-txt { font-size: 22px; font-weight: 900; }
-        .sale-info { padding: 12px 15px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        /* COUPON LOGIC */
+        .coupon-group { margin-bottom: 20px; }
+        .cp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .cp-item { background: var(--biz-card); border: 1px solid #333; border-radius: 8px; display: flex; height: 70px; text-decoration: none; overflow: hidden; }
+        .cp-side { width: 70px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; color: #fff; text-align: center; line-height: 1.2; }
+        .cp-main { flex: 1; padding: 10px; display: flex; flex-direction: column; justify-content: center; }
+        .cp-title { font-size: 11px; font-weight: 800; color: #fff; line-height: 1.3; }
+        
+        .hidden-coupons { display: none; }
+        .hidden-coupons.is-open { display: grid; margin-top: 8px; }
+        .more-btn { width: 100%; background: #262a2e; border: 1px solid #444; color: var(--text-sub); font-size: 10px; font-weight: 800; padding: 10px; border-radius: 6px; margin-top: 8px; cursor: pointer; }
 
-        .area-select-box { margin-top: 20px; background: var(--biz-card); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 20px; }
-        .biz-select { width: 100%; background: #000; color: #fff; border: 1px solid #555; height: 45px; border-radius: 6px; font-size: 14px; margin-bottom: 15px; }
-        .area-jump-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .jump-btn { height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 10px; font-weight: 900; color: #fff; opacity: 0.3; pointer-events: none; }
-        .jump-btn.active { opacity: 1; pointer-events: auto; }
-        .rak-bg { background: var(--rakuten-green); } .jal-bg { background: var(--jalan-orange); } .iky-bg { background: var(--ikyu-gold); }
+        /* TIPS */
+        .tips-card { background: var(--biz-card); border: 1px solid #333; border-radius: 8px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+        .tips-icon { color: var(--accent-gold); font-size: 14px; }
+        .tips-title { font-size: 12px; font-weight: 800; color: #eee; }
 
-        .biz-footer { background: #000; padding: 60px 20px; border-top: 1px solid #333; text-align: center; margin-top: 50px; }
-        .sns-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
-        .sns-links a { color: var(--accent-gold); font-size: 24px; text-decoration: none; }
+        /* FIELD OP */
+        .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .op-card { background: var(--biz-card); border: 1px solid #333; border-radius: 10px; padding: 12px; }
+        .op-label { font-size: 9px; color: var(--text-sub); font-weight: 900; }
+        .op-val { font-size: 13px; font-weight: 900; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .bg-green { background: #2ecc71; } .bg-red { background: var(--emergency-red); }
     </style>
 </head>
 <body>
 
 <div id="emergency-bar"></div>
-<div class="header-group">
-    <header class="biz-header"><a href="#" class="biz-logo">TRIP_DASH.</a><div id="header-date" style="font-size: 11px; font-weight: 800; font-family: monospace;"></div></header>
-    <div class="nav-bar"><a href="#sale-section" class="nav-link">Sale</a><a href="#hotel-section" class="nav-link">Hotel</a><a href="#coupon-section" class="nav-link">Coupon</a></div>
-</div>
+<header class="biz-header">
+    <a href="#" class="biz-logo">TRIP_DASH.</a>
+    <div id="header-date" style="font-size: 10px; font-weight: 900; font-family: monospace;"></div>
+</header>
 
 <div class="container">
     <div class="section-title">Field Operations</div>
-    <div class="op-panel-grid">
-        <div class="op-panel"><i class="fa-solid fa-cloud-sun" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" id="temp-val">--°C</div><div style="font-size:11px; font-weight:900;">WEATHER</div><div id="local-city" style="font-size:9px; color:var(--text-sub);">Detecting...</div></div>
-        <div class="op-panel"><i class="fa-solid fa-train" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" id="status-shinkansen">● 通常</div><div style="font-size:11px; font-weight:900;">SHINKANSEN</div></div>
-        <div class="op-panel"><i class="fa-solid fa-plane" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" id="status-flight">● 通常</div><div style="font-size:11px; font-weight:900;">AIRLINE</div></div>
-        <div class="op-panel"><i class="fa-solid fa-rss" style="color:var(--accent-gold); font-size:22px; margin-bottom:8px;"></i><div class="panel-status" style="color:var(--text-sub);">UPDATE</div><div style="font-size:11px; font-weight:900;">NEWS</div><div id="latest-news-tag" style="font-size:9px; color:var(--text-sub);">No Alerts</div></div>
+    <div class="op-grid">
+        <div class="op-card"><div class="op-label">WEATHER</div><div class="op-val" id="temp-val">--°C</div><div id="local-city" style="font-size:9px; color:var(--text-sub);">Detecting...</div></div>
+        <div class="op-card"><div class="op-label">SHINKANSEN</div><div class="op-val"><div id="dot-s" class="status-dot bg-green"></div><span id="txt-s">Normal</span></div></div>
+        <div class="op-card"><div class="op-label">AIRLINE</div><div class="op-val"><div id="dot-a" class="status-dot bg-green"></div><span id="txt-a">Normal</span></div></div>
+        <div class="op-card"><div class="op-label">NEWS</div><div id="news-tag" style="font-size:11px; font-weight:900;">No Alerts</div></div>
     </div>
 
-    <section id="recom-hotel-section" style="display:none;"><div class="section-title">Recommended Hotels</div><div class="swipe-container" id="recom-hotel-root"></div></section>
-    <section id="sale-section" style="display:none;"><div class="section-title">Now on Sale!!!</div><div id="sale-area"></div></section>
-
-    <section id="hotel-section">
-        <div class="section-title">Hotel Search</div>
-        <div class="hotel-grid" id="hotel-grid-root" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:15px;"></div>
-        <div class="area-select-box">
-            <select class="biz-select" id="area-dropdown" onchange="updateJumpLinks()">
-                <option value="">エリアを検索（サイトを選択）</option>
-                <optgroup label="北海道・東北"><option value="hokkaido" data-rak="https://a.r10.to/hPwqVk" data-jal="https://www.jalan.net/" data-iky="https://www.ikyu.com/">札幌・北海道</option></optgroup>
-                <optgroup label="関東・東海"><option value="yokohama" data-rak="https://a.r10.to/hNqD8y" data-jal="https://www.jalan.net/" data-iky="https://www.ikyu.com/">横浜・静岡</option></optgroup>
-            </select>
-            <div class="area-jump-btns">
-                <a href="#" id="jump-rak" target="_blank" class="jump-btn rak-bg">楽天トラベル</a>
-                <a href="#" id="jump-jal" target="_blank" class="jump-btn jal-bg">じゃらん</a>
-                <a href="#" id="jump-iky" target="_blank" class="jump-btn iky-bg">一休.com</a>
-            </div>
-        </div>
+    <section id="recom-section" style="display:none;">
+        <div class="section-title">Recommended Hotels</div>
+        <div class="swipe-wrap" id="recom-root"></div>
     </section>
 
-    <div id="coupon-section" style="display:none;"><div class="section-title">Coupons</div><div id="coupon-root"></div></div>
-    <div id="tips-section"><div class="section-title">Intelligence</div><div id="tips-area"></div></div>
-</div>
+    <section id="coupon-section" style="display:none;">
+        <div class="section-title">Active Coupons</div>
+        <div id="coupon-root"></div>
+    </section>
 
-<footer class="biz-footer">
-    <div class="sns-links"><a href="#"><i class="fa-brands fa-x-twitter"></i></a><a href="#"><i class="fa-brands fa-instagram"></i></a><a href="#"><i class="fa-regular fa-envelope"></i></a></div>
-    <div class="footer-copy">&copy; TRIP_DASH. ALL RIGHTS RESERVED.</div>
-</footer>
+    <div class="section-title">Business Intelligence</div>
+    <div id="tips-root"></div>
+</div>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
-const AREAS = [
-    { name: 'TOKYO / 東京', img: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600', rak: 'https://a.r10.to/hYb8ED', jal: 'https://www.jalan.net/', iky: 'https://www.ikyu.com/' },
-    { name: 'OSAKA / 梅田', img: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?w=600', rak: 'https://a.r10.to/hkI4ez', jal: 'https://www.jalan.net/', iky: 'https://www.ikyu.com/' }
-];
-
-function updateJumpLinks() {
-    const sel = document.getElementById('area-dropdown');
-    const opt = sel.options[sel.selectedIndex];
-    ['rak', 'jal', 'iky'].forEach(k => {
-        const btn = document.getElementById(`jump-${k}`);
-        if(opt && opt.value) { btn.href = opt.dataset[k]; btn.classList.add('active'); }
-        else { btn.href = "#"; btn.classList.remove('active'); }
-    });
+function toggleCoupons(btn, id) {
+    const target = document.getElementById(id);
+    const isOpen = target.classList.toggle('is-open');
+    btn.innerText = isOpen ? "閉じる" : "さらに表示";
 }
 
-async function updateData() {
+async function loadData() {
     try {
         const res = await fetch(CSV_URL);
         const csv = await res.text();
         const rows = csv.split(/\r?\n/).map(r => r.split(',').map(s => s.trim().replace(/^"|"$/g, '')));
         const now = new Date();
         
-        let hHtml = ''; let sHtml = ''; let cHtml = ''; let tHtml = '';
+        let hHtml = ''; let tHtml = '';
+        let coupons = { rak:[], jal:[], iky:[], otr:[] };
 
-        for(let i=1; i<rows.length; i++) {
-            const [type, brand, title, start, end, url, direct_url, disc, fTxt] = rows[i];
-            if(!type) continue;
-
+        rows.slice(1).forEach(row => {
+            const [type, brand, title, start, end, url, img_url, disc, fTxt] = row;
+            if(!type) return;
             const isExpired = (start && end && (now < new Date(start) || now > new Date(end)));
-            if(type !== 'EMERGENCY' && isExpired) continue;
+            if(type !== 'EMERGENCY' && isExpired) return;
 
-            if(type === 'HOTEL') {
+            if(type === 'EMERGENCY') {
+                const bar = document.getElementById('emergency-bar');
+                bar.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${title}`;
+                bar.style.display = 'block'; document.body.classList.add('has-emergency');
+            } else if(type === 'HOTEL') {
                 const bCol = brand.includes("楽天")?"#28a745":brand.includes("じゃらん")?"#ff9900":"#a68b5e";
-                const imgId = Math.abs((direct_url||title||"a").split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)) % 50;
+                const bgStyle = img_url ? `background-image:url('${img_url}')` : `background-color:#222`;
                 hHtml += `<a href="${url}" target="_blank" class="hotel-card-mini">
-                    <div class="mini-img" style="background-image:url('https://picsum.photos/id/${imgId}/400/300')"><div class="mini-brand" style="background:${bCol}">${brand}</div></div>
-                    <div class="mini-info"><div class="mini-name">${title}</div><div style="font-size:9px; color:var(--accent-gold); font-weight:900;">CHECK <i class="fa-solid fa-chevron-right"></i></div></div></a>`;
-            } else if(type === 'SALE') {
-                sHtml += `<a href="${url}" target="_blank" class="sale-card"><div class="sale-badge"><div class="d-txt">${disc}</div></div><div class="sale-info"><div class="sale-title">${title}</div></div></a>`;
+                    <div class="mini-img" style="${bgStyle}"><div class="mini-brand" style="background:${bCol}">${brand}</div></div>
+                    <div class="mini-info"><div class="mini-name">${title}</div></div></a>`;
+            } else if(type === 'COUPON') {
+                const bCol = brand.includes("楽天")?"#28a745":brand.includes("じゃらん")?"#ff9900":"#a68b5e";
+                const key = brand.includes("楽天")?"rak":brand.includes("じゃらん")?"jal":brand.includes("一休")?"iky":"otr";
+                coupons[key].push(`<a href="${url}" target="_blank" class="cp-item">
+                    <div class="cp-side" style="background:${bCol}">${disc}</div>
+                    <div class="cp-main"><div class="cp-title">${title}</div></div></a>`);
+            } else if(type === 'TIPS') {
+                tHtml += `<div class="tips-card"><i class="fa-solid fa-lightbulb tips-icon"></i><div class="tips-title">${title}</div></div>`;
             }
+        });
+
+        // クーポン表示ロジック
+        let cpHtml = '';
+        for(let key in coupons) {
+            if(coupons[key].length === 0) continue;
+            const visible = coupons[key].slice(0, 4).join('');
+            const hidden = coupons[key].slice(4).join('');
+            cpHtml += `<div class="coupon-group"><div class="cp-grid">${visible}</div>`;
+            if(hidden) {
+                const id = `cp-more-${key}`;
+                cpHtml += `<div id="${id}" class="cp-grid hidden-coupons">${hidden}</div><button class="more-btn" onclick="toggleCoupons(this, '${id}')">さらに表示</button>`;
+            }
+            cpHtml += `</div>`;
         }
-        document.getElementById('recom-hotel-root').innerHTML = hHtml;
-        document.getElementById('recom-hotel-section').style.display = hHtml?'block':'none';
-        document.getElementById('sale-area').innerHTML = sHtml;
-        document.getElementById('sale-section').style.display = sHtml?'block':'none';
-    } catch(e) { console.log(e); }
+
+        document.getElementById('recom-root').innerHTML = hHtml;
+        document.getElementById('recom-section').style.display = hHtml ? 'block' : 'none';
+        document.getElementById('coupon-root').innerHTML = cpHtml;
+        document.getElementById('coupon-section').style.display = cpHtml ? 'block' : 'none';
+        document.getElementById('tips-root').innerHTML = tHtml;
+
+    } catch(e) { console.error(e); }
 }
 
 function init() {
-    const d = new Date(); document.getElementById('header-date').innerText = `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()} OPS`;
-    document.getElementById('hotel-grid-root').innerHTML = AREAS.map(a => `<div class="hotel-card" style="background:var(--biz-card); border-radius:12px; overflow:hidden; border:1px solid #333;"><div style="height:75px; background-image:url('${a.img}'); background-size:cover; background-position:center; display:flex; align-items:center; padding:0 15px; position:relative;"><div style="position:absolute; inset:0; background:rgba(0,0,0,0.4);"></div><div style="position:relative; font-size:14px; font-weight:900; color:#fff;">${a.name}</div></div><div style="display:flex; padding:10px; gap:6px;"><a href="${a.rak}" target="_blank" class="jump-btn active rak-bg" style="flex:1;">楽天</a><a href="${a.jal}" target="_blank" class="jump-btn active jal-bg" style="flex:1;">じゃらん</a><a href="${a.iky}" target="_blank" class="jump-btn active iky-bg" style="flex:1;">一休</a></div></div>`).join('');
-    updateData();
+    const d = new Date(); 
+    document.getElementById('header-date').innerText = `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()} OPS`;
+    loadData();
 }
 init();
 </script>
