@@ -26,14 +26,14 @@
         html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
-        /* EMERGENCY BANNER (Ver1.32) */
+        /* EMERGENCY BANNER */
         #emergency-banner {
             display: none; position: fixed; top: 0; left: 0; width: 100%;
             background: var(--alert-red); color: #fff; padding: 8px 10px;
             font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
         }
 
-        /* HEADER & NAV (Ver1.32) */
+        /* HEADER & NAV */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
@@ -58,7 +58,7 @@
             background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
         }
 
-        /* SALE BANNER SYSTEM (Ver1.32) */
+        /* SALE BANNER SYSTEM */
         #sale-banner {
             display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
             border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
@@ -76,7 +76,7 @@
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
-        /* HUB GRID (Ver1.32) */
+        /* HUB GRID */
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
@@ -94,25 +94,10 @@
 
         .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
-        .dot.red { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
 
-        /* TIPS SECTION (New - Ver1.40) */
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .tips-card {
-            background: var(--card-gray); border-radius: 12px; padding: 15px; border: 1px solid #2a2a2a;
-            display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .tips-card:active { transform: scale(0.97); background: #252a30; }
-        .tips-icon { color: var(--gold); font-size: 14px; }
-        .tips-title { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.4; }
-
-        /* PRIORITY SALES (Ver1.32) */
+        /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .sale-card {
-            background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e;
-            padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
-            text-decoration: none; position: relative; overflow: hidden;
-        }
+        .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; position: relative; overflow: hidden; }
         .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
         .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
         .brand-rakuten { background: var(--rakuten-red); }
@@ -124,113 +109,58 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* BOARDING PASS COUPONS (Ver1.32) */
+        /* BOARDING PASS COUPONS */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
-
-        .coupon-card {
-            background: #e0e0e0; color: #333; border-radius: 12px; display: flex; 
-            min-height: 110px; text-decoration: none; position: relative; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        .coupon-card::before, .coupon-card::after { 
-            content: ''; position: absolute; left: 68%; width: 16px; height: 16px; 
-            background: var(--bg-black); border-radius: 50%; z-index: 5; 
-        }
-        .coupon-card::before { top: -8px; }
-        .coupon-card::after { bottom: -8px; }
-
-        .coupon-main { 
-            flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; 
-            justify-content: center; position: relative; border-right: 1.5px dashed #bbb;
-        }
-        .coupon-title-sub { font-size: 9px; font-weight: 900; color: #777; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; }
+        .coupon-card { background: #e0e0e0; color: #333; border-radius: 12px; display: flex; min-height: 110px; text-decoration: none; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .coupon-card::before, .coupon-card::after { content: ''; position: absolute; left: 68%; width: 16px; height: 16px; background: var(--bg-black); border-radius: 50%; z-index: 5; }
+        .coupon-card::before { top: -8px; } .coupon-card::after { bottom: -8px; }
+        .coupon-main { flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 1.5px dashed #bbb; }
+        .coupon-title-sub { font-size: 9px; font-weight: 900; color: #777; text-transform: uppercase; margin-bottom: 2px; }
         .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; margin-bottom: 4px; }
         .coupon-disc-sub { font-size: 10px; font-weight: 700; color: #555; }
+        .coupon-side { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 5px; position: relative; }
+        .coupon-side-label { font-size: 8px; font-weight: 900; color: #fff; margin-bottom: 2px; }
+        .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; }
+        .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
+        .show-more-ribbon { width: 100%; padding: 10px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer; margin-top: 10px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        .coupon-side { 
-            flex-grow: 1; display: flex; flex-direction: column; align-items: center; 
-            justify-content: center; text-align: center; padding: 10px 5px; position: relative;
-        }
-        .coupon-side-label { font-size: 8px; font-weight: 900; color: #fff; opacity: 0.9; margin-bottom: 2px; }
-        .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.2; }
-
-        .limit-badge {
-            position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff;
-            font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2); z-index: 10;
-        }
-
-        .show-more-ribbon { 
-            width: 100%; padding: 10px; background: rgba(212, 175, 55, 0.1); 
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; 
-            color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer; 
-            margin-top: 10px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-
-        /* AREA SECTION (Ver1.32) */
-        #area-section {
-            margin-top: 30px; position: relative;
-            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; border-radius: 24px; padding: 25px 0; overflow: hidden;
-        }
-        #area-section::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1;
-        }
+        /* AREA SECTION */
+        #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
+        #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
-        .area-section-header { padding: 0 20px; display: flex; align-items: center; margin-bottom: 15px; }
-
-        .area-swipe-container {
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 20px 15px; scrollbar-width: none;
-        }
+        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
         .area-swipe-container::-webkit-scrollbar { display: none; }
-
-        .area-column { flex: 0 0 85%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 12px; }
+        .area-column { flex: 0 0 85%; display: flex; flex-direction: column; gap: 12px; }
         .area-column.single { flex: 0 0 85%; }
-
-        .area-card { 
-            background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 16px; display: flex; flex-direction: column; gap: 12px; backdrop-filter: blur(8px);
-        }
-        .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 12px; }
+        .area-header { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
         .area-keyword { font-size: 9px; color: var(--gold); font-weight: 700; }
-        
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .area-btn { 
-            border: none; color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; display: flex; align-items: center; justify-content: center;
-        }
-        .btn-r { background: var(--rakuten-red); }
-        .btn-j { background: var(--jalan-orange); }
-        .btn-i { background: var(--ikyu-gold); }
+        .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
+        .btn-r { background: var(--rakuten-red); } .btn-j { background: var(--jalan-orange); } .btn-i { background: var(--ikyu-gold); }
 
-        /* MODALS (Ver1.32 + New Paper Modal) */
+        /* TIPS SECTION */
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .tips-icon { color: var(--gold); font-size: 14px; }
+        .tips-title { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.4; }
+
+        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
-        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; letter-spacing: 0.5px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
+        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; margin-bottom: 8px; display: block; }
 
-        #tips-modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 12000;
-            align-items: center; justify-content: center; padding: 20px;
-        }
-        .paper-content {
-            background: #f4f1ea; width: 100%; max-width: 400px; min-height: 500px; border-radius: 4px;
-            color: #1a1a1a; padding: 30px 25px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column;
-        }
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 12000; align-items: center; justify-content: center; padding: 20px; }
+        .paper-content { background: #f4f1ea; width: 100%; max-width: 400px; min-height: 500px; border-radius: 4px; color: #1a1a1a; padding: 30px 25px; display: flex; flex-direction: column; }
         .paper-header { border-bottom: 2px solid #1a1a1a; margin-bottom: 20px; padding-bottom: 10px; text-align: center; }
-        .paper-logo { font-family: serif; font-weight: 900; font-size: 18px; letter-spacing: 2px; border-bottom: 1px solid #1a1a1a; display: inline-block; margin-bottom: 5px; }
-        .paper-title { font-size: 20px; font-weight: 900; line-height: 1.3; margin-bottom: 15px; }
+        .paper-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; }
         .paper-body { font-size: 14px; line-height: 1.8; flex-grow: 1; text-align: justify; font-family: serif; white-space: pre-wrap; }
         .paper-footer { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #ccc; padding-top: 15px; }
-        .page-ctrl { display: flex; align-items: center; gap: 15px; }
-        .page-btn { background: none; border: 1px solid #1a1a1a; padding: 5px 12px; font-size: 10px; font-weight: 900; cursor: pointer; }
-        .page-btn:disabled { opacity: 0.3; cursor: default; }
-        .page-num { font-size: 11px; font-weight: 700; }
-        .paper-close { font-size: 11px; font-weight: 900; text-decoration: underline; cursor: pointer; }
+        .page-ctrl { display: flex; align-items: center; gap: 10px; }
+        .page-btn { background: none; border: 1px solid #1a1a1a; padding: 5px 10px; font-size: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -246,20 +176,16 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#tips-section" class="nav-link">Tips</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
             <a href="#area-section" class="nav-link">Area</a>
+            <a href="#tips-section" class="nav-link">Tips</a>
         </nav>
     </header>
 
     <div class="container">
         <a id="sale-banner" href="#">
-            <div class="sale-content">
-                <i id="sale-icon-type" class="fa-solid fa-crown"></i>
-                <div class="sale-text" id="sale-banner-text">CHECKING SALES...</div>
-                <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
-            </div>
+            <div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING SALES...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div>
         </a>
 
         <section id="field-ops">
@@ -282,29 +208,12 @@
             </div>
         </section>
 
-        <section id="tips-section">
-            <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
-            <div id="tips-container" class="tips-grid"></div>
-        </section>
-
         <section id="sale">
             <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
             <div class="sale-grid">
-                <a href="#" class="sale-card" id="card-rakuten">
-                    <div class="brand-logo-circle brand-rakuten">R</div>
-                    <div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div>
-                    <div class="sale-badge" id="badge-rakuten">CHECK</div>
-                </a>
-                <a href="#" class="sale-card" id="card-jalan">
-                    <div class="brand-logo-circle brand-jalan">J</div>
-                    <div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div>
-                    <div class="sale-badge" id="badge-jalan">CHECK</div>
-                </a>
-                <a href="#" class="sale-card" id="card-ikyu">
-                    <div class="brand-logo-circle brand-ikyu">一</div>
-                    <div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div>
-                    <div class="sale-badge" id="badge-ikyu">CHECK</div>
-                </a>
+                <a href="#" class="sale-card" id="card-rakuten"><div class="brand-logo-circle brand-rakuten">R</div><div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div><div class="sale-badge" id="badge-rakuten">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-jalan"><div class="brand-logo-circle brand-jalan">J</div><div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div><div class="sale-badge" id="badge-jalan">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-ikyu"><div class="brand-logo-circle brand-ikyu">一</div><div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div><div class="sale-badge" id="badge-ikyu">CHECK</div></a>
             </div>
         </section>
 
@@ -315,94 +224,75 @@
 
         <section id="area-section">
             <div class="area-content-wrapper">
-                <div class="area-section-header">
-                    <div class="section-title" style="color:#fff">AREA EXPLORER</div>
-                    <div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div>
-                </div>
+                <div class="area-section-header"><div class="section-title" style="color:#fff">AREA EXPLORER</div><div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div></div>
                 <div class="area-swipe-container">
                     <div class="area-column">
                         <div class="area-card">
-                            <div class="area-header">
-                                <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> TOKYO / 東京</div>
-                                <div class="area-keyword">東京駅</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
+                            <div class="area-header"><div class="area-name-main">TOKYO / 東京</div><div class="area-keyword">東京駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn btn-i">一休</a></div>
                         </div>
                         <div class="area-card">
-                            <div class="area-header">
-                                <div class="area-name-main"><i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--gold)"></i> OSAKA / 梅田</div>
-                                <div class="area-keyword">大阪 梅田</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="#" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="#" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
+                            <div class="area-header"><div class="area-name-main">OSAKA / 梅田</div><div class="area-keyword">大阪 梅田</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                    </div>
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">SHIZUOKA / 名古屋</div><div class="area-keyword">名古屋駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">FUKUOKA / 博多</div><div class="area-keyword">博多駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
                         </div>
                     </div>
                     <div class="area-column single">
-                        <div class="area-card" style="border: 1px solid var(--gold); height: 100%; justify-content: center;">
-                            <div class="area-header">
-                                <div class="area-name-main" style="color:var(--gold)"><i class="fa-solid fa-magnifying-glass" style="font-size:10px;"></i> OTHER AREAS</div>
-                                <div class="area-keyword">ALL AREAS</div>
-                            </div>
-                            <div class="area-actions">
-                                <a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="#" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="#" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
+                        <div class="area-card" style="border:1px solid var(--gold);height:100%;justify-content:center;">
+                            <div class="area-header"><div class="area-name-main" style="color:var(--gold)">OTHER AREAS</div><div class="area-keyword">ALL AREAS</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
-    <div id="tips-modal" onclick="closeTips()">
-        <div class="paper-content" onclick="event.stopPropagation()">
-            <div class="paper-header">
-                <div class="paper-logo">TRIP DISPATCH</div>
-            </div>
-            <div id="paper-title" class="paper-title" style="font-family: serif;"></div>
-            <div id="paper-body" class="paper-body"></div>
-            <div class="paper-footer">
-                <div class="page-ctrl">
-                    <button id="prev-page" class="page-btn" onclick="changePage(-1)">PREV</button>
-                    <div class="page-num"><span id="curr-page">1</span> / <span id="total-page">1</span></div>
-                    <button id="next-page" class="page-btn" onclick="changePage(1)">NEXT</button>
-                </div>
-                <div class="paper-close" onclick="closeTips()">CLOSE</div>
-            </div>
-        </div>
+        <section id="tips-section">
+            <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
+            <div id="tips-container" class="tips-grid"></div>
+        </section>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-title" style="color:var(--gold); font-weight:900; text-align:center; margin-bottom:15px; font-size:13px; letter-spacing:1px;"></div>
-            <div id="modal-btns" class="btn-grid"></div>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:var(--text-sub); margin-top:20px; font-weight:900; font-size:11px; cursor:pointer;">CLOSE</button>
+            <div id="modal-title" style="color:var(--gold);font-weight:900;text-align:center;margin-bottom:15px;font-size:13px;"></div>
+            <div id="modal-btns"></div>
+        </div>
+    </div>
+
+    <div id="tips-modal" onclick="closeTips()">
+        <div class="paper-content" onclick="event.stopPropagation()">
+            <div class="paper-header"><div class="paper-logo">TRIP DISPATCH</div></div>
+            <div id="paper-title" class="paper-title"></div>
+            <div id="paper-body" class="paper-body"></div>
+            <div class="paper-footer">
+                <div class="page-ctrl"><button id="prev-page" class="page-btn" onclick="changePage(-1)">PREV</button><span id="curr-page">1</span> / <span id="total-page">1</span><button id="next-page" class="page-btn" onclick="changePage(1)">NEXT</button></div>
+                <div style="text-decoration:underline;cursor:pointer;" onclick="closeTips()">CLOSE</div>
+            </div>
         </div>
     </div>
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
-
         const MODAL_DATA = {
-            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本 運行情報", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ 運行情報", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通 運行情報", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "Yahoo! 路線情報", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
-            weather: { t: "WEATHER DETAILS", b: [{n: "日本気象協会 (tenki.jp)", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁 防災情報", l: "https://www.jma.go.jp/bosai/", c: "#34495e"}] },
-            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "JARTIC 渋滞情報", l: "https://www.jartic.or.jp/", c: "#34495e"}] },
-            flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航情報", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航情報", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"}] },
-            rain: { t: "RAIN RADAR", b: [{n: "雨雲レーダー (Yahoo!)", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"}] },
+            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
+            weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"}] },
+            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"}] },
+            flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"}] },
+            rain: { t: "RAIN RADAR", b: [{n: "雨雲レーダー", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"}] },
             news: { t: "LATEST NEWS", b: [{n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},{n: "NHK ニュース", l: "https://www3.nhk.or.jp/news/", c: "#28a745"}] }
         };
 
-        let currentTipsPages = [];
-        let currentPageIdx = 0;
-        let currentTipsTitle = "";
+        let currentTipsPages = []; let currentPageIdx = 0; let currentTipsTitle = "";
 
         async function forceReloadData() {
             const btn = document.getElementById('refresh-btn');
@@ -427,9 +317,8 @@
                 document.getElementById('location-name').innerText = ipData.city || "Tokyo";
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
-                const temp = Math.round(wData.current_weather.temperature);
-                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${temp}°C Current`;
-            } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> 12°C Cloudy`; }
+                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${Math.round(wData.current_weather.temperature)}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> --°C`; }
         }
 
         function processCSVData(text) {
@@ -438,12 +327,9 @@
             const date = now.getDate();
             const bannerE = document.getElementById('emergency-banner');
             const bannerS = document.getElementById('sale-banner');
-            const header = document.getElementById('main-header');
             const tipsContainer = document.getElementById('tips-container');
             
-            bannerE.style.display = 'none';
-            bannerS.style.display = 'none';
-            header.style.top = '0';
+            bannerE.style.display = 'none'; bannerS.style.display = 'none';
             tipsContainer.innerHTML = '';
             
             let saleTopFound = false;
@@ -454,26 +340,23 @@
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
-                const sDate = new Date(start);
-                const eDate = new Date(end);
+                const sDate = new Date(start); const eDate = new Date(end);
 
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
                     bannerE.innerText = `【！】 ${title}`; bannerE.style.display = 'block';
-                    header.style.top = '30px'; document.body.style.paddingTop = '145px';
+                    document.getElementById('main-header').style.top = '30px';
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
-                    showTopBanner('today', title, url); saleTopFound = true;
+                    document.getElementById('sale-banner-text').innerText = title;
+                    bannerS.style.display = 'block'; bannerS.href = url; bannerS.className = 'sale-today'; saleTopFound = true;
                 }
                 if (type === 'TIPS') {
-                    const card = document.createElement('div');
-                    card.className = 'tips-card';
-                    card.onclick = () => openTips(title, disc);
+                    const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
                     card.innerHTML = `<i class="fa-solid fa-lightbulb tips-icon"></i><div class="tips-title">${title}</div>`;
                     tipsContainer.appendChild(card);
                 }
                 if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
-                    const id = brands[brand];
-                    const card = document.getElementById(`card-${id}`);
+                    const id = brands[brand]; const card = document.getElementById(`card-${id}`);
                     card.classList.add('active-sale'); card.href = url;
                     document.getElementById(`disc-${id}`).innerText = disc;
                     document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
@@ -483,59 +366,43 @@
                 }
             });
 
-            // 5と0のつく日ロジック等 (Ver1.32維持)
             if (!saleTopFound && [5,10,15,20,25,30].includes(date)) {
-                showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
+                document.getElementById('sale-banner-text').innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
+                bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-rakuten-day';
             }
 
-            // Coupon Rendering Logic (Ver1.32 2列対応)
-            const container = document.getElementById('coupon-list');
-            container.innerHTML = '';
+            const container = document.getElementById('coupon-list'); container.innerHTML = '';
             Object.keys(coupons).forEach(b => {
                 if (coupons[b].length === 0) return;
                 const group = document.createElement('div'); group.className = 'coupon-group';
                 const grid = document.createElement('div'); grid.className = 'coupon-grid';
-                let html = '';
                 coupons[b].forEach((c, i) => {
                     const isHidden = i >= 4 ? 'style="display:none"' : '';
-                    const endD = new Date(c.end);
-                    const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
+                    const endD = new Date(c.end); const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
                     const limitBadge = (diffDays > 0 && diffDays <= 3) ? `<div class="limit-badge">残り${diffDays}日</div>` : '';
-                    html += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-title-sub">${c.title}</div><div class="coupon-fTxt">${c.fTxt}</div><div class="coupon-disc-sub">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-side-label">UNTIL</div><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
+                    grid.innerHTML += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-title-sub">${c.title}</div><div class="coupon-fTxt">${c.fTxt}</div><div class="coupon-disc-sub">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-side-label">UNTIL</div><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
                 });
-                grid.innerHTML = html; group.appendChild(grid);
+                group.appendChild(grid);
                 if (coupons[b].length > 4) {
-                    const ribbon = document.createElement('div'); ribbon.className = 'show-more-ribbon'; ribbon.innerText = `${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-4})`;
-                    ribbon.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); ribbon.style.display = 'none'; };
-                    group.appendChild(ribbon);
+                    const r = document.createElement('div'); r.className = 'show-more-ribbon'; r.innerText = `${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-4})`;
+                    r.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); r.style.display = 'none'; };
+                    group.appendChild(r);
                 }
                 container.appendChild(group);
             });
         }
 
-        function openTips(title, fullText) {
-            currentTipsTitle = title;
-            currentTipsPages = splitTextIntoPages(fullText, 250);
-            currentPageIdx = 0;
-            renderPaper();
-            document.getElementById('tips-modal').style.display = 'flex';
-        }
-
+        function openTips(title, fullText) { currentTipsTitle = title; currentTipsPages = splitTextIntoPages(fullText, 250); currentPageIdx = 0; renderPaper(); document.getElementById('tips-modal').style.display = 'flex'; }
         function splitTextIntoPages(text, limit) {
             const pages = []; let remaining = text;
             while (remaining.length > 0) {
                 if (remaining.length <= limit) { pages.push(remaining); break; }
-                let splitPos = limit;
-                const lastKuten = remaining.lastIndexOf('。', limit);
-                const lastTouten = remaining.lastIndexOf('、', limit);
-                const betterPos = Math.max(lastKuten, lastTouten);
-                if (betterPos > limit * 0.7) splitPos = betterPos + 1;
-                pages.push(remaining.substring(0, splitPos));
-                remaining = remaining.substring(splitPos);
+                let pos = limit; const k = remaining.lastIndexOf('。', limit); const t = remaining.lastIndexOf('、', limit);
+                const b = Math.max(k, t); if (b > limit * 0.7) pos = b + 1;
+                pages.push(remaining.substring(0, pos)); remaining = remaining.substring(pos);
             }
             return pages;
         }
-
         function renderPaper() {
             document.getElementById('paper-title').innerText = currentTipsTitle;
             document.getElementById('paper-body').innerText = currentTipsPages[currentPageIdx];
@@ -544,19 +411,11 @@
             document.getElementById('prev-page').disabled = (currentPageIdx === 0);
             document.getElementById('next-page').disabled = (currentPageIdx === currentTipsPages.length - 1);
         }
-
         function changePage(dir) { currentPageIdx += dir; renderPaper(); }
         function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
-        function showTopBanner(mode, title, url) {
-            const bannerS = document.getElementById('sale-banner');
-            document.getElementById('sale-banner-text').innerText = title;
-            bannerS.style.display = 'block'; bannerS.href = url;
-            bannerS.className = mode === 'today' ? 'sale-today' : (mode === 'rakuten' ? 'sale-rakuten-day' : 'sale-preview');
-        }
         function openModal(key) {
-            const data = MODAL_DATA[key];
-            document.getElementById('modal-title').innerText = data.t;
-            document.getElementById('modal-btns').innerHTML = data.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
+            const d = MODAL_DATA[key]; document.getElementById('modal-title').innerText = d.t;
+            document.getElementById('modal-btns').innerHTML = d.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
             document.getElementById('hub-modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
