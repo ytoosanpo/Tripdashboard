@@ -114,39 +114,46 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* HOT COUPONS SECTION */
-        .coupon-group { margin-bottom: 20px; }
-        .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .coupon-card {
-            background: #fff; color: #000; border-radius: 12px; display: flex; flex-direction: column; 
-            overflow: hidden; text-decoration: none; position: relative; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #eee;
-        }
-        .coupon-card::before, .coupon-card::after { 
-            content: ''; position: absolute; top: 44px; width: 14px; height: 14px; 
-            background: var(--bg-black); border-radius: 50%; z-index: 2; 
-        }
-        .coupon-card::before { left: -7px; }
-        .coupon-card::after { right: -7px; }
-
-        .coupon-top { 
-            height: 52px; background: #fdfdfd; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; border-bottom: 2px dashed #ddd; padding: 5px; 
-        }
-        .coupon-val-big { font-size: 22px; font-weight: 900; color: var(--alert-red); letter-spacing: -1px; }
-        .coupon-val-unit { font-size: 10px; font-weight: 900; color: var(--alert-red); margin-top: -2px; }
+        /* BOARDING PASS COUPONS (UPDATED) */
+        .coupon-group { margin-bottom: 25px; }
+        .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         
-        .coupon-bottom { 
-            flex-grow: 1; padding: 12px 10px; display: flex; flex-direction: column; 
-            justify-content: space-between; min-height: 80px; background: #fff;
+        .coupon-card {
+            background: #e0e0e0; color: #333; border-radius: 12px; display: flex; 
+            min-height: 110px; text-decoration: none; position: relative; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        .coupon-title { 
-            font-size: 11px; font-weight: 800; line-height: 1.4; color: #333;
-            overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+        /* Ticket Cut-out */
+        .coupon-card::before, .coupon-card::after { 
+            content: ''; position: absolute; left: 68%; width: 16px; height: 16px; 
+            background: var(--bg-black); border-radius: 50%; z-index: 5; 
         }
-        .coupon-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-        .coupon-brand-tag { font-size: 8px; font-weight: 900; padding: 3px 7px; border-radius: 4px; color: #fff; }
-        .coupon-get-btn { font-size: 9px; font-weight: 900; color: var(--gold); }
+        .coupon-card::before { top: -8px; }
+        .coupon-card::after { bottom: -8px; }
+
+        /* Left Side (Main Info) */
+        .coupon-main { 
+            flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; 
+            justify-content: center; position: relative; border-right: 1.5px dashed #bbb;
+        }
+        .coupon-title-sub { font-size: 9px; font-weight: 900; color: #777; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; }
+        .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; margin-bottom: 4px; }
+        .coupon-disc-sub { font-size: 10px; font-weight: 700; color: #555; }
+
+        /* Right Side (End Date) */
+        .coupon-side { 
+            flex-grow: 1; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; text-align: center; padding: 10px 5px; position: relative;
+        }
+        .coupon-side-label { font-size: 8px; font-weight: 900; color: #fff; opacity: 0.9; margin-bottom: 2px; }
+        .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.2; }
+
+        /* Countdown Badge */
+        .limit-badge {
+            position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff;
+            font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2); z-index: 10;
+        }
 
         .show-more-ribbon { 
             width: 100%; padding: 10px; background: rgba(212, 175, 55, 0.1); 
@@ -442,7 +449,7 @@
                     document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                 }
                 if (type === 'COUPON' && brands[brand] && now >= sDate && now <= eDate) {
-                    coupons[brands[brand]].push({ title, url, fTxt });
+                    coupons[brands[brand]].push({ title, url, fTxt, end, disc });
                 }
             });
 
@@ -468,28 +475,42 @@
                 const grid = document.createElement('div');
                 grid.className = 'coupon-grid';
                 let html = '';
+                
                 coupons[b].forEach((c, i) => {
-                    const isHidden = i >= 2 ? 'style="display:none"' : '';
+                    const isHidden = i >= 3 ? 'style="display:none"' : '';
+                    
+                    // Countdown Logic
+                    const endD = new Date(c.end);
+                    const diffTime = endD - now;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    let limitBadge = '';
+                    if (diffDays > 0 && diffDays <= 3) {
+                        limitBadge = `<div class="limit-badge">残り${diffDays}日</div>`;
+                    }
+
+                    // Date Format
+                    const dateStr = `${endD.getMonth() + 1}/${endD.getDate()}`;
+
                     html += `
                     <a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>
-                        <div class="coupon-top">
-                            <div class="coupon-val-big">${c.fTxt || 'SALE'}</div>
-                            <div class="coupon-val-unit">OFF</div>
+                        ${limitBadge}
+                        <div class="coupon-main">
+                            <div class="coupon-title-sub">${c.title}</div>
+                            <div class="coupon-fTxt">${c.fTxt}</div>
+                            <div class="coupon-disc-sub">${c.disc}</div>
                         </div>
-                        <div class="coupon-bottom">
-                            <div class="coupon-title">${c.title}</div>
-                            <div class="coupon-footer">
-                                <div class="coupon-brand-tag" style="background:${colors[b]}">${b.toUpperCase()}</div>
-                                <div class="coupon-get-btn">GET <i class="fa-solid fa-chevron-right"></i></div>
-                            </div>
+                        <div class="coupon-side" style="background:${colors[b]}">
+                            <div class="coupon-side-label">UNTIL</div>
+                            <div class="coupon-end-date">${dateStr}</div>
+                            <div style="font-size:14px; color:#fff; margin-top:10px;"><i class="fa-solid fa-chevron-right"></i></div>
                         </div>
                     </a>`;
                 });
                 grid.innerHTML = html; group.appendChild(grid);
-                if (coupons[b].length > 2) {
+                if (coupons[b].length > 3) {
                     const ribbon = document.createElement('div');
                     ribbon.className = 'show-more-ribbon';
-                    ribbon.innerHTML = `<i class="fa-solid fa-gift"></i> ${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-2})`;
+                    ribbon.innerHTML = `<i class="fa-solid fa-gift"></i> ${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-3})`;
                     ribbon.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); ribbon.style.display = 'none'; };
                     group.appendChild(ribbon);
                 }
