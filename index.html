@@ -1,128 +1,439 @@
-<script>
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
-    
-    // Ver1.11確定リンク
-    const MODAL_DATA = {
-        transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "東急電鉄", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
-        weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},{n: "Yahoo! 天気", l: "https://weather.yahoo.co.jp/weather/", c: "#ff9900"}] },
-        highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "iHighway", l: "https://c-ihighway.jp/", c: "#f39c12"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"},{n: "首都高", l: "https://search.shutoko-eng.jp/rtmap.html", c: "#007aff"}] },
-        flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},{n: "羽田空港", l: "https://tokyo-haneda.com/flight/index.html", c: "#34495e"},{n: "成田空港", l: "https://www.narita-airport.jp/jp/flight/", c: "#007aff"}] },
-        rain: { t: "RAIN RADAR", b: [{n: "Yahoo!", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},{n: "JMA ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/radar/", c: "#2ecc71"}] },
-        news: { t: "LATEST NEWS", b: [{n: "Yahoo!", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},{n: "NHK", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},{n: "日経", l: "https://www.nikkei.com/", c: "#34495e"},{n: "Google", l: "https://news.google.com/", c: "#4285f4"}] }
-    };
-
-    let currentTipsPages = []; let currentPageIdx = 0; let currentTipsTitle = "";
-
-    async function forceReloadData() {
-        const btn = document.getElementById('refresh-btn');
-        const icon = document.getElementById('refresh-icon');
-        icon.classList.add('spin');
-        try {
-            const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
-            const text = await res.text();
-            processCSVData(text);
-            await getIPWeather();
-            icon.className = "fa-solid fa-check";
-            icon.classList.remove('spin');
-            btn.classList.add('success');
-            setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
-        } catch (e) { icon.classList.remove('spin'); }
-    }
-
-    async function getIPWeather() {
-        try {
-            const ipRes = await fetch('https://ipapi.co/json/');
-            const ipData = await ipRes.json();
-            document.getElementById('location-name').innerText = ipData.city || "Tokyo";
-            const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
-            const wData = await wRes.json();
-            document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${Math.round(wData.current_weather.temperature)}°C Current`;
-        } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> --°C`; }
-    }
-
-    function processCSVData(text) {
-        const rows = text.split('\n').slice(1).filter(r => r.trim());
-        const now = new Date();
-        const hour = now.getHours();
-        const date = now.getDate();
-        const bannerE = document.getElementById('emergency-banner');
-        const bannerS = document.getElementById('sale-banner');
-        const tipsContainer = document.getElementById('tips-container');
-        
-        bannerE.style.display = 'none'; bannerS.style.display = 'none';
-        tipsContainer.innerHTML = '';
-        
-        let saleTopFound = false;
-        let coupons = { rakuten: [], jalan: [], ikyu: [] };
-        const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
-        const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
-        
-        rows.forEach(line => {
-            const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-            const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
-            const sDate = new Date(start); const eDate = new Date(end);
-
-            if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
-                bannerE.innerText = `【！】 ${title}`; bannerE.style.display = 'block';
-                document.getElementById('main-header').style.top = '30px';
-                document.body.style.paddingTop = '150px';
-            }
-            if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
-                document.getElementById('sale-banner-text').innerText = title;
-                bannerS.style.display = 'block'; bannerS.href = url; bannerS.className = 'sale-today'; saleTopFound = true;
-            }
-            if (type === 'TIPS') {
-                const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
-                card.innerHTML = `<i class="fa-solid fa-lightbulb tips-icon"></i><div class="tips-title">${title}</div>`;
-                tipsContainer.appendChild(card);
-            }
-            // SALEセクションの個別URL反映ロジック (ver.1.25復元)
-            if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
-                const id = brands[brand]; const card = document.getElementById(`card-${id}`);
-                card.classList.add('active-sale');
-                card.href = url; // CSVのURLで上書き
-                document.getElementById(`disc-${id}`).innerText = disc;
-                document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
-            }
-            if (type === 'COUPON' && brands[brand] && now >= sDate && now <= eDate) {
-                coupons[brands[brand]].push({ title, url, fTxt, end, disc });
-            }
-        });
-
-        // 楽天5と0のつく日 & 前日告知判定ロジック (ver.1.11, 1.32復元)
-        if (!saleTopFound) {
-            const targetDays = [5, 10, 15, 20, 25, 30];
-            const tomorrow = new Date(now); tomorrow.setDate(date + 1);
-            
-            if (targetDays.includes(date)) {
-                // 当日
-                document.getElementById('sale-banner-text').innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
-                bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-rakuten-day';
-            } else if (targetDays.includes(tomorrow.getDate()) && hour >= 15) {
-                // 前日15時以降
-                document.getElementById('sale-banner-text').innerText = "予告｜明日 5と0のつく日 ポイント4倍";
-                bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-preview';
-            }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>TRIP_DASH. | OFFICIAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --bg-black: #0d0f11;
+            --card-gray: #1c2126;
+            --text-main: #ffffff;
+            --text-sub: #8e8e93;
+            --gold: #d4af37;
+            --alert-red: #e74c3c;
+            --success-green: #2ecc71;
+            --caution-yellow: #f1c40f;
+            --blue: #007aff;
+            --rakuten-red: #bf0000;
+            --jalan-orange: #f39c12;
+            --ikyu-gold: #8e774a;
+            --header-h: 120px;
         }
 
-        const container = document.getElementById('coupon-list'); container.innerHTML = '';
-        Object.keys(coupons).forEach(b => {
-            if (coupons[b].length === 0) return;
-            const group = document.createElement('div'); group.className = 'coupon-group';
-            const grid = document.createElement('div'); grid.className = 'coupon-grid';
-            coupons[b].forEach((c, i) => {
-                const isHidden = i >= 4 ? 'style="display:none"' : '';
-                const endD = new Date(c.end); const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
-                const limitBadge = (diffDays > 0 && diffDays <= 3) ? `<div class="limit-badge">残り${diffDays}日</div>` : '';
-                grid.innerHTML += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-title-sub">${c.title}</div><div class="coupon-fTxt">${c.fTxt}</div><div class="coupon-disc-sub">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-side-label">UNTIL</div><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); transition: padding-top 0.3s; }
+
+        /* EMERGENCY BANNER */
+        #emergency-banner {
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--alert-red); color: #fff; padding: 8px 10px;
+            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
+        }
+
+        /* HEADER & NAV */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
+            z-index: 9000; border-bottom: 1px solid #2a2a2a; transition: top 0.3s;
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
+        .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
+        
+        .refresh-btn {
+            width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold); display: flex; align-items: center; justify-content: center; 
+            background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.2s;
+        }
+        .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
+        .spin { animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
+        nav::-webkit-scrollbar { display: none; }
+        .nav-link {
+            font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
+        }
+
+        /* SALE BANNER SYSTEM */
+        #sale-banner {
+            display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
+            border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
+            text-decoration: none; cursor: pointer;
+        }
+        .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
+        .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
+        .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
+        .sale-today::after, .sale-rakuten-day::after {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(30deg); animation: flash 3.5s infinite;
+        }
+        @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
+        .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
+        .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
+
+        /* MAIN CONTAINER */
+        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
+        .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
+        .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
+        .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
+        
+        /* HUB GRID */
+        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
+        .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+
+        .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .sub-card { background: var(--card-gray); border-radius: 12px; padding: 12px 4px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
+        .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
+        .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
+
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .dot.green { background: var(--success-green); box-shadow: 0 0 6px var(--success-green); }
+
+        /* PRIORITY SALES */
+        .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; position: relative; overflow: hidden; }
+        .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
+        .brand-rakuten { background: var(--rakuten-red); }
+        .brand-jalan { background: var(--jalan-orange); }
+        .brand-ikyu { background: var(--ikyu-gold); }
+        .sale-info-text { margin-left: 12px; flex-grow: 1; }
+        .sale-name { font-size: 15px; font-weight: 700; color: #ffffff; }
+        .sale-disc { font-size: 11px; color: #8e8e93; }
+        .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
+        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
+
+        /* BOARDING PASS COUPONS */
+        .coupon-group { margin-bottom: 25px; }
+        .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+        @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
+        .coupon-card { background: #e0e0e0; color: #333; border-radius: 12px; display: flex; min-height: 110px; text-decoration: none; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .coupon-card::before, .coupon-card::after { content: ''; position: absolute; left: 68%; width: 16px; height: 16px; background: var(--bg-black); border-radius: 50%; z-index: 5; }
+        .coupon-card::before { top: -8px; } .coupon-card::after { bottom: -8px; }
+        .coupon-main { flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 1.5px dashed #bbb; }
+        .coupon-title-sub { font-size: 9px; font-weight: 900; color: #777; text-transform: uppercase; margin-bottom: 2px; }
+        .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; margin-bottom: 4px; }
+        .coupon-disc-sub { font-size: 10px; font-weight: 700; color: #555; }
+        .coupon-side { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 5px; position: relative; }
+        .coupon-side-label { font-size: 8px; font-weight: 900; color: #fff; margin-bottom: 2px; }
+        .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; }
+        .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
+        .show-more-ribbon { width: 100%; padding: 10px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; cursor: pointer; margin-top: 10px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        /* AREA SECTION */
+        #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
+        #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
+        .area-content-wrapper { position: relative; z-index: 2; }
+        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
+        .area-swipe-container::-webkit-scrollbar { display: none; }
+        .area-column { flex: 0 0 85%; display: flex; flex-direction: column; gap: 12px; }
+        @media screen and (min-width: 600px) { .area-column { flex: 0 0 45%; } }
+        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 12px; }
+        .area-header { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+        .area-keyword { font-size: 9px; color: var(--gold); font-weight: 700; }
+        .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
+        .btn-r { background: var(--rakuten-red); } .btn-j { background: var(--jalan-orange); } .btn-i { background: var(--ikyu-gold); }
+
+        /* TIPS SECTION */
+        .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media screen and (min-width: 600px) { .tips-grid { grid-template-columns: repeat(3, 1fr); } }
+        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .tips-icon { color: var(--gold); font-size: 14px; }
+        .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 85vh; overflow-y: auto; }
+        .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; margin-bottom: 8px; display: block; }
+
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 12000; align-items: center; justify-content: center; padding: 20px; }
+        .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; position: relative; }
+        .paper-header { border-bottom: 2px solid #1a1a1a; margin-bottom: 15px; padding-bottom: 10px; text-align: center; }
+        .paper-title { font-size: 18px; font-weight: 900; margin-bottom: 12px; font-family: serif; }
+        .paper-body { font-size: 13.5px; line-height: 1.7; flex-grow: 1; text-align: justify; font-family: serif; white-space: pre-wrap; color: #333; }
+        .paper-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #ccc; padding-top: 12px; }
+        .page-ctrl { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 900; }
+        .page-btn { background: none; border: 1px solid #1a1a1a; padding: 4px 8px; font-size: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="emergency-banner"></div>
+
+    <header id="main-header">
+        <div class="header-top">
+            <div class="logo">TRIP_DASH.</div>
+            <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
+                <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
+            </div>
+        </div>
+        <nav>
+            <a href="#field-ops" class="nav-link">Hub</a>
+            <a href="#sale" class="nav-link">Sale</a>
+            <a href="#dynamic-coupons" class="nav-link">Coupon</a>
+            <a href="#area-section" class="nav-link">Area</a>
+            <a href="#tips-section" class="nav-link">Tips</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a id="sale-banner" href="#">
+            <div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING SALES...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div>
+        </a>
+
+        <section id="field-ops">
+            <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
+            <div class="hub-grid">
+                <div class="hub-card" onclick="openModal('transit')">
+                    <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
+                    <div class="hub-val" id="transit-display"><div class="dot green"></div> 正常運行</div>
+                </div>
+                <div class="hub-card" onclick="openModal('weather')">
+                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Loading...</span></div>
+                    <div class="hub-val" id="weather-display"><div class="dot green"></div> --°C</div>
+                </div>
+            </div>
+            <div class="sub-grid">
+                <div class="sub-card" onclick="openModal('highway')"><i class="fa-solid fa-car sub-icon"></i><div class="sub-txt">HIGHWAY</div></div>
+                <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon"></i><div class="sub-txt">FLIGHT</div></div>
+                <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
+                <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
+            </div>
+        </section>
+
+        <section id="sale">
+            <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
+            <div class="sale-grid">
+                <a href="#" class="sale-card" id="card-rakuten"><div class="brand-logo-circle brand-rakuten">R</div><div class="sale-info-text"><div class="sale-name">楽天トラベル</div><div class="sale-disc" id="disc-rakuten">プラン一覧を見る</div></div><div class="sale-badge" id="badge-rakuten">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-jalan"><div class="brand-logo-circle brand-jalan">J</div><div class="sale-info-text"><div class="sale-name">じゃらん</div><div class="sale-disc" id="disc-jalan">プラン一覧を見る</div></div><div class="sale-badge" id="badge-jalan">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-ikyu"><div class="brand-logo-circle brand-ikyu">一</div><div class="sale-info-text"><div class="sale-name">一休.com</div><div class="sale-disc" id="disc-ikyu">プラン一覧を見る</div></div><div class="sale-badge" id="badge-ikyu">CHECK</div></a>
+            </div>
+        </section>
+
+        <section id="dynamic-coupons">
+            <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
+            <div id="coupon-list"></div>
+        </section>
+
+        <section id="area-section">
+            <div class="area-content-wrapper">
+                <div class="area-section-header"><div class="section-title" style="color:#fff">AREA EXPLORER</div><div class="section-line" style="background:linear-gradient(90deg, #fff, transparent)"></div></div>
+                <div class="area-swipe-container">
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">TOKYO / 東京</div><div class="area-keyword">東京駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn btn-i">一休</a></div>
+                        </div>
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">OSAKA / 梅田</div><div class="area-keyword">大阪 梅田</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                    </div>
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">SHIZUOKA / 名古屋</div><div class="area-keyword">名古屋駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                        <div class="area-card">
+                            <div class="area-header"><div class="area-name-main">FUKUOKA / 博多</div><div class="area-keyword">博多駅</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                    </div>
+                    <div class="area-column single">
+                        <div class="area-card" style="border:1px solid var(--gold);height:100%;justify-content:center;">
+                            <div class="area-header"><div class="area-name-main" style="color:var(--gold)">OTHER AREAS</div><div class="area-keyword">ALL AREAS</div></div>
+                            <div class="area-actions"><a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn btn-r">楽天</a><a href="#" class="area-btn btn-j">じゃらん</a><a href="#" class="area-btn btn-i">一休</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips-section">
+            <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
+            <div id="tips-container" class="tips-grid"></div>
+        </section>
+    </div>
+
+    <div id="hub-modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modal-title" style="color:var(--gold);font-weight:900;text-align:center;margin-bottom:15px;font-size:13px;"></div>
+            <div id="modal-btns"></div>
+        </div>
+    </div>
+
+    <div id="tips-modal" onclick="closeTips()">
+        <div class="paper-content" onclick="event.stopPropagation()">
+            <div class="paper-header"><div class="paper-logo">TRIP DISPATCH</div></div>
+            <div id="paper-title" class="paper-title"></div>
+            <div id="paper-body" class="paper-body"></div>
+            <div class="paper-footer">
+                <div class="page-ctrl"><button id="prev-page" class="page-btn" onclick="changePage(-1)">PREV</button><span id="curr-page">1</span> / <span id="total-page">1</span><button id="next-page" class="page-btn" onclick="changePage(1)">NEXT</button></div>
+                <div style="text-decoration:underline;cursor:pointer;font-size:11px;font-weight:900;" onclick="closeTips()">CLOSE</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+        
+        // Ver1.11確定リンク
+        const MODAL_DATA = {
+            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "東急電鉄", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
+            weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},{n: "Yahoo! 天気", l: "https://weather.yahoo.co.jp/weather/", c: "#ff9900"}] },
+            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "iHighway", l: "https://c-ihighway.jp/", c: "#f39c12"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"},{n: "首都高", l: "https://search.shutoko-eng.jp/rtmap.html", c: "#007aff"}] },
+            flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},{n: "羽田空港", l: "https://tokyo-haneda.com/flight/index.html", c: "#34495e"},{n: "成田空港", l: "https://www.narita-airport.jp/jp/flight/", c: "#007aff"}] },
+            rain: { t: "RAIN RADAR", b: [{n: "Yahoo!", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},{n: "JMA ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/radar/", c: "#2ecc71"}] },
+            news: { t: "LATEST NEWS", b: [{n: "Yahoo!", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},{n: "NHK", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},{n: "日経", l: "https://www.nikkei.com/", c: "#34495e"},{n: "Google", l: "https://news.google.com/", c: "#4285f4"}] }
+        };
+
+        let currentTipsPages = []; let currentPageIdx = 0; let currentTipsTitle = "";
+
+        async function forceReloadData() {
+            const btn = document.getElementById('refresh-btn');
+            const icon = document.getElementById('refresh-icon');
+            icon.classList.add('spin');
+            try {
+                const res = await fetch(CSV_URL + `&t=${new Date().getTime()}`);
+                const text = await res.text();
+                processCSVData(text);
+                await getIPWeather();
+                icon.className = "fa-solid fa-check";
+                icon.classList.remove('spin');
+                btn.classList.add('success');
+                setTimeout(() => { icon.className = "fa-solid fa-arrows-rotate"; btn.classList.remove('success'); }, 2000);
+            } catch (e) { icon.classList.remove('spin'); }
+        }
+
+        async function getIPWeather() {
+            try {
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const ipData = await ipRes.json();
+                document.getElementById('location-name').innerText = ipData.city || "Tokyo";
+                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
+                const wData = await wRes.json();
+                document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> ${Math.round(wData.current_weather.temperature)}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = `<div class="dot green"></div> --°C`; }
+        }
+
+        function processCSVData(text) {
+            const rows = text.split('\n').slice(1).filter(r => r.trim());
+            const now = new Date(); const hour = now.getHours(); const date = now.getDate();
+            const bannerE = document.getElementById('emergency-banner');
+            const bannerS = document.getElementById('sale-banner');
+            const header = document.getElementById('main-header');
+            const tipsContainer = document.getElementById('tips-container');
+            
+            bannerE.style.display = 'none'; bannerS.style.display = 'none';
+            header.style.top = '0'; document.body.style.paddingTop = 'var(--header-h)';
+            tipsContainer.innerHTML = '';
+            
+            let saleTopFound = false;
+            let coupons = { rakuten: [], jalan: [], ikyu: [] };
+            const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
+            const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
+            
+            rows.forEach(line => {
+                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
+                const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
+                const sDate = new Date(start); const eDate = new Date(end);
+
+                if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
+                    bannerE.innerText = `【！】 ${title}`; bannerE.style.display = 'block';
+                    header.style.top = '30px'; document.body.style.paddingTop = '150px';
+                }
+                if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
+                    document.getElementById('sale-banner-text').innerText = title;
+                    bannerS.style.display = 'block'; bannerS.href = url; bannerS.className = 'sale-today'; saleTopFound = true;
+                }
+                if (type === 'TIPS') {
+                    const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
+                    card.innerHTML = `<i class="fa-solid fa-lightbulb tips-icon"></i><div class="tips-title">${title}</div>`;
+                    tipsContainer.appendChild(card);
+                }
+                if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
+                    const id = brands[brand]; const card = document.getElementById(`card-${id}`);
+                    card.classList.add('active-sale'); card.href = url; // URL反映
+                    document.getElementById(`disc-${id}`).innerText = disc;
+                    document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
+                }
+                if (type === 'COUPON' && brands[brand] && now >= sDate && now <= eDate) {
+                    coupons[brands[brand]].push({ title, url, fTxt, end, disc });
+                }
             });
-            group.appendChild(grid);
-            if (coupons[b].length > 4) {
-                const r = document.createElement('div'); r.className = 'show-more-ribbon'; r.innerText = `${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-4})`;
-                r.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); r.style.display = 'none'; };
-                group.appendChild(r);
+
+            // 楽天5と0判定・前日15時告知
+            if (!saleTopFound) {
+                const targetDays = [5, 10, 15, 20, 25, 30];
+                const tomorrow = new Date(now); tomorrow.setDate(date + 1);
+                if (targetDays.includes(date)) {
+                    document.getElementById('sale-banner-text').innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
+                    bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-rakuten-day';
+                } else if (targetDays.includes(tomorrow.getDate()) && hour >= 15) {
+                    document.getElementById('sale-banner-text').innerText = "予告｜明日 5と0のつく日 ポイント4倍";
+                    bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-preview';
+                }
             }
-            container.appendChild(group);
-        });
-    }
-    // 以下Tipsモーダル文字数200, PC3列グリッド、Hubリンク等のver1.41調整を統合...
+
+            const container = document.getElementById('coupon-list'); container.innerHTML = '';
+            Object.keys(coupons).forEach(b => {
+                if (coupons[b].length === 0) return;
+                const group = document.createElement('div'); group.className = 'coupon-group';
+                const grid = document.createElement('div'); grid.className = 'coupon-grid';
+                coupons[b].forEach((c, i) => {
+                    const isHidden = i >= 4 ? 'style="display:none"' : '';
+                    const endD = new Date(c.end); const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
+                    const limitBadge = (diffDays > 0 && diffDays <= 3) ? `<div class="limit-badge">残り${diffDays}日</div>` : '';
+                    grid.innerHTML += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-title-sub">${c.title}</div><div class="coupon-fTxt">${c.fTxt}</div><div class="coupon-disc-sub">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-side-label">UNTIL</div><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
+                });
+                group.appendChild(grid);
+                if (coupons[b].length > 4) {
+                    const r = document.createElement('div'); r.className = 'show-more-ribbon'; r.innerText = `${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-4})`;
+                    r.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); r.style.display = 'none'; };
+                    group.appendChild(r);
+                }
+                container.appendChild(group);
+            });
+        }
+
+        function openTips(title, fullText) { currentTipsTitle = title; currentTipsPages = splitTextIntoPages(fullText, 200); currentPageIdx = 0; renderPaper(); document.getElementById('tips-modal').style.display = 'flex'; }
+        function splitTextIntoPages(text, limit) {
+            const pages = []; let remaining = text;
+            while (remaining.length > 0) {
+                if (remaining.length <= limit) { pages.push(remaining); break; }
+                let pos = limit; const k = remaining.lastIndexOf('。', limit); const t = remaining.lastIndexOf('、', limit);
+                const b = Math.max(k, t); if (b > limit * 0.7) pos = b + 1;
+                pages.push(remaining.substring(0, pos)); remaining = remaining.substring(pos);
+            }
+            return pages;
+        }
+        function renderPaper() {
+            document.getElementById('paper-title').innerText = currentTipsTitle;
+            document.getElementById('paper-body').innerText = currentTipsPages[currentPageIdx];
+            document.getElementById('curr-page').innerText = currentPageIdx + 1;
+            document.getElementById('total-page').innerText = currentTipsPages.length;
+            document.getElementById('prev-page').disabled = (currentPageIdx === 0);
+            document.getElementById('next-page').disabled = (currentPageIdx === currentTipsPages.length - 1);
+        }
+        function changePage(dir) { currentPageIdx += dir; renderPaper(); }
+        function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
+        function openModal(key) {
+            const d = MODAL_DATA[key]; document.getElementById('modal-title').innerText = d.t;
+            document.getElementById('modal-btns').innerHTML = d.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
+            document.getElementById('hub-modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('hub-modal').style.display = 'none'; }
+
+        forceReloadData();
+    </script>
+</body>
+</html>
