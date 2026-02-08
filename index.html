@@ -109,7 +109,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* COUPONS */
+        /* --- COUPON SECTION (Ver.1.32 Restoration) --- */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -122,7 +122,7 @@
         .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; }
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
 
-        /* --- AREA EXPLORER (Ver.1.32 Restoration) --- */
+        /* --- AREA EXPLORER (Ver.1.25 Restoration) --- */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
@@ -371,7 +371,7 @@
                 }
             });
 
-            // Logic Gate: 自動判定 (15時プレビュー含む)
+            // --- Logic Gate: 自動判定 (Ver.1.18復活ロジック) ---
             if (!saleTopFound) {
                 const rakutenDays = [5, 10, 15, 20, 25, 30];
                 if (rakutenDays.includes(date)) {
@@ -389,6 +389,7 @@
                 }
             }
 
+            // --- Coupon List Rendering (Ver.1.32 Logic) ---
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             Object.keys(coupons).forEach(b => {
                 if (coupons[b].length === 0) return;
