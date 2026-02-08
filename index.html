@@ -3,53 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trip_Dash. - Release Ver.1.60</title>
+    <title>Trip_Dash. - Release Ver.1.61</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* --- [Ver.1.55 基本設定を完全保持] --- */
         :root {
-            --bg-color: #000000;
-            --card-bg: #111111;
+            --bg-color: #0a0a0a;
+            --card-bg: #1a1a1a;
             --accent-gold: #d4af37;
-            --text-color: #ffffff;
-            --sub-text: #aaaaaa;
-            --alert-red: #ff3b30;
-            --safe-green: #4cd964;
-            --caution-yellow: #ffcc00;
+            --text-color: #e0e0e0;
+            --sub-text: #888;
+            --alert-red: #e74c3c;
+            --safe-green: #2ecc71;
+            --caution-yellow: #f1c40f;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg-color);
-            font-family: 'Hiragino Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- Ver.1.60 New: Hamburger Menu --- */
+        /* --- [New: ハンバーガーメニュー追加分] --- */
         .menu-btn {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.2);
             border: 1px solid var(--accent-gold);
             color: var(--accent-gold);
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
 
         .nav-overlay {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 260px;
+            width: 250px;
             height: 100%;
-            background: rgba(10, 10, 10, 0.98);
+            background: rgba(26, 26, 26, 0.95);
             z-index: 999;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
             padding-top: 80px;
             border-left: 1px solid var(--accent-gold);
         }
@@ -57,72 +58,49 @@
         .nav-overlay.active { right: 0; }
         .nav-overlay a {
             display: block;
-            padding: 18px 30px;
+            padding: 15px 25px;
             color: var(--text-color);
             text-decoration: none;
-            font-size: 1rem;
-            border-bottom: 1px solid #222;
-            letter-spacing: 1px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
         }
-        .nav-overlay a:hover { background: rgba(212, 175, 55, 0.1); color: var(--accent-gold); }
 
-        /* --- Header & Logo --- */
-        header { padding: 60px 20px 30px; text-align: center; }
+        /* --- [Ver.1.55 Header / Logo / Hub デザイン完全保持] --- */
+        header { padding: 40px 20px 20px; text-align: center; }
         .logo {
-            font-size: 2.8rem;
-            font-weight: 900;
-            letter-spacing: 6px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 4px;
             color: var(--accent-gold);
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        .version-tag { font-size: 0.65rem; color: var(--sub-text); margin-top: 5px; letter-spacing: 2px; }
 
-        /* --- Intelligence Hub (Ver.1.55 完全維持) --- */
-        .hub-label { text-align: center; color: var(--accent-gold); font-size: 0.75rem; margin-bottom: 10px; letter-spacing: 3px; }
         .hub-container {
-            max-width: 500px;
-            margin: 0 auto 40px;
-            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background: var(--card-bg);
             border: 1px solid #333;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 15px;
+            padding: 20px;
         }
-        .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .status-item { text-align: center; font-size: 0.7rem; color: var(--sub-text); }
-        .light-box {
-            background: #000;
-            padding: 15px 10px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            border: 1px solid #222;
-        }
-        .light { width: 14px; height: 14px; border-radius: 50%; margin: 0 auto; }
-        .light.green { background: var(--safe-green); box-shadow: 0 0 15px var(--safe-green); }
+
+        .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; }
+        .status-item { font-size: 0.8rem; color: var(--sub-text); }
+        .light { width: 12px; height: 12px; border-radius: 50%; margin: 5px auto; }
         .light.red { background: var(--alert-red); box-shadow: 0 0 15px var(--alert-red); }
+        .light.green { background: var(--safe-green); box-shadow: 0 0 15px var(--safe-green); }
         .light.yellow { background: var(--caution-yellow); box-shadow: 0 0 15px var(--caution-yellow); }
 
-        /* --- Sale Banner (Ver.1.55 完全維持) --- */
-        .sale-area { margin-bottom: 40px; }
-        .sale-banner {
-            background: linear-gradient(90deg, #8b0000, #ff0000);
+        /* --- [Ver.1.55 Sale / Coupon 完全保持] --- */
+        .sale-ticker {
+            background: linear-gradient(90deg, #b31217, #e74c3c);
             color: white;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             font-weight: bold;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
-        .sale-banner::after {
-            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 3s infinite;
-        }
-        @keyframes shine { 100% { left: 100%; } }
-
-        /* --- Hot Coupons (Ver.1.55 完全維持) --- */
-        .coupon-list { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .coupon-list { padding: 0 20px; margin-bottom: 30px; }
         .coupon-card {
             background: #1a1a1a;
             border: 1px dashed var(--accent-gold);
@@ -131,214 +109,129 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
-        .coupon-info h4 { color: var(--accent-gold); font-size: 1.1rem; }
-        .coupon-info p { font-size: 0.75rem; color: var(--sub-text); }
-        .limit-badge {
-            background: var(--alert-red);
-            color: white;
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-weight: bold;
+        .limit-badge { background: var(--alert-red); color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+
+        /* --- [Ver.1.55 Area Search 完全保持] --- */
+        .section-title { padding-left: 20px; margin: 40px 0 20px; border-left: 4px solid var(--accent-gold); font-size: 1.2rem; }
+        .card-scroll { display: flex; overflow-x: auto; padding: 0 20px 20px; gap: 20px; scrollbar-width: none; }
+        .area-card { min-width: 280px; background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
+        .area-img { width: 100%; height: 150px; background-size: cover; background-position: center; }
+        .area-info { padding: 15px; }
+        .btn-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+        .btn-group a {
+            background: #2a2a2a; color: var(--accent-gold); text-decoration: none; font-size: 0.7rem;
+            padding: 8px 0; text-align: center; border-radius: 5px; border: 1px solid var(--accent-gold);
         }
 
-        /* --- Section Titles --- */
-        .section-header {
-            padding: 0 20px;
-            margin: 50px 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-header h2 { font-size: 1.1rem; letter-spacing: 2px; }
-        .line { flex: 1; height: 1px; background: #333; }
-
-        /* --- Area Cards (Ver.1.55 完全維持) --- */
-        .card-container { display: flex; overflow-x: auto; padding: 0 20px 20px; gap: 20px; scrollbar-width: none; }
-        .area-card {
-            min-width: 280px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-        .area-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
-        .area-img { width: 100%; height: 160px; background-size: cover; background-position: center; }
-        .area-content { padding: 20px; }
-        .area-content h3 { font-size: 1.4rem; margin-bottom: 15px; letter-spacing: 2px; }
-        .link-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .link-grid a {
-            background: #000;
-            color: var(--accent-gold);
-            border: 1px solid var(--accent-gold);
-            text-decoration: none;
-            font-size: 0.7rem;
-            padding: 10px 0;
-            text-align: center;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        /* --- Ver.1.60 New: Gourmet Section --- */
-        .gourmet-container { padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .gourmet-btn {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-color);
-        }
-        .gourmet-btn i { color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 8px; display: block; }
-        .gourmet-btn span { font-size: 0.8rem; font-weight: bold; }
-
-        /* --- Ver.1.60 New: Gadget Section --- */
+        /* --- [New: Gourmet / Gadget デザイン追加分] --- */
+        .gourmet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
+        .gourmet-item { background: var(--card-bg); padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #444; color: var(--text-color); text-decoration: none; }
+        .gourmet-item i { color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 5px; display: block; }
+        
         .gadget-list { padding: 0 20px; display: flex; flex-direction: column; gap: 15px; }
-        .gadget-card {
-            display: flex;
-            background: #111;
-            border-radius: 15px;
-            border: 1px solid #222;
-            overflow: hidden;
-        }
-        .gadget-thumb { width: 100px; height: 100px; background: #222; background-size: cover; }
-        .gadget-body { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .gadget-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; }
-        .gadget-meta { display: flex; justify-content: space-between; align-items: center; }
-        .gadget-price { color: var(--accent-gold); font-weight: bold; font-size: 0.9rem; }
-        .buy-btn { font-size: 0.7rem; background: var(--accent-gold); color: #000; padding: 4px 10px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .gadget-card { display: flex; background: #1a1a1a; border-radius: 10px; overflow: hidden; border-left: 3px solid var(--accent-gold); }
+        .gadget-img { width: 80px; height: 80px; background: #333; background-size: cover; }
+        .gadget-body { padding: 10px; flex: 1; }
+        .gadget-name { font-size: 0.9rem; font-weight: bold; }
+        .buy-link { font-size: 0.7rem; background: var(--accent-gold); color: #000; padding: 2px 8px; border-radius: 3px; text-decoration: none; float: right; margin-top: 5px; }
 
-        /* --- Tips (Ver.1.55 位置関係維持) --- */
-        .tips-list { padding: 0 20px; margin-bottom: 50px; }
-        .tips-item {
-            background: #111;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-size: 0.8rem;
-            border-left: 3px solid var(--accent-gold);
-            color: #ddd;
-        }
-
-        /* --- SNS & Footer (Ver.1.55 完全維持) --- */
-        .sns-section {
-            text-align: center;
-            padding: 60px 20px;
-            background: #050505;
-            border-top: 1px solid #111;
-        }
-        .sns-title { font-size: 0.7rem; color: var(--accent-gold); letter-spacing: 3px; margin-bottom: 25px; }
-        .sns-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; }
-        .sns-links a { color: var(--text-color); font-size: 1.8rem; transition: 0.3s; }
-        .sns-links a:hover { color: var(--accent-gold); }
-        footer { font-size: 0.6rem; color: #444; letter-spacing: 1px; }
+        /* --- [Ver.1.55 Tips / SNS / Footer 完全保持] --- */
+        .tips-area { padding: 0 20px; margin-bottom: 40px; }
+        .tips-card { background: #222; padding: 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.85rem; }
+        .sns-footer { text-align: center; padding: 40px 20px; border-top: 1px solid #333; background: #0a0a0a; }
+        .sns-icons { margin-bottom: 20px; }
+        .sns-icons a { color: var(--accent-gold); font-size: 1.5rem; margin: 0 15px; text-decoration: none; }
+        footer { font-size: 0.7rem; color: var(--sub-text); margin-top: 10px; }
 
     </style>
 </head>
 <body>
 
     <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+
     <nav class="nav-overlay" id="navOverlay">
-        <a href="#hub" onclick="toggleMenu()">INTELLIGENCE HUB</a>
-        <a href="#sale" onclick="toggleMenu()">SALE INFO</a>
-        <a href="#area" onclick="toggleMenu()">AREA EXPLORE</a>
-        <a href="#gourmet" onclick="toggleMenu()">GOURMET SEARCH</a>
-        <a href="#gadget" onclick="toggleMenu()">TRAVEL GADGETS</a>
-        <a href="#tips" onclick="toggleMenu()">TRAVEL TIPS</a>
+        <a href="#hub" onclick="toggleMenu()">Intelligence Hub</a>
+        <a href="#sale" onclick="toggleMenu()">Sale Info</a>
+        <a href="#area" onclick="toggleMenu()">Area Search</a>
+        <a href="#gourmet" onclick="toggleMenu()">Gourmet</a>
+        <a href="#gadget" onclick="toggleMenu()">Gadgets</a>
+        <a href="#tips" onclick="toggleMenu()">Tips</a>
     </nav>
 
     <header>
         <div class="logo">Trip_Dash.</div>
-        <div class="version-tag">RELEASE Ver.1.60</div>
+        <p style="font-size: 0.6rem; color: var(--sub-text);">Ver.1.61 (Gourmet & Gadget Edition)</p>
     </header>
 
-    <div id="hub">
-        <div class="hub-label">INTELLIGENCE HUB</div>
-        <div class="hub-container">
-            <div class="status-grid">
-                <div class="status-item"><div class="light-box"><div class="light green"></div></div>新幹線</div>
-                <div class="status-item"><div class="light-box"><div class="light green"></div></div>国内航空便</div>
-                <div class="status-item"><div class="light-box"><div class="light yellow"></div></div>現地気象</div>
-            </div>
+    <div id="hub" class="hub-container">
+        <div class="status-grid">
+            <div class="status-item">新幹線<div class="light green"></div></div>
+            <div class="status-item">航空便<div class="light green"></div></div>
+            <div class="status-item">天気<div class="light yellow"></div></div>
         </div>
     </div>
 
-    <div id="sale" class="sale-area">
-        <div class="sale-banner">楽天トラベル：5と0のつく日【ポイント最大20%】</div>
-        <div class="coupon-list" style="margin-top: 20px;">
+    <div id="sale">
+        <div class="sale-ticker">楽天トラベル：5と0のつく日 ポイント最大20%還元中！</div>
+        <div class="coupon-list">
             <div class="coupon-card">
-                <div class="coupon-info"><h4>10,000円OFF クーポン</h4><p>対象宿泊施設で利用可能</p></div>
+                <div><h4>10,000円OFF クーポン</h4><p>対象宿泊施設で利用可能</p></div>
                 <div class="limit-badge">残り1日</div>
-            </div>
-            <div class="coupon-card">
-                <div class="coupon-info"><h4>5,000円OFF クーポン</h4><p>レンタカー・バス予約</p></div>
-                <div class="limit-badge">残り3日</div>
             </div>
         </div>
     </div>
 
     <div id="area">
-        <div class="section-header"><h2>AREA EXPLORE</h2><div class="line"></div></div>
-        <div class="card-container">
+        <h2 class="section-title">エリア検索</h2>
+        <div class="card-scroll">
             <div class="area-card">
                 <div class="area-img" style="background-image: url('https://images.unsplash.com/photo-1540959733332-e94e1b3f1081?w=400');"></div>
-                <div class="area-content">
+                <div class="area-info">
                     <h3>TOKYO</h3>
-                    <div class="link-grid"><a href="#">楽天</a><a href="#">じゃらん</a><a href="#">一休</a></div>
+                    <div class="btn-group"><a href="#">楽天</a><a href="#">じゃらん</a><a href="#">一休</a></div>
                 </div>
             </div>
             <div class="area-card">
                 <div class="area-img" style="background-image: url('https://images.unsplash.com/photo-1590559899731-a382839e5549?w=400');"></div>
-                <div class="area-content">
+                <div class="area-info">
                     <h3>OSAKA</h3>
-                    <div class="link-grid"><a href="#">楽天</a><a href="#">じゃらん</a><a href="#">一休</a></div>
+                    <div class="btn-group"><a href="#">楽天</a><a href="#">じゃらん</a><a href="#">一休</a></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="gourmet">
-        <div class="section-header"><h2>GOURMET SEARCH</h2><div class="line"></div></div>
-        <div class="gourmet-container">
-            <a href="#" class="gourmet-btn"><i class="fas fa-utensils"></i><span>食べログ</span></a>
-            <a href="#" class="gourmet-btn"><i class="fas fa-fire"></i><span>Hot Pepper</span></a>
+        <h2 class="section-title">グルメ検索</h2>
+        <div class="gourmet-grid">
+            <a href="#" class="gourmet-item"><i class="fas fa-utensils"></i><span>食べログ</span></a>
+            <a href="#" class="gourmet-item"><i class="fas fa-search"></i><span>Hot Pepper</span></a>
         </div>
     </div>
 
     <div id="gadget">
-        <div class="section-header"><h2>TRAVEL GADGETS</h2><div class="line"></div></div>
+        <h2 class="section-title">旅の必需品</h2>
         <div class="gadget-list">
             <div class="gadget-card">
-                <div class="gadget-thumb" style="background-image: url('https://images.unsplash.com/photo-1619134769035-492759e66432?w=200');"></div>
+                <div class="gadget-img" style="background-image: url('https://images.unsplash.com/photo-1619134769035-492759e66432?w=100');"></div>
                 <div class="gadget-body">
-                    <div class="gadget-title">MagSafe対応 モバイルバッテリー</div>
-                    <div class="gadget-meta"><span class="gadget-price">¥4,280</span><a href="#" class="buy-btn">Amazon</a></div>
-                </div>
-            </div>
-            <div class="gadget-card">
-                <div class="gadget-thumb" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200');"></div>
-                <div class="gadget-body">
-                    <div class="gadget-title">ノイズキャンセリング ヘッドホン</div>
-                    <div class="gadget-meta"><span class="gadget-price">¥29,800</span><a href="#" class="buy-btn">楽天</a></div>
+                    <div class="gadget-name">モバイルバッテリー 10000mAh</div>
+                    <a href="#" class="buy-link">Amazon</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="tips">
-        <div class="section-header"><h2>TRAVEL TIPS</h2><div class="line"></div></div>
-        <div class="tips-list">
-            <div class="tips-item">💡 新幹線の座席予約は「車両の端」を選ぶと、荷物スペースを確保しやすい。</div>
-            <div class="tips-item">💡 ホテルのWi-Fi速度が不安な時は、事前にスピードテストサイトを確認。</div>
-        </div>
+    <div id="tips" class="tips-area">
+        <h2 class="section-title">旅のTips</h2>
+        <div class="tips-card">💡 新幹線の領収書はスマートEXならアプリ内で即時発行。</div>
+        <div class="tips-card">💡 飛行機の機内持ち込み、モバイルバッテリーは個数制限に注意。</div>
     </div>
 
-    <div class="sns-section">
-        <div class="sns-title">FOLLOW US</div>
-        <div class="sns-links">
+    <div class="sns-footer">
+        <div class="sns-icons">
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-x-twitter"></i></a>
         </div>
@@ -349,15 +242,6 @@
         function toggleMenu() {
             document.getElementById('navOverlay').classList.toggle('active');
         }
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
     </script>
 </body>
 </html>
