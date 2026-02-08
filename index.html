@@ -82,7 +82,7 @@
             background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
         }
 
-        /* SALE BANNER (Ver1.45) */
+        /* SALE BANNER */
         #sale-banner {
             display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
             border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
@@ -106,23 +106,20 @@
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
         
-        /* HUB GRID */
+        /* HUB GRID & STATUS INDICATORS (Ver 1.11 Restoration) */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
         .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .dot-green { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
+        .dot-yellow { background: var(--caution-yellow); box-shadow: 0 0 8px var(--caution-yellow); }
+        .dot-red { background: var(--alert-red); box-shadow: 0 0 8px var(--alert-red); }
 
         .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .sub-card { background: var(--card-gray); border-radius: 12px; padding: 12px 4px; border: 1px solid #2a2a2a; text-align: center; cursor: pointer; }
         .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
-
-        /* SNS SECTION (Ver 1.54 Fix) */
-        .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .sns-card { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
-        .sns-card i { font-size: 18px; }
-        .sns-x { background: #000000; }
-        .sns-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 
         /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -138,7 +135,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* COUPONS (Ver.1.50) */
+        /* COUPONS */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -173,6 +170,13 @@
         .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
         .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
 
+        /* SNS SECTION (Ver 1.55 Moved) */
+        .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .sns-card { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .sns-card i { font-size: 18px; }
+        .sns-x { background: #000000; }
+        .sns-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
         /* FOOTER */
         footer { margin: 40px 0 20px; padding: 25px; border-top: 1px solid #2a2a2a; text-align: center; }
         .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
@@ -204,7 +208,6 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#sns-section" class="nav-link">SNS</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
             <a href="#area-section" class="nav-link">Area</a>
@@ -222,11 +225,17 @@
             <div class="hub-grid">
                 <div class="hub-card" onclick="openModal('transit')">
                     <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-                    <div class="hub-val" id="transit-display">正常運行</div>
+                    <div class="hub-val" id="transit-display">
+                        <span class="status-dot dot-green"></span>
+                        運行状況を確認
+                    </div>
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
                     <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Detecting...</span></div>
-                    <div class="hub-val" id="weather-display">--°C</div>
+                    <div class="hub-val" id="weather-display">
+                        <span id="weather-dot" class="status-dot dot-green"></span>
+                        --°C
+                    </div>
                 </div>
             </div>
             <div class="sub-grid">
@@ -234,18 +243,6 @@
                 <div class="sub-card" onclick="openModal('flight')"><i class="fa-solid fa-plane sub-icon"></i><div class="sub-txt">FLIGHT</div></div>
                 <div class="sub-card" onclick="openModal('rain')"><i class="fa-solid fa-cloud-showers-heavy sub-icon"></i><div class="sub-txt">RAIN</div></div>
                 <div class="sub-card" onclick="openModal('news')"><i class="fa-solid fa-rss sub-icon"></i><div class="sub-txt">NEWS</div></div>
-            </div>
-        </section>
-
-        <section id="sns-section">
-            <div class="section-header"><div class="section-title">OFFICIAL SNS</div><div class="section-line"></div></div>
-            <div class="sns-grid">
-                <a href="https://x.com/tokutabi_pro" target="_blank" class="sns-card sns-x">
-                    <i class="fa-brands fa-x-twitter"></i> Official X
-                </a>
-                <a href="https://www.instagram.com/hazusanai_mens" target="_blank" class="sns-card sns-ig">
-                    <i class="fa-brands fa-instagram"></i> Instagram
-                </a>
             </div>
         </section>
 
@@ -300,6 +297,18 @@
         <section id="tips-section">
             <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
             <div id="tips-container" class="tips-grid"></div>
+        </section>
+
+        <section id="sns-section">
+            <div class="section-header"><div class="section-title">OFFICIAL SNS</div><div class="section-line"></div></div>
+            <div class="sns-grid">
+                <a href="https://x.com/tokutabi_pro" target="_blank" class="sns-card sns-x">
+                    <i class="fa-brands fa-x-twitter"></i> Official X
+                </a>
+                <a href="https://www.instagram.com/hazusanai_mens" target="_blank" class="sns-card sns-ig">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
         </section>
 
         <footer>
@@ -362,8 +371,9 @@
                 document.getElementById('location-name').innerText = ipData.city || "Tokyo";
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
-                document.getElementById('weather-display').innerText = `${Math.round(wData.current_weather.temperature)}°C Current`;
-            } catch (e) { document.getElementById('weather-display').innerText = `--°C`; }
+                const temp = Math.round(wData.current_weather.temperature);
+                document.getElementById('weather-display').innerHTML = `<span id="weather-dot" class="status-dot dot-green"></span> ${temp}°C Current`;
+            } catch (e) { document.getElementById('weather-display').innerHTML = `<span id="weather-dot" class="status-dot dot-yellow"></span> --°C`; }
         }
 
         function processCSVData(text) {
@@ -377,6 +387,10 @@
             const tipsContainer = document.getElementById('tips-container');
             const root = document.documentElement;
             
+            // Intelligence Hub Signal Logic (Restored from Ver 1.11)
+            const transitDisplay = document.getElementById('transit-display');
+            let hasEmergency = false;
+
             bannerE.style.display = 'none'; 
             root.style.setProperty('--emergency-h', '0px');
             bannerS.style.display = 'none';
@@ -399,6 +413,7 @@
                     bannerE.innerText = `【！】 ${title}`; 
                     bannerE.style.display = 'block';
                     root.style.setProperty('--emergency-h', '38px');
+                    hasEmergency = true;
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     document.getElementById('sale-banner-text').innerText = title;
@@ -419,6 +434,13 @@
                     coupons[brands[brand]].push({ title, url, fTxt, end, disc });
                 }
             });
+
+            // Signal Light Control
+            if (hasEmergency) {
+                transitDisplay.innerHTML = `<span class="status-dot dot-red"></span> 運行情報あり`;
+            } else {
+                transitDisplay.innerHTML = `<span class="status-dot dot-green"></span> 正常運行`;
+            }
 
             if (!saleTopFound) {
                 const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
