@@ -20,24 +20,48 @@
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
             --header-h: 120px;
+            --banner-h: 0px; /* Ver 1.11 Dynamic Control */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); transition: padding-top 0.3s; }
+        body { 
+            background: var(--bg-black); 
+            color: var(--text-main); 
+            font-family: -apple-system, sans-serif; 
+            padding-top: calc(var(--header-h) + var(--banner-h)); 
+            transition: padding-top 0.3s ease; 
+        }
 
-        /* EMERGENCY BANNER (Ver1.45) */
+        /* --- EMERGENCY BANNER (Ver 1.11 Style) --- */
         #emergency-banner {
-            display: none; position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--alert-red); color: #fff; padding: 8px 10px;
-            font-size: 10px; font-weight: 900; text-align: center; z-index: 10000;
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            height: 34px;
+            background: var(--alert-red); 
+            color: #fff; 
+            line-height: 34px;
+            font-size: 11px; 
+            font-weight: 900; 
+            text-align: center; 
+            z-index: 10000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         /* HEADER & NAV */
         header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px);
-            z-index: 9000; border-bottom: 1px solid #2a2a2a; transition: top 0.3s;
+            position: fixed; 
+            top: var(--banner-h); 
+            left: 0; 
+            width: 100%;
+            background: rgba(13, 15, 17, 0.95); 
+            backdrop-filter: blur(10px);
+            z-index: 9000; 
+            border-bottom: 1px solid #2a2a2a; 
+            transition: top 0.3s ease;
         }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
@@ -109,7 +133,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* --- COUPONS (Ver.1.32 Logic Update) --- */
+        /* --- COUPONS (Ver.1.50 Logic) --- */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -332,11 +356,13 @@
 
             const bannerE = document.getElementById('emergency-banner');
             const bannerS = document.getElementById('sale-banner');
-            const header = document.getElementById('main-header');
             const tipsContainer = document.getElementById('tips-container');
+            const root = document.documentElement;
             
-            bannerE.style.display = 'none'; bannerS.style.display = 'none';
-            header.style.top = '0'; document.body.style.paddingTop = 'var(--header-h)';
+            // Initial Reset (Ver 1.11 Restoration)
+            bannerE.style.display = 'none'; 
+            root.style.setProperty('--banner-h', '0px');
+            bannerS.style.display = 'none';
             tipsContainer.innerHTML = '';
             
             let saleTopFound = false;
@@ -349,9 +375,11 @@
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
                 const sDate = new Date(start); const eDate = new Date(end);
 
+                // --- Emergency Logic (Ver 1.11) ---
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
-                    bannerE.innerText = `【！】 ${title}`; bannerE.style.display = 'block';
-                    header.style.top = '30px'; document.body.style.paddingTop = '150px';
+                    bannerE.innerText = `【！】 ${title}`; 
+                    bannerE.style.display = 'block';
+                    root.style.setProperty('--banner-h', '34px');
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     document.getElementById('sale-banner-text').innerText = title;
@@ -390,7 +418,6 @@
                 }
             }
 
-            // --- Device-based Coupon Display Logic ---
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             const isMobile = window.innerWidth < 600;
             const maxVisible = isMobile ? 2 : 4;
@@ -399,14 +426,12 @@
                 if (coupons[b].length === 0) return;
                 const group = document.createElement('div'); group.className = 'coupon-group';
                 const grid = document.createElement('div'); grid.id = `grid-${b}`; grid.className = 'coupon-grid';
-                
                 coupons[b].forEach((c, i) => {
                     const isHidden = i >= maxVisible ? 'style="display:none"' : '';
                     const endD = new Date(c.end); const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
                     const limitBadge = (diffDays > 0 && diffDays <= 3) ? `<div class="limit-badge">残り${diffDays}日</div>` : '';
                     grid.innerHTML += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-fTxt">${c.fTxt}</div><div style="font-size:10px;font-weight:700;color:#555;">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
                 });
-                
                 group.appendChild(grid);
                 if (coupons[b].length > maxVisible) {
                     const btn = document.createElement('button'); btn.className = 'expand-btn';
