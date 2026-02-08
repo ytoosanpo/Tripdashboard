@@ -67,12 +67,6 @@
         .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
         .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
         .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
-        .sale-today::after, .sale-rakuten-day::after {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(30deg); animation: flash 3.5s infinite;
-        }
-        @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
@@ -109,7 +103,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* BOARDING PASS COUPONS */
+        /* COUPONS */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -133,34 +127,35 @@
         .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
         .area-swipe-container::-webkit-scrollbar { display: none; }
         .area-column { flex: 0 0 85%; display: flex; flex-direction: column; gap: 12px; }
-        .area-column.single { flex: 0 0 85%; }
+        @media screen and (min-width: 600px) { .area-column { flex: 0 0 45%; } }
         .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 12px; }
         .area-header { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
-        .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
+        .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; }
         .area-keyword { font-size: 9px; color: var(--gold); font-weight: 700; }
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
         .btn-r { background: var(--rakuten-red); } .btn-j { background: var(--jalan-orange); } .btn-i { background: var(--ikyu-gold); }
 
         /* TIPS SECTION */
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media screen and (min-width: 600px) { .tips-grid { grid-template-columns: repeat(3, 1fr); } }
+        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s; }
         .tips-icon { color: var(--gold); font-size: 14px; }
-        .tips-title { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.4; }
+        .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
 
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card-gray); width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
+        .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; max-height: 85vh; overflow-y: auto; }
         .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; margin-bottom: 8px; display: block; }
 
         #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 12000; align-items: center; justify-content: center; padding: 20px; }
-        .paper-content { background: #f4f1ea; width: 100%; max-width: 400px; min-height: 500px; border-radius: 4px; color: #1a1a1a; padding: 30px 25px; display: flex; flex-direction: column; }
-        .paper-header { border-bottom: 2px solid #1a1a1a; margin-bottom: 20px; padding-bottom: 10px; text-align: center; }
-        .paper-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; }
-        .paper-body { font-size: 14px; line-height: 1.8; flex-grow: 1; text-align: justify; font-family: serif; white-space: pre-wrap; }
-        .paper-footer { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #ccc; padding-top: 15px; }
-        .page-ctrl { display: flex; align-items: center; gap: 10px; }
-        .page-btn { background: none; border: 1px solid #1a1a1a; padding: 5px 10px; font-size: 10px; cursor: pointer; }
+        .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; position: relative; }
+        .paper-header { border-bottom: 2px solid #1a1a1a; margin-bottom: 15px; padding-bottom: 10px; text-align: center; }
+        .paper-title { font-size: 18px; font-weight: 900; margin-bottom: 12px; font-family: serif; }
+        .paper-body { font-size: 13.5px; line-height: 1.7; flex-grow: 1; text-align: justify; font-family: serif; white-space: pre-wrap; color: #333; }
+        .paper-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #ccc; padding-top: 12px; }
+        .page-ctrl { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 900; }
+        .page-btn { background: none; border: 1px solid #1a1a1a; padding: 4px 8px; font-size: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -184,9 +179,7 @@
     </header>
 
     <div class="container">
-        <a id="sale-banner" href="#">
-            <div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING SALES...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div>
-        </a>
+        <a id="sale-banner" href="#"><div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING SALES...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div></a>
 
         <section id="field-ops">
             <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
@@ -276,20 +269,52 @@
             <div id="paper-body" class="paper-body"></div>
             <div class="paper-footer">
                 <div class="page-ctrl"><button id="prev-page" class="page-btn" onclick="changePage(-1)">PREV</button><span id="curr-page">1</span> / <span id="total-page">1</span><button id="next-page" class="page-btn" onclick="changePage(1)">NEXT</button></div>
-                <div style="text-decoration:underline;cursor:pointer;" onclick="closeTips()">CLOSE</div>
+                <div style="text-decoration:underline;cursor:pointer;font-size:11px;font-weight:900;" onclick="closeTips()">CLOSE</div>
             </div>
         </div>
     </div>
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+        
+        // Ver1.11で確定した全リンク先を完全復元
         const MODAL_DATA = {
-            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
-            weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"}] },
-            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"}] },
-            flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"}] },
-            rain: { t: "RAIN RADAR", b: [{n: "雨雲レーダー", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"}] },
-            news: { t: "LATEST NEWS", b: [{n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},{n: "NHK ニュース", l: "https://www3.nhk.or.jp/news/", c: "#28a745"}] }
+            transit: { t: "RAILWAY STATUS", b: [
+                {n: "JR東日本 運行情報", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},
+                {n: "東京メトロ 運行情報", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},
+                {n: "都営交通 運行情報", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},
+                {n: "東急電鉄 運行情報", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},
+                {n: "Yahoo! 路線情報", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}
+            ]},
+            weather: { t: "WEATHER DETAILS", b: [
+                {n: "日本気象協会 (tenki.jp)", l: "https://tenki.jp/", c: "#007aff"},
+                {n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},
+                {n: "気象庁 防災情報", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},
+                {n: "Yahoo! 天気", l: "https://weather.yahoo.co.jp/weather/", c: "#ff9900"}
+            ]},
+            highway: { t: "HIGHWAY TRAFFIC", b: [
+                {n: "ドラぷら (NEXCO東日本)", l: "https://www.driveplaza.com/", c: "#28a745"},
+                {n: "iHighway (NEXCO中日本)", l: "https://c-ihighway.jp/", c: "#f39c12"},
+                {n: "JARTIC 渋滞情報", l: "https://www.jartic.or.jp/", c: "#34495e"},
+                {n: "首都高 リアルタイム", l: "https://search.shutoko-eng.jp/rtmap.html", c: "#007aff"}
+            ]},
+            flight: { t: "FLIGHT STATUS", b: [
+                {n: "JAL 運航情報", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},
+                {n: "ANA 運航情報", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},
+                {n: "羽田空港 フライト情報", l: "https://tokyo-haneda.com/flight/index.html", c: "#34495e"},
+                {n: "成田空港 フライト情報", l: "https://www.narita-airport.jp/jp/flight/", c: "#007aff"}
+            ]},
+            rain: { t: "RAIN RADAR", b: [
+                {n: "雨雲レーダー (Yahoo!)", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},
+                {n: "高解像度降水ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#007aff"},
+                {n: "ウェザーニュース レーダー", l: "https://weathernews.jp/onebox/radar/", c: "#2ecc71"}
+            ]},
+            news: { t: "LATEST NEWS", b: [
+                {n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},
+                {n: "NHK ニュース", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},
+                {n: "日本経済新聞", l: "https://www.nikkei.com/", c: "#34495e"},
+                {n: "Google ニュース", l: "https://news.google.com/", c: "#4285f4"}
+            ]}
         };
 
         let currentTipsPages = []; let currentPageIdx = 0; let currentTipsTitle = "";
@@ -323,8 +348,7 @@
 
         function processCSVData(text) {
             const rows = text.split('\n').slice(1).filter(r => r.trim());
-            const now = new Date();
-            const date = now.getDate();
+            const now = new Date(); const date = now.getDate();
             const bannerE = document.getElementById('emergency-banner');
             const bannerS = document.getElementById('sale-banner');
             const tipsContainer = document.getElementById('tips-container');
@@ -392,7 +416,9 @@
             });
         }
 
-        function openTips(title, fullText) { currentTipsTitle = title; currentTipsPages = splitTextIntoPages(fullText, 250); currentPageIdx = 0; renderPaper(); document.getElementById('tips-modal').style.display = 'flex'; }
+        // Tipsモーダル文字数200文字制限
+        function openTips(title, fullText) { currentTipsTitle = title; currentTipsPages = splitTextIntoPages(fullText, 200); currentPageIdx = 0; renderPaper(); document.getElementById('tips-modal').style.display = 'flex'; }
+        
         function splitTextIntoPages(text, limit) {
             const pages = []; let remaining = text;
             while (remaining.length > 0) {
@@ -403,6 +429,7 @@
             }
             return pages;
         }
+
         function renderPaper() {
             document.getElementById('paper-title').innerText = currentTipsTitle;
             document.getElementById('paper-body').innerText = currentTipsPages[currentPageIdx];
@@ -413,6 +440,7 @@
         }
         function changePage(dir) { currentPageIdx += dir; renderPaper(); }
         function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
+        
         function openModal(key) {
             const d = MODAL_DATA[key]; document.getElementById('modal-title').innerText = d.t;
             document.getElementById('modal-btns').innerHTML = d.b.map(b => `<a href="${b.l}" target="_blank" class="choice-btn" style="background:${b.c}">${b.n}</a>`).join('');
