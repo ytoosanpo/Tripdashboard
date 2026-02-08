@@ -76,13 +76,12 @@
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
-        /* CONTAINER & SECTIONS */
+        /* HUB GRID */
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
         
-        /* HUB GRID */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
@@ -123,7 +122,6 @@
             overflow: hidden; text-decoration: none; position: relative; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #eee;
         }
-        /* Ticket design side cuts */
         .coupon-card::before, .coupon-card::after { 
             content: ''; position: absolute; top: 44px; width: 14px; height: 14px; 
             background: var(--bg-black); border-radius: 50%; z-index: 2; 
@@ -135,8 +133,8 @@
             height: 52px; background: #fdfdfd; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; border-bottom: 2px dashed #ddd; padding: 5px; 
         }
-        .coupon-val-unit { font-size: 9px; font-weight: 900; color: var(--alert-red); margin-bottom: -4px; }
         .coupon-val-big { font-size: 22px; font-weight: 900; color: var(--alert-red); letter-spacing: -1px; }
+        .coupon-val-unit { font-size: 10px; font-weight: 900; color: var(--alert-red); margin-top: -2px; }
         
         .coupon-bottom { 
             flex-grow: 1; padding: 12px 10px; display: flex; flex-direction: column; 
@@ -162,46 +160,26 @@
             margin-top: 30px;
             position: relative;
             background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            border-radius: 24px;
-            padding: 25px 0;
-            overflow: hidden;
+            background-size: cover; background-position: center; border-radius: 24px; padding: 25px 0; overflow: hidden;
         }
         #area-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9));
-            z-index: 1;
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1;
         }
         .area-content-wrapper { position: relative; z-index: 2; }
         .area-section-header { padding: 0 20px; display: flex; align-items: center; margin-bottom: 15px; }
 
         .area-swipe-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 12px;
-            padding: 0 20px 15px;
-            scrollbar-width: none;
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 20px 15px; scrollbar-width: none;
         }
         .area-swipe-container::-webkit-scrollbar { display: none; }
 
-        .area-column {
-            flex: 0 0 85%;
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .area-column { flex: 0 0 85%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 12px; }
         .area-column.single { flex: 0 0 85%; }
 
         .area-card { 
-            background: rgba(28, 33, 38, 0.85); 
-            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 16px; display: flex; flex-direction: column; gap: 12px; 
-            backdrop-filter: blur(8px);
+            background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 16px; display: flex; flex-direction: column; gap: 12px; backdrop-filter: blur(8px);
         }
         .area-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .area-name-main { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
@@ -209,9 +187,7 @@
         
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .area-btn { 
-            border: none; color: #fff; text-decoration: none;
-            padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center;
-            display: flex; align-items: center; justify-content: center;
+            border: none; color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; display: flex; align-items: center; justify-content: center;
         }
         .btn-r { background: var(--rakuten-red); }
         .btn-j { background: var(--jalan-orange); }
@@ -470,35 +446,35 @@
                 }
             });
 
-            // Specific Day Logic
-            if (!saleTopFound && [5, 10, 15, 20, 25, 30].includes(date)) {
-                showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
-                activateCard('rakuten', 'P4倍'); saleTopFound = true;
-            }
-            if (!saleTopFound && date === 9) {
-                showTopBanner('today', "一休.com｜本日は「一休の日」最大20%還元！", "https://www.ikyu.com/special/01/ikyunohi/");
-                activateCard('ikyu', 'MAX20%'); saleTopFound = true;
+            if (!saleTopFound) {
+                if ([5, 10, 15, 20, 25, 30].includes(date)) {
+                    showTopBanner('rakuten', "楽天トラベル｜本日 5と0のつく日 ポイント4倍", "https://travel.rakuten.co.jp/camp/50bunrui/");
+                    activateCard('rakuten', 'P4倍');
+                } else if (date === 9) {
+                    showTopBanner('today', "一休.com｜本日は「一休の日」最大20%還元！", "https://www.ikyu.com/special/01/ikyunohi/");
+                    activateCard('ikyu', 'MAX20%');
+                } else if (date === 8) {
+                    showTopBanner('preview', "一休.com｜明日9日は「一休の日」事前エントリー受付中", "https://www.ikyu.com/special/01/ikyunohi/");
+                    activateCard('ikyu', '明日開催');
+                }
             }
 
-            // Render Enhanced Coupons
             const container = document.getElementById('coupon-list');
             container.innerHTML = '';
             Object.keys(coupons).forEach(b => {
                 if (coupons[b].length === 0) return;
-                
                 const group = document.createElement('div');
                 group.className = 'coupon-group';
                 const grid = document.createElement('div');
                 grid.className = 'coupon-grid';
-                
                 let html = '';
                 coupons[b].forEach((c, i) => {
                     const isHidden = i >= 2 ? 'style="display:none"' : '';
                     html += `
                     <a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>
                         <div class="coupon-top">
-                            <div class="coupon-val-unit">OFF</div>
                             <div class="coupon-val-big">${c.fTxt || 'SALE'}</div>
+                            <div class="coupon-val-unit">OFF</div>
                         </div>
                         <div class="coupon-bottom">
                             <div class="coupon-title">${c.title}</div>
@@ -509,17 +485,12 @@
                         </div>
                     </a>`;
                 });
-                grid.innerHTML = html;
-                group.appendChild(grid);
-                
+                grid.innerHTML = html; group.appendChild(grid);
                 if (coupons[b].length > 2) {
                     const ribbon = document.createElement('div');
                     ribbon.className = 'show-more-ribbon';
                     ribbon.innerHTML = `<i class="fa-solid fa-gift"></i> ${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-2})`;
-                    ribbon.onclick = () => {
-                        grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex');
-                        ribbon.style.display = 'none';
-                    };
+                    ribbon.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); ribbon.style.display = 'none'; };
                     group.appendChild(ribbon);
                 }
                 container.appendChild(group);
