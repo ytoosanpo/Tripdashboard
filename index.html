@@ -109,7 +109,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* --- COUPONS (Ver.1.32 Restoration) --- */
+        /* --- COUPONS (Ver.1.32 Full Logic) --- */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -121,6 +121,13 @@
         .coupon-side { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 5px; position: relative; }
         .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; }
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
+        
+        /* Ver 1.32 Expand Ribbon */
+        .expand-btn {
+            width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px;
+            color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px;
+            margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
 
         /* --- AREA EXPLORER (Ver.1.25 Restoration: 5 Area) --- */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
@@ -384,20 +391,38 @@
                 }
             }
 
+            // --- Ver 1.32 Coupon Render with Expansion Logic ---
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             Object.keys(coupons).forEach(b => {
                 if (coupons[b].length === 0) return;
                 const group = document.createElement('div'); group.className = 'coupon-group';
-                const grid = document.createElement('div'); grid.className = 'coupon-grid';
+                const grid = document.createElement('div'); grid.id = `grid-${b}`; grid.className = 'coupon-grid';
+                
                 coupons[b].forEach((c, i) => {
                     const isHidden = i >= 4 ? 'style="display:none"' : '';
                     const endD = new Date(c.end); const diffDays = Math.ceil((endD - now) / (1000 * 60 * 60 * 24));
                     const limitBadge = (diffDays > 0 && diffDays <= 3) ? `<div class="limit-badge">残り${diffDays}日</div>` : '';
                     grid.innerHTML += `<a href="${c.url}" target="_blank" class="coupon-card" ${isHidden}>${limitBadge}<div class="coupon-main"><div class="coupon-fTxt">${c.fTxt}</div><div style="font-size:10px;font-weight:700;color:#555;">${c.disc}</div></div><div class="coupon-side" style="background:${colors[b]}"><div class="coupon-end-date">${endD.getMonth()+1}/${endD.getDate()}</div></div></a>`;
                 });
+                
                 group.appendChild(grid);
+                if (coupons[b].length > 4) {
+                    const btn = document.createElement('button'); btn.className = 'expand-btn';
+                    btn.innerHTML = `<span>MORE ${b.toUpperCase()} COUPONS</span><i class="fa-solid fa-chevron-down"></i>`;
+                    btn.onclick = () => toggleCoupons(b, btn);
+                    group.appendChild(btn);
+                }
                 container.appendChild(group);
             });
+        }
+
+        // Ver 1.32 Toggle Function
+        function toggleCoupons(brand, btn) {
+            const grid = document.getElementById(`grid-${brand}`);
+            const cards = grid.querySelectorAll('.coupon-card');
+            const isExpanding = btn.querySelector('span').innerText.includes('MORE');
+            cards.forEach((card, i) => { if (i >= 4) card.style.display = isExpanding ? 'flex' : 'none'; });
+            btn.innerHTML = isExpanding ? `<span>CLOSE</span><i class="fa-solid fa-chevron-up"></i>` : `<span>MORE ${brand.toUpperCase()} COUPONS</span><i class="fa-solid fa-chevron-down"></i>`;
         }
 
         function openTips(title, fullText) { currentTipsTitle = title; currentTipsPages = splitTextIntoPages(fullText, 200); currentPageIdx = 0; renderPaper(); document.getElementById('tips-modal').style.display = 'flex'; }
