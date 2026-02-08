@@ -114,16 +114,27 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* BOARDING PASS COUPONS (UPDATED) */
+        /* BOARDING PASS COUPONS */
         .coupon-group { margin-bottom: 25px; }
-        .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+        .coupon-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; /* Default for Mobile */
+            gap: 12px; 
+            margin-top: 10px; 
+        }
         
+        /* PC Responsive: 2 Columns */
+        @media screen and (min-width: 600px) {
+            .coupon-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         .coupon-card {
             background: #e0e0e0; color: #333; border-radius: 12px; display: flex; 
             min-height: 110px; text-decoration: none; position: relative; overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        /* Ticket Cut-out */
         .coupon-card::before, .coupon-card::after { 
             content: ''; position: absolute; left: 68%; width: 16px; height: 16px; 
             background: var(--bg-black); border-radius: 50%; z-index: 5; 
@@ -131,7 +142,6 @@
         .coupon-card::before { top: -8px; }
         .coupon-card::after { bottom: -8px; }
 
-        /* Left Side (Main Info) */
         .coupon-main { 
             flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; 
             justify-content: center; position: relative; border-right: 1.5px dashed #bbb;
@@ -140,7 +150,6 @@
         .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; margin-bottom: 4px; }
         .coupon-disc-sub { font-size: 10px; font-weight: 700; color: #555; }
 
-        /* Right Side (End Date) */
         .coupon-side { 
             flex-grow: 1; display: flex; flex-direction: column; align-items: center; 
             justify-content: center; text-align: center; padding: 10px 5px; position: relative;
@@ -148,7 +157,6 @@
         .coupon-side-label { font-size: 8px; font-weight: 900; color: #fff; opacity: 0.9; margin-bottom: 2px; }
         .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; line-height: 1.2; }
 
-        /* Countdown Badge */
         .limit-badge {
             position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff;
             font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px;
@@ -477,9 +485,8 @@
                 let html = '';
                 
                 coupons[b].forEach((c, i) => {
-                    const isHidden = i >= 3 ? 'style="display:none"' : '';
+                    const isHidden = i >= 4 ? 'style="display:none"' : '';
                     
-                    // Countdown Logic
                     const endD = new Date(c.end);
                     const diffTime = endD - now;
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -487,8 +494,6 @@
                     if (diffDays > 0 && diffDays <= 3) {
                         limitBadge = `<div class="limit-badge">残り${diffDays}日</div>`;
                     }
-
-                    // Date Format
                     const dateStr = `${endD.getMonth() + 1}/${endD.getDate()}`;
 
                     html += `
@@ -507,10 +512,10 @@
                     </a>`;
                 });
                 grid.innerHTML = html; group.appendChild(grid);
-                if (coupons[b].length > 3) {
+                if (coupons[b].length > 4) {
                     const ribbon = document.createElement('div');
                     ribbon.className = 'show-more-ribbon';
-                    ribbon.innerHTML = `<i class="fa-solid fa-gift"></i> ${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-3})`;
+                    ribbon.innerHTML = `<i class="fa-solid fa-gift"></i> ${b.toUpperCase()} 他のクーポンをみる (${coupons[b].length-4})`;
                     ribbon.onclick = () => { grid.querySelectorAll('.coupon-card').forEach(el => el.style.display = 'flex'); ribbon.style.display = 'none'; };
                     group.appendChild(ribbon);
                 }
