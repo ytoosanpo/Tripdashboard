@@ -20,7 +20,7 @@
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
             --header-h: 120px;
-            --emergency-h: 0px; /* Ver 1.11 Restoration */
+            --emergency-h: 0px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -33,21 +33,21 @@
             transition: padding-top 0.3s ease; 
         }
 
-        /* --- EMERGENCY BANNER (Ver 1.11 logic) --- */
+        /* --- EMERGENCY BANNER --- */
         #emergency-banner {
             display: none; 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%;
-            height: 38px; /* Slightly taller for visibility */
+            height: 38px;
             background: var(--alert-red); 
             color: #fff; 
             line-height: 38px;
             font-size: 11px; 
             font-weight: 900; 
             text-align: center; 
-            z-index: 20000; /* Absolute top */
+            z-index: 20000;
             box-shadow: 0 2px 15px rgba(231, 76, 60, 0.4);
         }
 
@@ -117,6 +117,12 @@
         .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
 
+        /* SNS SECTION (Added for Ver 1.52) */
+        .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .sns-card { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .sns-x { background: #000000; }
+        .sns-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
         /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; position: relative; overflow: hidden; }
@@ -131,7 +137,7 @@
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* --- COUPONS (Ver.1.50 Logic) --- */
+        /* COUPONS (Ver.1.50) */
         .coupon-group { margin-bottom: 25px; }
         .coupon-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
         @media screen and (min-width: 600px) { .coupon-grid { grid-template-columns: 1fr 1fr; } }
@@ -145,7 +151,7 @@
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
         .expand-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px; margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* AREA EXPLORER (Ver.1.25) */
+        /* AREA EXPLORER */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
@@ -160,11 +166,15 @@
         .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
         .btn-r { background: var(--rakuten-red); } .btn-j { background: var(--jalan-orange); } .btn-i { background: var(--ikyu-gold); }
 
-        /* TIPS SECTION (Ver.1.32 Bottom Position) */
+        /* TIPS SECTION */
         .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media screen and (min-width: 600px) { .tips-grid { grid-template-columns: repeat(3, 1fr); } }
         .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
         .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
+
+        /* FOOTER (Added for Ver 1.52) */
+        footer { margin: 40px 0 20px; padding: 20px; border-top: 1px solid #2a2a2a; text-align: center; }
+        .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; }
 
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 30000; align-items: center; justify-content: center; padding: 20px; }
@@ -225,6 +235,18 @@
             </div>
         </section>
 
+        <section id="sns-section">
+            <div class="section-header"><div class="section-title">OFFICIAL SNS</div><div class="section-line"></div></div>
+            <div class="sns-grid">
+                <a href="https://x.com/tokutabi_pro" target="_blank" class="sns-card sns-x">
+                    <i class="fa-brands fa-x-twitter"></i> Official X
+                </a>
+                <a href="https://www.instagram.com/hazusanai_mens" target="_blank" class="sns-card sns-ig">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </section>
+
         <section id="sale">
             <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
             <div class="sale-grid">
@@ -277,6 +299,10 @@
             <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
             <div id="tips-container" class="tips-grid"></div>
         </section>
+
+        <footer>
+            <div class="copyright">TRIP_DASH. &copy; Allrightsreserve</div>
+        </footer>
     </div>
 
     <div id="hub-modal" class="modal" onclick="closeModal()">
@@ -349,7 +375,6 @@
             const tipsContainer = document.getElementById('tips-container');
             const root = document.documentElement;
             
-            // --- Reset ---
             bannerE.style.display = 'none'; 
             root.style.setProperty('--emergency-h', '0px');
             bannerS.style.display = 'none';
@@ -364,11 +389,9 @@
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
                 if (!start || !end) return;
-
-                // Ver 1.11 Restoration: Flexible Date Parsing
                 const sDate = new Date(start); 
                 const eDate = new Date(end);
-                eDate.setHours(23, 59, 59); // Ensure end of day
+                eDate.setHours(23, 59, 59);
 
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
                     bannerE.innerText = `【！】 ${title}`; 
@@ -395,7 +418,6 @@
                 }
             });
 
-            // Auto-Banners (Ver 1.45)
             if (!saleTopFound) {
                 const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
                 const tomorrowDate = tomorrow.getDate();
@@ -415,7 +437,6 @@
                 }
             }
 
-            // Coupon Render (Ver 1.50)
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             const isMobile = window.innerWidth < 600;
             const maxVisible = isMobile ? 2 : 4;
