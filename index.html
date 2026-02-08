@@ -117,9 +117,10 @@
         .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
 
-        /* SNS SECTION (Added for Ver 1.52) */
-        .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .sns-card { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        /* SNS SECTION (Ver 1.54 Fix) */
+        .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .sns-card { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .sns-card i { font-size: 18px; }
         .sns-x { background: #000000; }
         .sns-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 
@@ -172,9 +173,9 @@
         .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
         .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
 
-        /* FOOTER (Added for Ver 1.52) */
-        footer { margin: 40px 0 20px; padding: 20px; border-top: 1px solid #2a2a2a; text-align: center; }
-        .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; }
+        /* FOOTER */
+        footer { margin: 40px 0 20px; padding: 25px; border-top: 1px solid #2a2a2a; text-align: center; }
+        .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
 
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 30000; align-items: center; justify-content: center; padding: 20px; }
@@ -203,6 +204,7 @@
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
+            <a href="#sns-section" class="nav-link">SNS</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
             <a href="#area-section" class="nav-link">Area</a>
