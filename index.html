@@ -20,7 +20,7 @@
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
             --header-h: 120px;
-            --banner-h: 0px; /* Ver 1.11 Dynamic Control */
+            --emergency-h: 0px; /* Ver 1.11 Restoration */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -29,37 +29,37 @@
             background: var(--bg-black); 
             color: var(--text-main); 
             font-family: -apple-system, sans-serif; 
-            padding-top: calc(var(--header-h) + var(--banner-h)); 
+            padding-top: calc(var(--header-h) + var(--emergency-h)); 
             transition: padding-top 0.3s ease; 
         }
 
-        /* --- EMERGENCY BANNER (Ver 1.11 Style) --- */
+        /* --- EMERGENCY BANNER (Ver 1.11 logic) --- */
         #emergency-banner {
             display: none; 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%;
-            height: 34px;
+            height: 38px; /* Slightly taller for visibility */
             background: var(--alert-red); 
             color: #fff; 
-            line-height: 34px;
+            line-height: 38px;
             font-size: 11px; 
             font-weight: 900; 
             text-align: center; 
-            z-index: 10000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            z-index: 20000; /* Absolute top */
+            box-shadow: 0 2px 15px rgba(231, 76, 60, 0.4);
         }
 
         /* HEADER & NAV */
         header {
             position: fixed; 
-            top: var(--banner-h); 
+            top: var(--emergency-h); 
             left: 0; 
             width: 100%;
             background: rgba(13, 15, 17, 0.95); 
             backdrop-filter: blur(10px);
-            z-index: 9000; 
+            z-index: 10000; 
             border-bottom: 1px solid #2a2a2a; 
             transition: top 0.3s ease;
         }
@@ -82,7 +82,7 @@
             background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0;
         }
 
-        /* SALE BANNER SYSTEM (Ver1.45) */
+        /* SALE BANNER (Ver1.45) */
         #sale-banner {
             display: none; width: 100%; max-width: 800px; margin: 0 auto 15px;
             border-radius: 12px; padding: 12px; position: relative; overflow: hidden;
@@ -92,14 +92,12 @@
         .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
         .sale-ikyu-day { background: linear-gradient(135deg, var(--ikyu-gold) 0%, #d4af37 100%); color: #fff; }
         .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
-        
         .sale-today::after, .sale-rakuten-day::after, .sale-ikyu-day::after {
             content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
             transform: rotate(30deg); animation: flash 3.5s infinite;
         }
         @keyframes flash { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
-        
         .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; z-index: 2; }
         .sale-text { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-align: center; }
 
@@ -145,14 +143,9 @@
         .coupon-side { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 5px; position: relative; }
         .coupon-end-date { font-size: 11px; font-weight: 900; color: #fff; }
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
-        
-        .expand-btn {
-            width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px;
-            color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px;
-            margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .expand-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px; margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* --- AREA EXPLORER (Ver.1.25 Restoration: 5 Area) --- */
+        /* AREA EXPLORER (Ver.1.25) */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
@@ -167,18 +160,18 @@
         .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
         .btn-r { background: var(--rakuten-red); } .btn-j { background: var(--jalan-orange); } .btn-i { background: var(--ikyu-gold); }
 
-        /* TIPS SECTION */
+        /* TIPS SECTION (Ver.1.32 Bottom Position) */
         .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media screen and (min-width: 600px) { .tips-grid { grid-template-columns: repeat(3, 1fr); } }
-        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
         .tips-title { font-size: 12px; font-weight: 900; color: #fff; line-height: 1.4; }
 
         /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 11000; align-items: center; justify-content: center; padding: 20px; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 30000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
         .choice-btn { padding: 12px; border-radius: 10px; color: #fff; font-weight: 900; text-align: center; text-decoration: none; font-size: 11px; margin-bottom: 8px; display: block; }
 
-        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 12000; align-items: center; justify-content: center; padding: 20px; }
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 40000; align-items: center; justify-content: center; padding: 20px; }
         .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; position: relative; }
         .paper-title { font-size: 18px; font-weight: 900; margin-bottom: 12px; font-family: serif; border-bottom: 2px solid #1a1a1a; padding-bottom: 10px; }
         .paper-body { font-size: 13.5px; line-height: 1.7; flex-grow: 1; text-align: justify; font-family: serif; white-space: pre-wrap; color: #333; }
@@ -209,7 +202,7 @@
 
     <div class="container">
         <a id="sale-banner" href="#">
-            <div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING SALES...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div>
+            <div class="sale-content"><i class="fa-solid fa-crown"></i><div class="sale-text" id="sale-banner-text">CHECKING...</div><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></div>
         </a>
 
         <section id="field-ops">
@@ -217,10 +210,10 @@
             <div class="hub-grid">
                 <div class="hub-card" onclick="openModal('transit')">
                     <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
-                    <div class="hub-val" id="transit-display"><div class="dot green" style="width:8px;height:8px;border-radius:50%;background:#2ecc71;box-shadow:0 0 6px #2ecc71;"></div> 正常運行</div>
+                    <div class="hub-val" id="transit-display">正常運行</div>
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
-                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Loading...</span></div>
+                    <div class="hub-label"><i class="fa-solid fa-location-dot"></i> <span id="location-name">Detecting...</span></div>
                     <div class="hub-val" id="weather-display">--°C</div>
                 </div>
             </div>
@@ -350,18 +343,15 @@
             const now = new Date();
             const date = now.getDate();
             const hour = now.getHours();
-            const tomorrow = new Date(now);
-            tomorrow.setDate(now.getDate() + 1);
-            const tomorrowDate = tomorrow.getDate();
-
+            
             const bannerE = document.getElementById('emergency-banner');
             const bannerS = document.getElementById('sale-banner');
             const tipsContainer = document.getElementById('tips-container');
             const root = document.documentElement;
             
-            // Initial Reset (Ver 1.11 Restoration)
+            // --- Reset ---
             bannerE.style.display = 'none'; 
-            root.style.setProperty('--banner-h', '0px');
+            root.style.setProperty('--emergency-h', '0px');
             bannerS.style.display = 'none';
             tipsContainer.innerHTML = '';
             
@@ -373,13 +363,17 @@
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
-                const sDate = new Date(start); const eDate = new Date(end);
+                if (!start || !end) return;
 
-                // --- Emergency Logic (Ver 1.11) ---
+                // Ver 1.11 Restoration: Flexible Date Parsing
+                const sDate = new Date(start); 
+                const eDate = new Date(end);
+                eDate.setHours(23, 59, 59); // Ensure end of day
+
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
                     bannerE.innerText = `【！】 ${title}`; 
                     bannerE.style.display = 'block';
-                    root.style.setProperty('--banner-h', '34px');
+                    root.style.setProperty('--emergency-h', '38px');
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     document.getElementById('sale-banner-text').innerText = title;
@@ -401,7 +395,10 @@
                 }
             });
 
+            // Auto-Banners (Ver 1.45)
             if (!saleTopFound) {
+                const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
+                const tomorrowDate = tomorrow.getDate();
                 const rakutenDays = [5, 10, 15, 20, 25, 30];
                 if (rakutenDays.includes(date)) {
                     document.getElementById('sale-banner-text').innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
@@ -418,6 +415,7 @@
                 }
             }
 
+            // Coupon Render (Ver 1.50)
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             const isMobile = window.innerWidth < 600;
             const maxVisible = isMobile ? 2 : 4;
