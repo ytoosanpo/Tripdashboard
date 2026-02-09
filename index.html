@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TRIP_DASH. | OFFICIAL Ver 1.65</title>
+    <title>TRIP_DASH. | OFFICIAL Ver 1.70</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* Ver 1.60のスタイルを完全継承 */
         :root {
             --bg-black: #0d0f11;
             --card-gray: #1c2126;
@@ -14,8 +13,6 @@
             --text-sub: #8e8e93;
             --gold: #d4af37;
             --alert-red: #e74c3c;
-            --success-green: #2ecc71;
-            --caution-yellow: #f1c40f;
             --rakuten-red: #bf0000;
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
@@ -24,220 +21,182 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: calc(var(--header-h) + var(--emergency-h)); }
 
-        header { position: fixed; top: var(--emergency-h); left: 0; width: 100%; height: var(--header-h); background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 10000; border-bottom: 1px solid #2a2a2a; }
+        /* --- HEADER & NAV (Ver 1.55 Style) --- */
+        header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 10000; border-bottom: 1px solid #2a2a2a; }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
         .header-right { display: flex; align-items: center; gap: 15px; }
-        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; background: rgba(212, 175, 55, 0.05); cursor: pointer; }
-        .menu-icon { font-size: 24px; color: var(--gold); cursor: pointer; }
-
-        nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; scrollbar-width: none; }
+        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        nav { display: flex; justify-content: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; scrollbar-width: none; }
         nav::-webkit-scrollbar { display: none; }
-        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; text-transform: uppercase; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
 
-        /* スワイプ共通スタイル */
-        .swipe-container { display: flex; overflow-x: auto; gap: 15px; padding: 0 5px 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
-        .swipe-container::-webkit-scrollbar { display: none; }
-
-        /* HOTEL CARD */
-        .hotel-card { flex: 0 0 280px; scroll-snap-align: start; position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16/10; text-decoration: none; border: 1px solid #2a2a2a; }
-        .hotel-bg { width: 100%; height: 100%; object-fit: cover; }
-        .hotel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4), transparent); padding: 40px 15px 15px; color: #fff; }
-
-        /* GADGET CARD (Update: Swipe & Adjusted Height) */
-        .gadget-card { flex: 0 0 200px; scroll-snap-align: start; background: var(--card-gray); border-radius: 16px; border: 1px solid #2a2a2a; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; }
-        .gadget-img { width: 100%; height: 140px; object-fit: contain; background: #fff; padding: 10px; }
-        .gadget-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
-        .gadget-title { font-size: 11px; font-weight: 900; color: #fff; margin-bottom: 8px; line-height: 1.4; height: 2.8em; overflow: hidden; }
-        .gadget-btn { padding: 8px; border-radius: 6px; text-align: center; font-weight: 900; font-size: 10px; margin-top: auto; color: #fff; }
-        .buy-rakuten { background: var(--rakuten-red); }
-        .buy-amazon { background: #ff9900; color: #000 !important; }
-
-        /* GOURMET (Update: Links Applied) */
-        .gourmet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .gourmet-card { background: #fff; padding: 12px 5px; border-radius: 12px; text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-        .gourmet-card img { height: 18px; object-fit: contain; }
-        .gourmet-label { font-size: 8px; font-weight: 900; color: #333; }
-
-        /* サイドメニュー・モーダル等は1.60を継承 */
-        .side-menu { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: var(--card-gray); z-index: 30000; transition: 0.3s ease; padding: 80px 20px; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
+        /* --- SIDE MENU --- */
+        .side-menu { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: var(--card-gray); z-index: 30000; transition: 0.3s; padding: 80px 20px; }
         .side-menu.active { right: 0; }
-        .side-menu a { display: block; color: #fff; text-decoration: none; padding: 18px 0; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+        .side-menu a { display: block; color: #fff; text-decoration: none; padding: 15px 0; font-weight: 900; border-bottom: 1px solid #333; }
+
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
-        .coupon-card { background: #e0e0e0; color: #333; border-radius: 12px; display: flex; min-height: 110px; text-decoration: none; position: relative; overflow: hidden; margin-bottom: 10px; }
+
+        /* --- HUB & CARDS (Restore 1.55) --- */
+        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; cursor: pointer; }
+
+        /* --- AREA (Restore 1.55) --- */
+        .area-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
+        .area-card { background: rgba(28,33,38,0.9); padding: 15px; border-radius: 15px; min-width: 260px; border: 1px solid rgba(255,255,255,0.1); }
+        .area-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+        .area-btn { font-size: 9px; padding: 8px; border-radius: 6px; text-align: center; text-decoration: none; font-weight: 900; color: #fff; }
+
+        /* --- HOTEL & GADGET SWIPE (Ver 1.65 Optimized) --- */
+        .swipe-container { display: flex; overflow-x: auto; gap: 15px; padding: 0 5px 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .hotel-card { flex: 0 0 280px; scroll-snap-align: start; position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16/10; }
+        .gadget-card { flex: 0 0 200px; scroll-snap-align: start; background: var(--card-gray); border-radius: 16px; border: 1px solid #2a2a2a; overflow: hidden; display: flex; flex-direction: column; }
+        .gadget-img { width: 100%; height: 130px; object-fit: contain; background: #fff; padding: 8px; }
+
+        /* --- GOURMET (Ver 1.65 Links) --- */
+        .gourmet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .gourmet-card { background: #fff; padding: 12px 5px; border-radius: 12px; text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; }
+
+        /* --- TIPS PAPER MODAL (Restore 1.55) --- */
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 40000; align-items: center; justify-content: center; }
+        .paper-content { background: #f4f1ea; width: 85%; max-width: 360px; border-radius: 2px; color: #1a1a1a; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
-    <header id="main-header">
-        <div class="header-top">
-            <div class="logo">TRIP_DASH.</div>
-            <div class="header-right">
-                <div class="refresh-btn" onclick="forceReloadData()"><i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i></div>
-                <i class="fa-solid fa-bars menu-icon" onclick="toggleMenu()"></i>
+<header>
+    <div class="header-top">
+        <div class="logo">TRIP_DASH.</div>
+        <div class="header-right">
+            <div class="refresh-btn" onclick="forceReloadData()"><i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i></div>
+            <i class="fa-solid fa-bars" style="font-size:24px;color:var(--gold);cursor:pointer;" onclick="toggleMenu()"></i>
+        </div>
+    </div>
+    <nav>
+        <a href="#field-ops" class="nav-link">Hub</a>
+        <a href="#sale" class="nav-link">Sale</a>
+        <a href="#dynamic-coupons" class="nav-link">Coupon</a>
+        <a href="#area-section" class="nav-link">Area</a>
+        <a href="#recommended-hotels" class="nav-link">Hotel</a>
+        <a href="#gourmet" class="nav-link">Gourmet</a>
+        <a href="#gadgets" class="nav-link">Gadget</a>
+        <a href="#tips-section" class="nav-link">Tips</a>
+    </nav>
+</header>
+
+<div class="side-menu" id="side-menu">
+    <a href="#field-ops" onclick="toggleMenu()">INTELLIGENCE HUB</a>
+    <a href="#sale" onclick="toggleMenu()">PRIORITY SALE</a>
+    <a href="#area-section" onclick="toggleMenu()">AREA EXPLORER</a>
+    <a href="#tips-section" onclick="toggleMenu()">TRAVEL TIPS</a>
+</div>
+
+<div class="container">
+    <section id="field-ops">
+        <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
+        <div class="hub-grid">
+            <div class="hub-card" onclick="openHubModal('transit')">
+                <div style="font-size:10px; color:var(--text-sub);">TRANSIT</div>
+                <div id="transit-display" style="font-size:14px; font-weight:900; margin-top:5px;">Check Status</div>
+            </div>
+            <div class="hub-card" onclick="openHubModal('weather')">
+                <div style="font-size:10px; color:var(--text-sub);" id="location-name">WEATHER</div>
+                <div id="weather-display" style="font-size:14px; font-weight:900; margin-top:5px;">--°C</div>
             </div>
         </div>
-        <nav>
-            <a href="#field-ops" class="nav-link">Hub</a>
-            <a href="#sale" class="nav-link">Sale</a>
-            <a href="#dynamic-coupons" class="nav-link">Coupon</a>
-            <a href="#area-section" class="nav-link">Area</a>
-            <a href="#recommended-hotels" class="nav-link">Hotel</a>
-            <a href="#gourmet" class="nav-link">Gourmet</a>
-            <a href="#gadgets" class="nav-link">Gadget</a>
-            <a href="#tips-section" class="nav-link">Tips</a>
-        </nav>
-    </header>
+    </section>
 
-    <div class="side-menu" id="side-menu">
-        <i class="fa-solid fa-xmark close-menu" onclick="toggleMenu()"></i>
-        <a href="#field-ops" onclick="toggleMenu()">INTELLIGENCE HUB</a>
-        <a href="#sale" onclick="toggleMenu()">PRIORITY SALE</a>
-        <a href="#dynamic-coupons" onclick="toggleMenu()">HOT COUPONS</a>
-        <a href="#area-section" onclick="toggleMenu()">AREA EXPLORER</a>
-        <a href="#recommended-hotels" onclick="toggleMenu()">HOTELS</a>
-        <a href="#gourmet" onclick="toggleMenu()">GOURMET RESERVATION</a>
-        <a href="#gadgets" onclick="toggleMenu()">TRAVEL GADGETS</a>
-        <a href="#tips-section" onclick="toggleMenu()">TRAVEL TIPS</a>
-    </div>
+    <section id="sale"><div id="sale-grid"></div></section>
 
-    <div class="container">
-        <section id="field-ops">
-            <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div class="hub-card" style="background:var(--card-gray); padding:15px; border-radius:14px; border:1px solid #2a2a2a;">
-                    <div style="font-size:10px; color:var(--text-sub);">TRANSIT</div>
-                    <div id="transit-display" style="font-size:14px; font-weight:900; margin-top:5px;">Loading...</div>
-                </div>
-                <div class="hub-card" style="background:var(--card-gray); padding:15px; border-radius:14px; border:1px solid #2a2a2a;">
-                    <div style="font-size:10px; color:var(--text-sub);" id="location-name">WEATHER</div>
-                    <div id="weather-display" style="font-size:14px; font-weight:900; margin-top:5px;">--°C</div>
-                </div>
-            </div>
-        </section>
+    <section id="dynamic-coupons"><div id="coupon-list"></div></section>
 
-        <section id="sale">
-            <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
-            <div id="sale-grid"></div>
-        </section>
+    <section id="area-section" style="background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070'); background-size:cover; border-radius:24px; padding:25px 0;">
+        <div class="section-title" style="color:#fff;margin:0 20px 15px;">AREA EXPLORER</div>
+        <div class="area-swipe" id="area-container"></div>
+    </section>
 
-        <section id="dynamic-coupons">
-            <div class="section-header"><div class="section-title">HOT COUPONS</div><div class="section-line"></div></div>
-            <div id="coupon-list"></div>
-        </section>
+    <section id="recommended-hotels">
+        <div class="section-header"><div class="section-title">RECOMMENDED HOTELS</div><div class="section-line"></div></div>
+        <div class="swipe-container" id="hotel-container"></div>
+    </section>
 
-        <section id="area-section" style="background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070'); background-size:cover; border-radius:24px; padding:25px 0;">
-            <div class="section-title" style="color:#fff;margin:0 20px 15px;">AREA EXPLORER</div>
-            <div class="swipe-container" id="area-container">
-                </div>
-        </section>
+    <section id="gourmet">
+        <div class="section-header"><div class="section-title">GOURMET RESERVATION</div><div class="section-line"></div></div>
+        <div class="gourmet-grid">
+            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538158&vc_url=https%3A%2F%2Ftabelog.com%2F%2F" target="_blank" class="gourmet-card"><img src="https://www.google.com/s2/favicons?domain=tabelog.com" height="18"><span style="font-size:8px;font-weight:900;color:#333;">食べログ</span></a>
+            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538160&vc_url=https%3A%2F%2Frestaurant.ikyu.com%2F" target="_blank" class="gourmet-card"><img src="https://www.ikyu.com/favicon.ico" height="18"><span style="font-size:8px;font-weight:900;color:#333;">一休レストラン</span></a>
+            <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538162&vc_url=https%3A%2F%2Fwww.hotpepper.jp%2F%3Fvos%3Dnhppvccp99002" target="_blank" class="gourmet-card"><img src="https://www.hotpepper.jp/favicon.ico" height="18"><span style="font-size:8px;font-weight:900;color:#333;">Hotpepper</span></a>
+        </div>
+    </section>
 
-        <section id="recommended-hotels">
-            <div class="section-header"><div class="section-title">RECOMMENDED HOTELS</div><div class="section-line"></div></div>
-            <div class="swipe-container" id="hotel-container"></div>
-        </section>
+    <section id="gadgets">
+        <div class="section-header"><div class="section-title">TRAVEL GADGETS</div><div class="section-line"></div></div>
+        <div class="swipe-container" id="gadget-container"></div>
+    </section>
 
-        <section id="gourmet">
-            <div class="section-header"><div class="section-title">GOURMET RESERVATION</div><div class="section-line"></div></div>
-            <div class="gourmet-grid">
-                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538158&vc_url=https%3A%2F%2Ftabelog.com%2F%2F" target="_blank" rel="nofollow" class="gourmet-card">
-                    <img src="https://www.google.com/s2/favicons?domain=tabelog.com" alt="食べログ">
-                    <span class="gourmet-label">食べログ</span>
-                </a>
-                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538160&vc_url=https%3A%2F%2Frestaurant.ikyu.com%2F" target="_blank" rel="nofollow" class="gourmet-card">
-                    <img src="https://www.ikyu.com/favicon.ico" alt="一休">
-                    <span class="gourmet-label">一休レストラン</span>
-                </a>
-                <a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538162&vc_url=https%3A%2F%2Fwww.hotpepper.jp%2F%3Fvos%3Dnhppvccp99002" target="_blank" rel="nofollow" class="gourmet-card">
-                    <img src="https://www.hotpepper.jp/favicon.ico" alt="ホットペッパーグルメ">
-                    <span class="gourmet-label">Hotpepperグルメ</span>
-                </a>
-            </div>
-        </section>
+    <section id="tips-section">
+        <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
+        <div id="tips-container" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+    </section>
+</div>
 
-        <section id="gadgets">
-            <div class="section-header"><div class="section-title">TRAVEL GADGETS</div><div class="section-line"></div></div>
-            <div class="swipe-container" id="gadget-container"></div>
-        </section>
+<div id="tips-modal" onclick="closeTips()"><div class="paper-content" onclick="event.stopPropagation()"><div id="paper-title" style="font-weight:900;border-bottom:2px solid #1a1a1a;margin-bottom:15px;"></div><div id="paper-body" style="font-size:14px;line-height:1.6;"></div></div></div>
 
-        <section id="tips-section">
-            <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
-            <div id="tips-container" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
-        </section>
-    </div>
+<script>
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
 
-    <script>
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+    function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
 
-        function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
+    async function forceReloadData() {
+        const res = await fetch(CSV_URL + `&t=${Date.now()}`);
+        const text = await res.text();
+        processCSV(text);
+    }
 
-        async function forceReloadData() {
-            const icon = document.getElementById('refresh-icon');
-            icon.classList.add('fa-spin');
-            try {
-                const res = await fetch(CSV_URL + `&t=${Date.now()}`);
-                const text = await res.text();
-                processCSV(text);
-                icon.classList.remove('fa-spin');
-            } catch (e) { icon.classList.remove('fa-spin'); }
-        }
+    function processCSV(text) {
+        const rows = text.split('\n').slice(1).filter(r => r.trim());
+        const now = new Date();
+        const containers = { SALE: document.getElementById('sale-grid'), HOTEL: document.getElementById('hotel-container'), GADGET: document.getElementById('gadget-container'), TIPS: document.getElementById('tips-container'), AREA: document.getElementById('area-container') };
+        Object.values(containers).forEach(c => c.innerHTML = '');
 
-        function processCSV(text) {
-            const rows = text.split('\n').slice(1).filter(r => r.trim());
-            const now = new Date();
-            
-            const saleGrid = document.getElementById('sale-grid');
-            const hotelGrid = document.getElementById('hotel-container');
-            const gadgetGrid = document.getElementById('gadget-container');
-            const tipsGrid = document.getElementById('tips-container');
-            const couponGrid = document.getElementById('coupon-list');
-            
-            [saleGrid, hotelGrid, gadgetGrid, tipsGrid, couponGrid].forEach(g => g.innerHTML = '');
+        rows.forEach(line => {
+            const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
+            const [type, brand, title, start, end, url, directUrl, disc, fTxt] = cols;
+            const isActive = (!start || now >= new Date(start)) && (!end || now <= new Date(end).setHours(23,59,59));
 
-            rows.forEach(line => {
-                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                const [type, brand, title, start, end, url, directUrl, disc, fTxt] = cols;
-                const isActive = (!start || now >= new Date(start)) && (!end || now <= new Date(end).setHours(23,59,59));
+            if (type === 'AREA') {
+                containers.AREA.innerHTML += `<div class="area-card"><div style="font-size:13px; font-weight:900; color:#fff;">${title}</div><div class="area-btns">
+                    <a href="${url}" class="area-btn" style="background:var(--rakuten-red)">楽天</a>
+                    <a href="${directUrl}" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a>
+                    <a href="${disc}" class="area-btn" style="background:var(--ikyu-gold)">一休</a>
+                </div></div>`;
+            }
 
-                if (type === 'SALE' && isActive) {
-                    const bColor = brand === '楽天トラベル' ? 'var(--rakuten-red)' : 'var(--jalan-orange)';
-                    saleGrid.innerHTML += `<a href="${url}" target="_blank" class="coupon-card" style="background:var(--card-gray); border:1px solid var(--gold); align-items:center; min-height:60px; padding:10px; margin-bottom:10px; text-decoration:none;">
-                        <div style="background:${bColor}; color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px;">${brand[0]}</div>
-                        <div style="margin-left:12px; color:#fff; font-weight:900; font-size:13px;">${brand} <span style="font-weight:400; font-size:11px; color:var(--text-sub);">${disc}</span></div>
-                    </a>`;
-                }
+            if (type === 'HOTEL' && isActive) {
+                containers.HOTEL.innerHTML += `<div class="hotel-card"><img src="${directUrl}" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;bottom:0;width:100%;background:linear-gradient(transparent,rgba(0,0,0,0.9));padding:15px;"><div style="font-size:13px;font-weight:900;">${title}</div><div style="color:var(--gold);font-size:11px;">${fTxt}</div></div></div>`;
+            }
 
-                if (type === 'HOTEL' && isActive) {
-                    hotelGrid.innerHTML += `<a href="${url}" target="_blank" class="hotel-card">
-                        <img src="${directUrl}" class="hotel-bg">
-                        <div class="hotel-overlay"><div style="font-size:13px; font-weight:900;">${title}</div><div style="color:var(--gold); font-size:12px; font-weight:900;">${fTxt}</div></div>
-                    </a>`;
-                }
+            if (type === 'gadget') {
+                containers.GADGET.innerHTML += `<div class="gadget-card"><img src="${directUrl}" class="gadget-img"><div style="padding:10px;"><div style="font-size:11px;font-weight:900;height:2.6em;overflow:hidden;">${title}</div><a href="${url}" target="_blank" style="display:block;margin-top:8px;padding:6px;background:var(--rakuten-red);color:#fff;text-align:center;text-decoration:none;font-size:10px;border-radius:4px;font-weight:900;">${brand}で購入</a></div></div>`;
+            }
 
-                if (type === 'gadget') {
-                    const btnClass = brand.includes('楽天') ? 'buy-rakuten' : 'buy-amazon';
-                    gadgetGrid.innerHTML += `<div class="gadget-card">
-                        <img src="${directUrl}" class="gadget-img">
-                        <div class="gadget-info">
-                            <div class="gadget-title">${title}</div>
-                            <a href="${url}" target="_blank" class="gadget-btn ${btnClass}">${brand}で購入する</a>
-                        </div>
-                    </div>`;
-                }
+            if (type === 'TIPS') {
+                containers.TIPS.innerHTML += `<div class="hub-card" onclick="openTips('${title}', '${disc.replace(/\n/g, '<br>')}')"><div style="font-size:12px;font-weight:900;">${title}</div></div>`;
+            }
+        });
+    }
 
-                if (type === 'TIPS') {
-                    tipsGrid.innerHTML += `<div class="coupon-card" style="background:var(--card-gray); border:1px solid #333; min-height:50px; padding:15px; font-size:12px; font-weight:900;">${title}</div>`;
-                }
-            });
-        }
+    function openTips(t, b) { document.getElementById('paper-title').innerHTML = t; document.getElementById('paper-body').innerHTML = b; document.getElementById('tips-modal').style.display = 'flex'; }
+    function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
+    function openHubModal(k) { alert(k.toUpperCase() + " Details coming soon..."); }
 
-        forceReloadData();
-    </script>
+    forceReloadData();
+</script>
 </body>
 </html>
