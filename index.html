@@ -172,13 +172,14 @@
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
         .expand-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px; margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* AREA EXPLORER - MODIFIED (Requirement 1) */
+        /* AREA EXPLORER - MODIFIED */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
-        .area-swipe-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 15px; }
-        .area-column { display: flex; flex-direction: column; gap: 10px; }
-        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 12px; height: 100%; }
+        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .area-swipe-container::-webkit-scrollbar { display: none; }
+        .area-column { flex: 0 0 280px; display: flex; flex-direction: column; gap: 12px; scroll-snap-align: start; }
+        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 12px; }
         .area-info { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .area-name { font-size: 11px; font-weight: 900; color: #fff; }
         .area-spot { font-size: 8px; color: var(--gold); font-weight: 700; }
@@ -301,68 +302,8 @@
         <section id="area-section">
             <div class="area-content-wrapper">
                 <div class="area-section-header"><div class="section-title" style="color:#fff;margin:0 20px 15px;">AREA EXPLORER</div></div>
-                <div class="area-swipe-container">
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅・銀座</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/yado/tokyo/tokyo.html" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/130000/rg_130100/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/area/ma000000/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
+                <div class="area-swipe-container" id="area-swipe-list">
                     </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OSAKA / 大阪</div><div class="area-spot">梅田・難波</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/yado/osaka/osaka.html" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/270000/rg_270100/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/area/ma000002/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">KYOTO / 京都</div><div class="area-spot">河原町・祇園</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/yado/kyoto/kyoto.html" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/260000/rg_260100/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/area/ma000003/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">FUKUOKA / 福岡</div><div class="area-spot">博多・天神</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/yado/fukuoka/fukuoka.html" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/400000/rg_400100/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/area/ma000005/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">SAPPORO / 札幌</div><div class="area-spot">駅・すすきの</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/yado/hokkaido/sapporo.html" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/010000/rg_010100/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/area/ma000001/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OTHER / その他</div><div class="area-spot">その他のエリア</div></div>
-                            <div class="area-actions">
-                                <a href="https://travel.rakuten.co.jp/" target="_blank" class="area-btn btn-r">楽天</a>
-                                <a href="https://www.jalan.net/" target="_blank" class="area-btn btn-j">じゃらん</a>
-                                <a href="https://www.ikyu.com/" target="_blank" class="area-btn btn-i">一休</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -428,6 +369,8 @@
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
         
+        let hasEmergencyGlobal = false; // Emergency判定用フラグ
+
         function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
 
         const MODAL_DATA = {
@@ -462,11 +405,24 @@
                 const ipRes = await fetch('https://ipapi.co/json/');
                 const ipData = await ipRes.json();
                 document.getElementById('location-name').innerText = ipData.city || "Tokyo";
+
+                // Requirement 2: Emergency時の天気表示上書き
+                if (hasEmergencyGlobal) {
+                    document.getElementById('weather-display').innerHTML = `<span class="status-dot dot-red"></span> <span style="color:var(--alert-red)">要確認</span>`;
+                    return;
+                }
+
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ipData.latitude}&longitude=${ipData.longitude}&current_weather=true`);
                 const wData = await wRes.json();
                 const temp = Math.round(wData.current_weather.temperature);
                 document.getElementById('weather-display').innerHTML = `<span id="weather-dot" class="status-dot dot-green"></span> ${temp}°C Current`;
-            } catch (e) { document.getElementById('weather-display').innerHTML = `<span id="weather-dot" class="status-dot dot-yellow"></span> --°C`; }
+            } catch (e) { 
+                if (hasEmergencyGlobal) {
+                    document.getElementById('weather-display').innerHTML = `<span class="status-dot dot-red"></span> <span style="color:var(--alert-red)">要確認</span>`;
+                } else {
+                    document.getElementById('weather-display').innerHTML = `<span id="weather-dot" class="status-dot dot-yellow"></span> --°C`;
+                }
+            }
         }
 
         function processCSVData(text) {
@@ -480,9 +436,10 @@
             const tipsContainer = document.getElementById('tips-container');
             const hotelList = document.getElementById('hotel-list');
             const gadgetList = document.getElementById('gadget-list');
+            const areaSwipeList = document.getElementById('area-swipe-list');
             const root = document.documentElement;
             
-            // Initial reset
+            // Reset
             ['rakuten', 'jalan', 'ikyu'].forEach(id => {
                 const card = document.getElementById(`card-${id}`);
                 card.classList.remove('active-sale');
@@ -494,15 +451,15 @@
             tipsContainer.innerHTML = '';
             hotelList.innerHTML = '';
             gadgetList.innerHTML = '';
+            areaSwipeList.innerHTML = '';
+            hasEmergencyGlobal = false;
             
             let saleTopFound = false;
             let coupons = { rakuten: [], jalan: [], ikyu: [] };
+            let areaData = [];
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
             const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
             
-            // Requirement 3: Emergency flag
-            let hasEmergency = false;
-
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
                 const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
@@ -511,11 +468,12 @@
                 const eDate = new Date(end);
                 eDate.setHours(23, 59, 59);
 
+                // Requirement 1 & 2: Emergency Detection
                 if (type === 'EMERGENCY' && now >= sDate && now <= eDate) {
                     bannerE.innerText = `【！】 ${title}`; 
                     bannerE.style.display = 'block';
                     root.style.setProperty('--emergency-h', '38px');
-                    hasEmergency = true; // Added (Requirement 3)
+                    hasEmergencyGlobal = true;
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     document.getElementById('sale-banner-text').innerText = title;
@@ -530,7 +488,6 @@
                 if (type === 'HOTEL' && now >= sDate && now <= eDate) {
                     hotelList.innerHTML += `<a href="${url}" target="_blank" class="item-card"><img src="${direct}" class="item-img"><div class="item-info"><div style="font-size:12px;font-weight:900;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${fTxt}</div></div></a>`;
                 }
-                // Requirement 2: Gadget Section Update
                 if (type === 'GADGET') {
                     gadgetList.innerHTML += `
                         <div class="item-card" style="display:flex; flex-direction:column;">
@@ -543,6 +500,10 @@
                             </div>
                         </div>`;
                 }
+                // Requirement 4: Area Data Collection
+                if (type === 'AREA' && now >= sDate && now <= eDate) {
+                    areaData.push({ brand, title, url, direct, disc });
+                }
                 if (type === 'TIPS') {
                     const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
                     card.innerHTML = `<div class="tips-title">${title}</div>`;
@@ -553,12 +514,22 @@
                 }
             });
 
-            // Requirement 3: Automatic Switch
-            if (hasEmergency) {
-                document.getElementById('transit-display').innerHTML = `<span class="status-dot dot-red"></span> <span style="color:var(--alert-red)">● 見合わせ/欠航</span>`;
+            // Requirement 1: Transit Emergency Switch
+            if (hasEmergencyGlobal) {
+                document.getElementById('transit-display').innerHTML = `<span class="status-dot dot-red"></span> <span style="color:var(--alert-red)">見合わせ/欠航</span>`;
             } else {
                 document.getElementById('transit-display').innerHTML = `<span class="status-dot dot-green"></span> 運行状況を確認`;
             }
+
+            // Requirement 3 & 4: Area Explorer Rendering (2-row swipe)
+            let areaHtml = '';
+            for (let i = 0; i < areaData.length; i += 2) {
+                areaHtml += `<div class="area-column">`;
+                areaHtml += createAreaCardHtml(areaData[i]);
+                if (areaData[i + 1]) areaHtml += createAreaCardHtml(areaData[i + 1]);
+                areaHtml += `</div>`;
+            }
+            areaSwipeList.innerHTML = areaHtml;
 
             if (!saleTopFound) {
                 const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
@@ -596,6 +567,18 @@
                 }
                 container.appendChild(group);
             });
+        }
+
+        function createAreaCardHtml(data) {
+            return `
+                <div class="area-card">
+                    <div class="area-info"><div class="area-name">${data.brand}</div><div class="area-spot">${data.title}</div></div>
+                    <div class="area-actions">
+                        <a href="${data.url}" target="_blank" class="area-btn btn-r">楽天</a>
+                        <a href="${data.direct}" target="_blank" class="area-btn btn-j">じゃらん</a>
+                        <a href="${data.disc}" target="_blank" class="area-btn btn-i">一休</a>
+                    </div>
+                </div>`;
         }
 
         function toggleCoupons(brand, btn, maxVisible) {
