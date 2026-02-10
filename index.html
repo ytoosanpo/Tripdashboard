@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TRIP_DASH. | OFFICIAL Ver 1.75</title>
+    <title>TRIP_DASH. | OFFICIAL Ver 1.85</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* --- Ver 1.55 BASE STYLES (UNCHANGED) --- */
         :root {
             --bg-black: #0d0f11;
             --card-gray: #1c2126;
             --text-main: #ffffff;
             --text-sub: #8e8e93;
             --gold: #d4af37;
-            --alert-red: #e74c3c;
-            --success-green: #2ecc71;
-            --caution-yellow: #f1c40f;
             --rakuten-red: #bf0000;
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
+            --hotpepper-silver: #999;
+            --tabelog-orange: #fead00;
+            --success-green: #2ecc71;
             --header-h: 120px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
 
+        /* HEADER & NAV */
         header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 10000; border-bottom: 1px solid #2a2a2a; }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
@@ -32,7 +32,7 @@
         nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
         .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
 
-        /* SIDE MENU (1.70 ADDITION) */
+        /* SIDE MENU */
         .side-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: var(--card-gray); z-index: 30000; transition: 0.4s; padding: 100px 30px; border-left: 1px solid var(--gold); }
         .side-menu.active { right: 0; }
         .side-menu a { display: block; color: #fff; text-decoration: none; padding: 15px 0; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -42,7 +42,7 @@
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
 
-        /* HUB (1.55) */
+        /* HUB */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
@@ -54,21 +54,20 @@
         .sub-icon { font-size: 16px; color: var(--gold); margin-bottom: 5px; }
         .sub-txt { font-size: 8px; color: var(--text-sub); font-weight: 900; }
 
-        /* SALE (UPDATED CSS: Hidden by default, Flex-shrink fix) */
+        /* SALE */
         .sale-card { display: none; background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; align-items: center; justify-content: space-between; text-decoration: none; margin-bottom: 12px; }
         .sale-card.active-sale { display: flex; border: 1px solid var(--gold); }
         .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); flex-shrink: 0; }
-        .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
 
-        /* COUPON (1.55) */
+        /* COUPON & RIBBON */
         .coupon-card { background: #e0e0e0; color: #333; border-radius: 12px; display: flex; min-height: 110px; text-decoration: none; position: relative; overflow: hidden; margin-bottom: 12px; }
         .coupon-main { flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; border-right: 1.5px dashed #bbb; }
         .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; }
         .coupon-side { flex: 1; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; }
-        .ribbon-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 12px; margin: 5px 0 20px; cursor: pointer; text-transform: uppercase; }
+        .ribbon-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 12px; margin: 5px 0 20px; cursor: pointer; }
 
-        /* AREA (1.55) */
+        /* AREA */
         #area-section { margin-top: 30px; position: relative; background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070') center/cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
@@ -81,30 +80,29 @@
         .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
 
-        /* 1.70 NEW SECTIONS (HOTEL, GADGET, GOURMET) */
+        /* HOTEL & GADGET SCROLL */
         .hotel-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; scrollbar-width: none; }
-        .hotel-card { flex: 0 0 240px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; }
+        .hotel-card { flex: 0 0 240px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; min-height: 200px; }
         .hotel-img { width: 100%; height: 130px; object-fit: cover; }
         .hotel-info { padding: 12px; }
-        .gadget-card { flex: 0 0 200px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; }
-        .gadget-img { width: 100%; height: 140px; object-fit: contain; background: #fff; padding: 10px; }
-        .gadget-info { padding: 12px; }
-        .gourmet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .gourmet-card { background: #fff; padding: 15px 5px; border-radius: 12px; text-align: center; text-decoration: none; color: #333; font-size: 9px; font-weight: 900; display: block; }
 
-        /* TIPS & SNS (1.55) */
+        /* GOURMET SECTION (Fixed 3 Buttons) */
+        .gourmet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .gourmet-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 15px 5px; border-radius: 16px; text-decoration: none; font-weight: 900; font-size: 10px; color: #fff; border: 1px solid rgba(255,255,255,0.1); background: var(--card-gray); }
+
+        /* TIPS & SNS */
         .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; cursor: pointer; }
         .sns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .sns-card { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 12px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* MODALS (1.55) */
-        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 40000; align-items: center; justify-content: center; padding: 20px; }
-        .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; font-family: serif; }
+        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 30000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-gray); width: 100%; max-width: 340px; border-radius: 20px; border: 1px solid var(--gold); padding: 25px 20px; }
         .choice-btn { display: block; padding: 12px; border-radius: 10px; color: #fff; text-decoration: none; font-weight: 900; text-align: center; margin-bottom: 8px; font-size: 11px; }
-        
+        #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 40000; align-items: center; justify-content: center; padding: 20px; }
+        .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; font-family: serif; }
+
         footer { margin-top: 40px; padding: 25px; border-top: 1px solid #2a2a2a; text-align: center; }
         .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
     </style>
@@ -171,24 +169,20 @@
                 <div class="section-title" style="color:#fff;margin:0 20px 15px;">AREA EXPLORER</div>
                 <div class="area-swipe-container">
                     <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OSAKA / 大阪</div><div class="area-spot">梅田</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅</div></div><div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">OSAKA / 大阪</div><div class="area-spot">梅田</div></div><div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
                     </div>
                     <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">NAGOYA / 名古屋</div><div class="area-spot">名古屋駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">FUKUOKA / 博多</div><div class="area-spot">博多駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hYI69O" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">NAGOYA / 名古屋</div><div class="area-spot">名古屋駅</div></div><div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">FUKUOKA / 博多</div><div class="area-spot">博多駅</div></div><div class="area-actions"><a href="https://a.r10.to/hYI69O" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                    </div>
+                    <div class="area-column">
+                        <div class="area-card"><div class="area-info"><div class="area-name">HOKKAIDO / 北海道</div><div class="area-spot">札幌・函館</div></div><div class="area-actions"><a href="https://a.r10.to/hN6r8t" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">KYOTO / 京都</div><div class="area-spot">祇園・嵐山</div></div><div class="area-actions"><a href="https://a.r10.to/hYI6A1" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                    </div>
+                    <div class="area-column">
+                        <div class="area-card"><div class="area-info"><div class="area-name">OKINAWA / 沖縄</div><div class="area-spot">那覇・宮古</div></div><div class="area-actions"><a href="https://a.r10.to/h5XSdd" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
+                        <div class="area-card"><div class="area-info"><div class="area-name">KOBE / 神戸</div><div class="area-spot">三宮</div></div><div class="area-actions"><a href="https://a.r10.to/hU7Adf" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div></div>
                     </div>
                 </div>
             </div>
@@ -201,7 +195,11 @@
 
         <section id="gourmet-section">
             <div class="section-header"><div class="section-title">GOURMET GUIDE</div><div class="section-line"></div></div>
-            <div class="hotel-scroll" id="gourmet-list"></div>
+            <div class="gourmet-grid">
+                <a href="https://restaurant.ikyu.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-utensils" style="color:var(--ikyu-gold);font-size:20px;"></i>一休.com</a>
+                <a href="https://www.hotpepper.jp/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-fire" style="color:#ff3600;font-size:20px;"></i>ホットペッパー</a>
+                <a href="https://tabelog.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-star" style="color:var(--tabelog-orange);font-size:20px;"></i>食べログ</a>
+            </div>
         </section>
 
         <section id="gadget-section">
@@ -242,13 +240,14 @@
 
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
+        
         const MODAL_DATA = {
-            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
-            weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"}] },
-            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"}] },
-            flight: { t: "FLIGHT STATUS", b: [{n: "JAL", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"}] },
-            rain: { t: "RAIN RADAR", b: [{n: "Yahoo! 雨雲", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"}] },
-            news: { t: "LATEST NEWS", b: [{n: "Yahoo! ニュース", l: "https://news.yahoo.co.jp/", c: "#e74c3c"}] }
+            transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "東急電鉄", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
+            weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},{n: "Yahoo! 天気", l: "https://weather.yahoo.co.jp/weather/", c: "#ff9900"}] },
+            highway: { t: "HIGHWAY TRAFFIC", b: [{n: "ドラぷら", l: "https://www.driveplaza.com/", c: "#28a745"},{n: "iHighway", l: "https://c-ihighway.jp/", c: "#f39c12"},{n: "JARTIC", l: "https://www.jartic.or.jp/", c: "#34495e"},{n: "首都高", l: "https://search.shutoko-eng.jp/rtmap.html", c: "#007aff"}] },
+            flight: { t: "FLIGHT STATUS", b: [{n: "JAL 運航", l: "https://www.jal.co.jp/cms/other/ja/weather_info_dom.html", c: "#e74c3c"},{n: "ANA 運航", l: "https://www.ana.co.jp/fs/dom/jp/", c: "#007aff"},{n: "羽田空港", l: "https://tokyo-haneda.com/flight/index.html", c: "#34495e"},{n: "成田空港", l: "https://www.narita-airport.jp/jp/flight/", c: "#007aff"}] },
+            rain: { t: "RAIN RADAR", b: [{n: "Yahoo!", l: "https://weather.yahoo.co.jp/weather/zoomradar/", c: "#e74c3c"},{n: "JMA ナウキャスト", l: "https://www.jma.go.jp/bosai/nowc/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/radar/", c: "#2ecc71"}] },
+            news: { t: "LATEST NEWS", b: [{n: "Yahoo!", l: "https://news.yahoo.co.jp/", c: "#e74c3c"},{n: "NHK", l: "https://www3.nhk.or.jp/news/", c: "#28a745"},{n: "日経", l: "https://www.nikkei.com/", c: "#34495e"},{n: "Google", l: "https://news.google.com/", c: "#4285f4"}] }
         };
 
         function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
@@ -262,7 +261,6 @@
         function openTips(t, b) { document.getElementById('paper-title').innerText = t; document.getElementById('paper-body').innerText = b; document.getElementById('tips-modal').style.display = 'flex'; }
         function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
 
-        // Fix for Coupon Reveal Scope
         window.showAll = function(k) {
             document.querySelectorAll(`.extra-${k}`).forEach(el => el.style.display = 'flex');
             const btn = document.getElementById(`btn-${k}`);
@@ -277,8 +275,7 @@
                 const now = new Date();
                 
                 let coupons = { rakuten: [], jalan: [], ikyu: [] };
-                let hotelHtml = '', gadgetHtml = '', gourmetHtml = '';
-                let tipsHtml = '';
+                let hotelHtml = '', gadgetHtml = '', tipsHtml = '';
 
                 rows.forEach(line => {
                     const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
@@ -304,10 +301,7 @@
                         hotelHtml += `<a href="${url}" target="_blank" class="hotel-card"><img src="${directUrl}" class="hotel-img"><div class="hotel-info"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${fTxt}</div></div></a>`;
                     }
                     if (type === 'GADGET') {
-                        gadgetHtml += `<a href="${url}" target="_blank" class="gadget-card"><img src="${directUrl}" class="gadget-img"><div class="gadget-info"><div style="font-size:11px;font-weight:900;color:#fff;">${title}</div><div style="font-size:9px;color:var(--gold);">${brand}</div></div></a>`;
-                    }
-                    if (type === 'GOURMET') {
-                        gourmetHtml += `<a href="${url}" target="_blank" class="hotel-card" style="flex:0 0 200px;"><img src="${directUrl}" class="hotel-img"><div class="hotel-info"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div></div></a>`;
+                        gadgetHtml += `<a href="${url}" target="_blank" class="hotel-card"><img src="${directUrl}" class="hotel-img" style="object-fit:contain;background:#fff;padding:10px;"><div class="hotel-info"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${brand}</div></div></a>`;
                     }
                     if (type === 'TIPS') {
                         tipsHtml += `<div class="tips-card" onclick="openTips('${title}', '${disc}')"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div></div>`;
@@ -317,22 +311,17 @@
                 document.getElementById('tips-container').innerHTML = tipsHtml;
                 document.getElementById('hotel-list').innerHTML = hotelHtml || '<p style="color:#666;font-size:10px;">Loading...</p>';
                 document.getElementById('gadget-list').innerHTML = gadgetHtml;
-                document.getElementById('gourmet-list').innerHTML = gourmetHtml;
 
-                // Coupon Rendering
                 const cList = document.getElementById('coupon-list');
                 Object.keys(coupons).forEach(k => {
                     if (coupons[k].length === 0) return;
                     const brandName = k.toUpperCase();
                     const color = k === 'rakuten' ? 'var(--rakuten-red)' : k === 'jalan' ? 'var(--jalan-orange)' : 'var(--ikyu-gold)';
-                    
                     let html = `<div style="margin-bottom:15px;"><div class="section-title" style="margin-bottom:10px;opacity:0.6;">${brandName}</div>`;
-                    
                     coupons[k].forEach((c, idx) => {
                         const style = idx >= 2 ? `style="display:none;" class="extra-${k}"` : '';
                         html += `<a href="${c.url}" target="_blank" class="coupon-card" ${style}><div class="coupon-main"><div class="coupon-fTxt">${c.fTxt}</div><div style="font-size:10px;font-weight:700;color:#555;">${c.disc}</div></div><div class="coupon-side" style="background:${color}">${new Date(c.end).getMonth()+1}/${new Date(c.end).getDate()}</div></a>`;
                     });
-
                     if (coupons[k].length > 2) {
                         html += `<button class="ribbon-btn" id="btn-${k}" onclick="showAll('${k}')">SEE ALL ${brandName} COUPONS (+${coupons[k].length - 2})</button>`;
                     }
