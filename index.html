@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TRIP_DASH. | OFFICIAL Ver 1.92</title>
+    <title>TRIP_DASH. | OFFICIAL Ver 1.55</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
@@ -12,115 +12,105 @@
             --text-main: #ffffff;
             --text-sub: #8e8e93;
             --gold: #d4af37;
+            --alert-red: #e74c3c;
+            --success-green: #2ecc71;
             --rakuten-red: #bf0000;
             --jalan-orange: #f39c12;
             --ikyu-gold: #8e774a;
-            --tabelog-orange: #fead00;
-            --success-green: #2ecc71;
             --header-h: 120px;
+            --emergency-h: 0px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: var(--header-h); }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-black); color: var(--text-main); font-family: -apple-system, sans-serif; padding-top: calc(var(--header-h) + var(--emergency-h)); }
 
-        /* HEADER & BANNER */
-        header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 10000; border-bottom: 1px solid #2a2a2a; }
+        #emergency-banner { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 38px; background: var(--alert-red); color: #fff; line-height: 38px; font-size: 11px; font-weight: 900; text-align: center; z-index: 20000; }
+
+        header { position: fixed; top: var(--emergency-h); left: 0; width: 100%; background: rgba(13, 15, 17, 0.95); backdrop-filter: blur(10px); z-index: 10000; border-bottom: 1px solid #2a2a2a; }
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
-        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; background: rgba(212, 175, 55, 0.05); cursor: pointer; }
         
-        #special-banner-area { padding: 0 15px 10px; display: flex; flex-direction: column; gap: 8px; }
-        .logic-banner { display: none; border-radius: 8px; padding: 10px 15px; align-items: center; justify-content: space-between; text-decoration: none; color: #fff; }
-        .banner-rakuten { background: linear-gradient(90deg, #bf0000, #ff3600); }
-        .banner-ikyu { background: linear-gradient(90deg, #8e774a, #d4af37); }
-        .logic-banner span { font-size: 11px; font-weight: 900; }
-
-        nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
-        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+        .header-right { display: flex; gap: 15px; align-items: center; }
+        .refresh-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); color: var(--gold); display: flex; align-items: center; justify-content: center; background: rgba(212, 175, 55, 0.05); cursor: pointer; }
+        .menu-btn { font-size: 22px; color: var(--gold); cursor: pointer; }
 
         /* SIDE MENU */
         .side-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: var(--card-gray); z-index: 30000; transition: 0.4s; padding: 100px 30px; border-left: 1px solid var(--gold); }
         .side-menu.active { right: 0; }
-        .side-menu a { display: block; color: #fff; text-decoration: none; padding: 15px 0; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .side-menu a { display: block; color: #fff; text-decoration: none; padding: 15px 0; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
+        nav { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 10px 12px; overflow-x: auto; }
+        .nav-link { font-size: 11px; font-weight: 900; color: var(--text-main); text-decoration: none; background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+
+        #sale-banner { display: none; width: 100%; max-width: 800px; margin: 0 auto 15px; border-radius: 12px; padding: 12px; position: relative; overflow: hidden; text-decoration: none; }
+        .sale-today { background: linear-gradient(135deg, #8a6e2f 0%, #d4af37 50%, #8a6e2f 100%); color: #000; }
+        .sale-rakuten-day { background: linear-gradient(135deg, var(--rakuten-red) 0%, #d4af37 100%); color: #fff; }
+        .sale-ikyu-day { background: linear-gradient(135deg, var(--ikyu-gold) 0%, #d4af37 100%); color: #fff; }
+        .sale-preview { background: linear-gradient(135deg, #1c2126 0%, #2c3e50 100%); border: 1px solid var(--gold); color: var(--gold); }
+        .sale-content { display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 11px; font-weight: 900; }
 
         .container { padding: 15px; max-width: 800px; margin: 0 auto; }
         .section-header { display: flex; align-items: center; margin: 25px 0 15px; }
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
-
+        
         /* HUB */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
         .hub-val { font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .dot-green { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
 
-        /* SALE & COUPON */
-        .sale-card { display: none; background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; align-items: center; justify-content: space-between; text-decoration: none; margin-bottom: 12px; }
-        .sale-card.active-sale { display: flex; border: 1px solid var(--gold); }
-        .coupon-card { background: #e0e0e0; color: #333; border-radius: 12px; display: flex; min-height: 110px; text-decoration: none; position: relative; overflow: hidden; margin-bottom: 12px; }
-        .coupon-main { flex: 0 0 70%; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; border-right: 1.5px dashed #bbb; }
-        .coupon-fTxt { font-size: 24px; font-weight: 900; color: #000; line-height: 1.1; }
-        .coupon-side { flex: 1; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; }
-        .ribbon-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 12px; margin: 5px 0 20px; cursor: pointer; text-transform: uppercase; }
+        /* SALES */
+        .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; margin-bottom: 12px; }
+        .sale-card.active-sale { border: 1px solid var(--gold); }
+        .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; }
 
-        /* AREA (Ver 1.55 5-Card) */
-        #area-section { margin-top: 30px; position: relative; background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070') center/cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
-        #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
-        .area-content-wrapper { position: relative; z-index: 2; }
-        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; scrollbar-width: none; }
-        .area-column { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; width: 280px; }
-        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; backdrop-filter: blur(8px); }
-        .area-info { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px; }
-        .area-name { font-size: 13px; font-weight: 900; color: #fff; }
-        .area-spot { font-size: 9px; color: var(--gold); font-weight: 700; }
-        .area-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; }
-
-        /* SCROLL SECTIONS */
-        .hotel-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; scrollbar-width: none; }
-        .hotel-card { flex: 0 0 240px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; min-height: 200px; }
-        .hotel-img { width: 100%; height: 130px; object-fit: cover; }
-        .hotel-info { padding: 12px; }
+        /* HORIZONTAL SCROLL (Hotel & Gadget) */
+        .h-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; scrollbar-width: none; }
+        .h-scroll::-webkit-scrollbar { display: none; }
+        .item-card { flex: 0 0 240px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; }
+        .item-img { width: 100%; height: 130px; object-fit: cover; }
+        .item-info { padding: 12px; }
 
         /* GOURMET */
-        .gourmet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .gourmet-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 15px 5px; border-radius: 16px; text-decoration: none; font-weight: 900; font-size: 10px; color: #fff; border: 1px solid rgba(255,255,255,0.1); background: var(--card-gray); }
+        .gourmet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .gourmet-btn { background: var(--card-gray); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); padding: 15px 5px; text-align: center; text-decoration: none; color: #fff; font-size: 10px; font-weight: 900; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-        footer { margin-top: 40px; padding: 25px; border-top: 1px solid #2a2a2a; text-align: center; }
-        .copyright { font-size: 10px; color: var(--text-sub); letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
-        
+        /* AREA */
+        #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
+        #area-section::before { content: ''; position: absolute; inset: 0; background: rgba(13, 15, 17, 0.85); z-index: 1; }
+        .area-content-wrapper { position: relative; z-index: 2; }
+        .area-swipe-container { display: flex; overflow-x: auto; gap: 12px; padding: 0 20px 15px; }
+        .area-card { background: rgba(28, 33, 38, 0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 16px; width: 280px; flex-shrink: 0; }
+        .area-btn { color: #fff; text-decoration: none; padding: 10px 4px; border-radius: 10px; font-size: 10px; font-weight: 900; text-align: center; display: inline-block; width: 30%; }
+
+        /* TIPS */
+        .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .tips-card { background: var(--card-gray); border-radius: 12px; padding: 18px 15px; border: 1px solid #2a2a2a; cursor: pointer; font-size: 12px; font-weight: 900; }
+
+        /* MODAL */
         #tips-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 40000; align-items: center; justify-content: center; padding: 20px; }
         .paper-content { background: #f4f1ea; width: 100%; max-width: 360px; min-height: 420px; border-radius: 4px; color: #1a1a1a; padding: 25px; display: flex; flex-direction: column; font-family: serif; }
     </style>
 </head>
 <body>
 
+    <div id="emergency-banner"></div>
+
     <header>
         <div class="header-top">
             <div class="logo">TRIP_DASH.</div>
-            <div class="header-right" style="display:flex;gap:15px;align-items:center;">
-                <div class="refresh-btn" onclick="location.reload(true)"><i class="fa-solid fa-arrows-rotate"></i></div>
-                <i class="fa-solid fa-bars" style="color:var(--gold);font-size:22px;" onclick="toggleMenu()"></i>
+            <div class="header-right">
+                <div class="refresh-btn" onclick="location.reload()"><i class="fa-solid fa-arrows-rotate"></i></div>
+                <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
             </div>
-        </div>
-        <div id="special-banner-area">
-            <a href="https://a.r10.to/hU7Adf" target="_blank" class="logic-banner banner-rakuten" id="banner-rakuten-day">
-                <span><i class="fa-solid fa-calendar-check"></i> 本日は「5と0のつく日」楽天ポイント最大4倍</span>
-                <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a href="https://www.ikyu.com/special/01/point_up_day/" target="_blank" class="logic-banner banner-ikyu" id="banner-ikyu-day">
-                <span id="ikyu-banner-text"></span>
-                <i class="fa-solid fa-chevron-right"></i>
-            </a>
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
-            <a href="#area-section" class="nav-link">Area</a>
-            <a href="#tips-section" class="nav-link">Tips</a>
+            <a href="#hotel-section" class="nav-link">Hotel</a>
         </nav>
     </header>
 
@@ -128,27 +118,33 @@
         <i class="fa-solid fa-xmark" style="position:absolute;top:30px;right:30px;font-size:28px;color:var(--text-sub);" onclick="toggleMenu()"></i>
         <a href="#field-ops" onclick="toggleMenu()">INTELLIGENCE HUB</a>
         <a href="#sale" onclick="toggleMenu()">PRIORITY SALE</a>
-        <a href="#dynamic-coupons" onclick="toggleMenu()">HOT COUPONS</a>
         <a href="#area-section" onclick="toggleMenu()">AREA EXPLORER</a>
         <a href="#hotel-section" onclick="toggleMenu()">HOTELS</a>
         <a href="#gourmet-section" onclick="toggleMenu()">GOURMET</a>
         <a href="#gadget-section" onclick="toggleMenu()">GADGETS</a>
+        <a href="#tips-section" onclick="toggleMenu()">TRAVEL TIPS</a>
     </div>
 
     <div class="container">
+        <a id="sale-banner" href="#">
+            <div class="sale-content"><i class="fa-solid fa-crown"></i><div id="sale-banner-text">CHECKING...</div><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+
         <section id="field-ops">
             <div class="section-header"><div class="section-title">INTELLIGENCE HUB</div><div class="section-line"></div></div>
             <div class="hub-grid">
-                <div class="hub-card" onclick="alert('最新の運行情報を確認中...')"><div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div><div class="hub-val"><span class="status-dot dot-green"></span> 正常運行</div></div>
-                <div class="hub-card"><div class="hub-label"><i class="fa-solid fa-cloud-sun"></i> Weather</div><div class="hub-val">--°C Tokyo</div></div>
+                <div class="hub-card"><div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div><div class="hub-val">正常運行</div></div>
+                <div class="hub-card"><div class="hub-label"><i class="fa-solid fa-location-dot"></i> Tokyo</div><div class="hub-val">--°C</div></div>
             </div>
         </section>
 
         <section id="sale">
             <div class="section-header"><div class="section-title">PRIORITY SALES</div><div class="section-line"></div></div>
-            <a href="#" class="sale-card" id="card-rakuten"><div style="background:var(--rakuten-red);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;">R</div><div style="flex-grow:1;margin-left:15px;"><div style="font-size:15px;font-weight:900;color:#fff;">楽天トラベル</div><div id="disc-rakuten" style="font-size:11px;color:var(--text-sub);">プラン一覧を見る</div></div><div style="padding:6px 16px;border-radius:12px;font-size:11px;font-weight:900;color:var(--gold);border:1px solid var(--gold);" id="badge-rakuten">CHECK</div></a>
-            <a href="#" class="sale-card" id="card-jalan"><div style="background:var(--jalan-orange);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;">J</div><div style="flex-grow:1;margin-left:15px;"><div style="font-size:15px;font-weight:900;color:#fff;">じゃらん</div><div id="disc-jalan" style="font-size:11px;color:var(--text-sub);">プラン一覧を見る</div></div><div style="padding:6px 16px;border-radius:12px;font-size:11px;font-weight:900;color:var(--gold);border:1px solid var(--gold);" id="badge-jalan">CHECK</div></a>
-            <a href="#" class="sale-card" id="card-ikyu"><div style="background:var(--ikyu-gold);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;">一</div><div style="flex-grow:1;margin-left:15px;"><div style="font-size:15px;font-weight:900;color:#fff;">一休.com</div><div id="disc-ikyu" style="font-size:11px;color:var(--text-sub);">プラン一覧を見る</div></div><div style="padding:6px 16px;border-radius:12px;font-size:11px;font-weight:900;color:var(--gold);border:1px solid var(--gold);" id="badge-ikyu">CHECK</div></a>
+            <div id="sale-list">
+                <a href="#" class="sale-card" id="card-rakuten"><div class="brand-logo-circle" style="background:var(--rakuten-red)">R</div><div style="flex-grow:1;margin-left:15px;"><div style="font-weight:700;">楽天トラベル</div><div id="disc-rakuten" style="font-size:11px;color:var(--text-sub);">プラン一覧</div></div><div class="sale-badge" id="badge-rakuten">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-jalan"><div class="brand-logo-circle" style="background:var(--jalan-orange)">J</div><div style="flex-grow:1;margin-left:15px;"><div style="font-weight:700;">じゃらん</div><div id="disc-jalan" style="font-size:11px;color:var(--text-sub);">プラン一覧</div></div><div class="sale-badge" id="badge-jalan">CHECK</div></a>
+                <a href="#" class="sale-card" id="card-ikyu"><div class="brand-logo-circle" style="background:var(--ikyu-gold)">一</div><div style="flex-grow:1;margin-left:15px;"><div style="font-weight:700;">一休.com</div><div id="disc-ikyu" style="font-size:11px;color:var(--text-sub);">プラン一覧</div></div><div class="sale-badge" id="badge-ikyu">CHECK</div></a>
+            </div>
         </section>
 
         <section id="dynamic-coupons">
@@ -158,33 +154,11 @@
 
         <section id="area-section">
             <div class="area-content-wrapper">
-                <div class="section-title" style="color:#fff;margin:0 20px 15px;">AREA EXPLORER</div>
+                <div style="color:#fff;margin:0 20px 15px;font-size:11px;font-weight:900;">AREA EXPLORER</div>
                 <div class="area-swipe-container">
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅・銀座</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="https://www.jalan.net/130000/" target="_blank" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="https://restaurant.ikyu.com/area/tokyo/" target="_blank" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OSAKA / 大阪</div><div class="area-spot">梅田・難波</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="https://www.jalan.net/270000/" target="_blank" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="https://restaurant.ikyu.com/area/osaka/" target="_blank" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">NAGOYA / 名古屋</div><div class="area-spot">名古屋駅・栄</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="https://www.jalan.net/230000/" target="_blank" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="https://restaurant.ikyu.com/area/aichi/" target="_blank" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">FUKUOKA / 博多</div><div class="area-spot">博多・天神</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hYI69O" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="https://www.jalan.net/400000/" target="_blank" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="https://restaurant.ikyu.com/area/fukuoka/" target="_blank" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OTHER / その他</div><div class="area-spot">全国エリア</div></div>
-                            <div class="area-actions"><a href="https://travel.rakuten.co.jp/" target="_blank" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="https://www.jalan.net/" target="_blank" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="https://www.ikyu.com/" target="_blank" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
-                        </div>
+                    <div class="area-card">
+                        <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:8px;margin-bottom:10px;"><div style="font-size:13px;font-weight:900;color:#fff;">TOKYO / 東京</div><div style="font-size:9px;color:var(--gold);">東京駅</div></div>
+                        <div style="display:flex;gap:5px;"><a href="#" class="area-btn" style="background:var(--rakuten-red)">楽天</a><a href="#" class="area-btn" style="background:var(--jalan-orange)">じゃらん</a><a href="#" class="area-btn" style="background:var(--ikyu-gold)">一休</a></div>
                     </div>
                 </div>
             </div>
@@ -192,29 +166,27 @@
 
         <section id="hotel-section">
             <div class="section-header"><div class="section-title">RECOMMENDED HOTELS</div><div class="section-line"></div></div>
-            <div class="hotel-scroll" id="hotel-list"></div>
+            <div class="h-scroll" id="hotel-list"></div>
         </section>
 
         <section id="gourmet-section">
             <div class="section-header"><div class="section-title">GOURMET GUIDE</div><div class="section-line"></div></div>
             <div class="gourmet-grid">
-                <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538160&vc_url=https%3A%2F%2Frestaurant.ikyu.com%2F" rel="nofollow" target="_blank" class="gourmet-btn"><i class="fa-solid fa-utensils" style="color:var(--ikyu-gold);font-size:20px;"></i>一休レストラン</a>
-                <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538162&vc_url=https%3A%2F%2Fwww.hotpepper.jp%2F%3Fvos%3Dnhppvccp99002" rel="nofollow" target="_blank" class="gourmet-btn"><i class="fa-solid fa-fire" style="color:#ff3600;font-size:20px;"></i>ホットペッパー</a>
-                <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892538158&vc_url=https%3A%2F%2Ftabelog.com%2F%2F" rel="nofollow" target="_blank" class="gourmet-btn"><i class="fa-solid fa-star" style="color:var(--tabelog-orange);font-size:20px;"></i>食べログ</a>
+                <a href="https://restaurant.ikyu.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-utensils" style="color:var(--ikyu-gold);font-size:20px;"></i>一休レストラン</a>
+                <a href="https://www.hotpepper.jp/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-fire" style="color:#ff3600;font-size:20px;"></i>ホットペッパー</a>
+                <a href="https://tabelog.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-star" style="color:#fead00;font-size:20px;"></i>食べログ</a>
             </div>
         </section>
 
         <section id="gadget-section">
             <div class="section-header"><div class="section-title">TRAVEL GADGETS</div><div class="section-line"></div></div>
-            <div class="hotel-scroll" id="gadget-list"></div>
+            <div class="h-scroll" id="gadget-list"></div>
         </section>
 
         <section id="tips-section">
             <div class="section-header"><div class="section-title">TRAVEL TIPS</div><div class="section-line"></div></div>
-            <div id="tips-container" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+            <div id="tips-container" class="tips-grid"></div>
         </section>
-
-        <footer><div class="copyright">TRIP_DASH. &copy; ALL RIGHTS RESERVED</div></footer>
     </div>
 
     <div id="tips-modal" onclick="closeTips()">
@@ -227,53 +199,44 @@
         function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
         function openTips(t, b) { document.getElementById('paper-title').innerText = t; document.getElementById('paper-body').innerText = b; document.getElementById('tips-modal').style.display = 'flex'; }
         function closeTips() { document.getElementById('tips-modal').style.display = 'none'; }
-        
-        window.toggleRibbon = function(k) {
-            const extras = document.querySelectorAll(`.extra-${k}`);
-            const btn = document.getElementById(`btn-${k}`);
-            const isHidden = (extras[0].style.display === 'none');
-            extras.forEach(el => el.style.display = isHidden ? 'flex' : 'none');
-            btn.innerText = isHidden ? `CLOSE` : `SEE ALL ${k.toUpperCase()} COUPONS (+${extras.length})`;
-        }
 
         async function init() {
             const now = new Date();
-            const today = now.getDate();
-            const tomorrow = new Date(now); tomorrow.setDate(today + 1);
-            const tmDay = tomorrow.getDate();
+            const date = now.getDate();
+            const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+            
+            // --- 一休ロジック復元 (1, 9, 19日) ---
+            const bannerS = document.getElementById('sale-banner');
+            const bannerT = document.getElementById('sale-banner-text');
+            
+            const isIkyuDay = [1, 9, 19].includes(date);
+            const isIkyuPreview = (date === lastDay || date === 8 || date === 18);
+            const isRakutenDay = [5, 10, 15, 20, 25, 30].includes(date);
 
-            // --- Ver 1.55 Sale Banner Logic Restoration ---
-            // Rakuten: 5, 0 days
-            if ([5, 10, 15, 20, 25, 30].includes(today)) {
-                document.getElementById('banner-rakuten-day').style.display = 'flex';
+            if (isIkyuDay) {
+                bannerS.style.display = 'block'; bannerS.className = 'sale-ikyu-day';
+                bannerT.innerText = "一休.com｜本日「1・9・19日」ポイント最大5倍";
+            } else if (isIkyuPreview) {
+                bannerS.style.display = 'block'; bannerS.className = 'sale-preview';
+                bannerT.innerText = "予告｜明日「1・9・19日」ポイント最大5倍";
+            } else if (isRakutenDay) {
+                bannerS.style.display = 'block'; bannerS.className = 'sale-rakuten-day';
+                bannerT.innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
             }
-
-            // Ikyu: 1, 9, 19 days
-            const ikyuBanner = document.getElementById('banner-ikyu-day');
-            const ikyuTxt = document.getElementById('ikyu-banner-text');
-            if ([1, 9, 19].includes(today)) {
-                ikyuBanner.style.display = 'flex';
-                ikyuTxt.innerHTML = '<i class="fa-solid fa-crown"></i> 本日は一休「1・9・19日」ポイント最大5倍';
-            } else if ([1, 9, 19].includes(tmDay)) {
-                // Preview Logic
-                ikyuBanner.style.display = 'flex';
-                ikyuTxt.innerHTML = '<i class="fa-solid fa-clock"></i> 明日から一休「1・9・19日」ポイント最大5倍';
-            }
-            // ----------------------------------------------
 
             try {
                 const res = await fetch(CSV_URL);
                 const text = await res.text();
                 const rows = text.split('\n').slice(1).filter(r => r.trim());
                 
-                let coupons = { rakuten: [], jalan: [], ikyu: [] };
                 let hotelHtml = '', gadgetHtml = '', tipsHtml = '';
-
+                
                 rows.forEach(line => {
                     const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                    const [type, brand, title, start, end, url, directUrl, disc, fTxt] = cols;
+                    const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
                     const isActive = (!start || now >= new Date(start)) && (!end || now <= new Date(end).setHours(23,59,59));
 
+                    // SALEセクション：CSV type SALEのみ反映
                     if (type === 'SALE' && isActive) {
                         const id = brand.includes('楽天') ? 'rakuten' : brand.includes('じゃらん') ? 'jalan' : 'ikyu';
                         const card = document.getElementById(`card-${id}`);
@@ -283,39 +246,19 @@
                             document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                         }
                     }
-                    if (type === 'COUPON' && isActive) {
-                        const key = brand.includes('楽天') ? 'rakuten' : brand.includes('じゃらん') ? 'jalan' : 'ikyu';
-                        coupons[key].push({title, fTxt, disc, url, end});
-                    }
                     if (type === 'HOTEL' && isActive) {
-                        hotelHtml += `<a href="${url}" target="_blank" class="hotel-card"><img src="${directUrl}" class="hotel-img"><div class="hotel-info"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${fTxt}</div></div></a>`;
+                        hotelHtml += `<a href="${url}" target="_blank" class="item-card"><img src="${direct}" class="item-img"><div class="item-info"><div style="font-size:12px;font-weight:900;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${fTxt}</div></div></a>`;
                     }
                     if (type === 'GADGET') {
-                        gadgetHtml += `<a href="${url}" target="_blank" class="hotel-card"><img src="${directUrl}" class="hotel-img" style="object-fit:contain;background:#fff;padding:10px;"><div class="hotel-info"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${brand}</div></div></a>`;
+                        gadgetHtml += `<a href="${url}" target="_blank" class="item-card"><img src="${direct}" class="item-img" style="object-fit:contain;background:#fff;"><div class="item-info"><div style="font-size:12px;font-weight:900;">${title}</div><div style="font-size:10px;color:var(--text-sub);margin-top:4px;">${brand}</div></div></a>`;
                     }
                     if (type === 'TIPS') {
-                        tipsHtml += `<div style="background:var(--card-gray);border-radius:12px;padding:18px 15px;border:1px solid #2a2a2a;cursor:pointer;" onclick="openTips('${title}', '${disc}')"><div style="font-size:12px;font-weight:900;color:#fff;">${title}</div></div>`;
+                        tipsHtml += `<div class="tips-card" onclick="openTips('${title}', '${disc}')">${title}</div>`;
                     }
                 });
-
                 document.getElementById('hotel-list').innerHTML = hotelHtml;
                 document.getElementById('gadget-list').innerHTML = gadgetHtml;
                 document.getElementById('tips-container').innerHTML = tipsHtml;
-
-                const cList = document.getElementById('coupon-list');
-                Object.keys(coupons).forEach(k => {
-                    if (coupons[k].length === 0) return;
-                    const color = k === 'rakuten' ? 'var(--rakuten-red)' : k === 'jalan' ? 'var(--jalan-orange)' : 'var(--ikyu-gold)';
-                    let html = `<div style="margin-bottom:15px;"><div class="section-title" style="margin-bottom:10px;opacity:0.6;">${k.toUpperCase()}</div>`;
-                    coupons[k].forEach((c, idx) => {
-                        const hidden = idx >= 2 ? `style="display:none;" class="extra-${k}"` : '';
-                        html += `<a href="${c.url}" target="_blank" class="coupon-card" ${hidden}><div class="coupon-main"><div class="coupon-fTxt">${c.fTxt}</div><div style="font-size:10px;font-weight:700;color:#555;">${c.disc}</div></div><div class="coupon-side" style="background:${color}">${new Date(c.end).getMonth()+1}/${new Date(c.end).getDate()}</div></a>`;
-                    });
-                    if (coupons[k].length > 2) {
-                        html += `<button class="ribbon-btn" id="btn-${k}" onclick="toggleRibbon('${k}')">SEE ALL ${k.toUpperCase()} COUPONS (+${coupons[k].length - 2})</button>`;
-                    }
-                    cList.innerHTML += html + `</div>`;
-                });
             } catch (e) { console.error(e); }
         }
         init();
