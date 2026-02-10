@@ -66,11 +66,23 @@
         .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo { font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 2px; }
         
+        .header-right { display: flex; align-items: center; gap: 15px; }
         .refresh-btn {
             width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3);
             color: var(--gold); display: flex; align-items: center; justify-content: center; 
             background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.2s;
         }
+        .menu-btn { font-size: 22px; color: var(--gold); cursor: pointer; padding: 5px; }
+
+        /* SIDE MENU */
+        .side-menu {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100%;
+            background: var(--card-gray); z-index: 30000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 80px 30px; border-left: 1px solid var(--gold); box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .side-menu.active { right: 0; }
+        .side-menu a { display: block; color: #fff; text-decoration: none; padding: 18px 0; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; letter-spacing: 1px; }
+
         .refresh-btn.success { border-color: var(--success-green); color: var(--success-green); background: rgba(46,204,113,0.1); }
         .spin { animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -106,7 +118,7 @@
         .section-title { font-size: 11px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
         .section-line { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); width: 100%; margin-left: 10px; opacity: 0.4; }
         
-        /* HUB GRID */
+        /* HUB GRID & STATUS INDICATORS */
         .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .hub-card { background: var(--card-gray); border-radius: 14px; padding: 15px; border: 1px solid #2a2a2a; min-height: 100px; cursor: pointer; }
         .hub-label { font-size: 10px; color: var(--text-sub); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
@@ -123,8 +135,8 @@
 
         /* PRIORITY SALES */
         .sale-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .sale-card { background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; position: relative; overflow: hidden; }
-        .sale-card.active-sale { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+        .sale-card { display: none; background: #1c1c1e; border-radius: 20px; border: 1px solid #2c2c2e; padding: 18px 20px; align-items: center; justify-content: space-between; text-decoration: none; position: relative; overflow: hidden; }
+        .sale-card.active-sale { display: flex; border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
         .brand-logo-circle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; }
         .brand-rakuten { background: var(--rakuten-red); }
         .brand-jalan { background: var(--jalan-orange); }
@@ -134,6 +146,17 @@
         .sale-disc { font-size: 11px; color: #8e8e93; }
         .sale-badge { padding: 6px 16px; border-radius: 12px; font-size: 11px; font-weight: 900; color: var(--gold); border: 1px solid var(--gold); }
         .active-sale .sale-badge { background: var(--gold); color: #000; border: none; }
+
+        /* HORIZONTAL SCROLL (Hotels & Gadgets) */
+        .h-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; scrollbar-width: none; }
+        .h-scroll::-webkit-scrollbar { display: none; }
+        .item-card { flex: 0 0 240px; background: var(--card-gray); border-radius: 16px; overflow: hidden; border: 1px solid #2a2a2a; text-decoration: none; }
+        .item-img { width: 100%; height: 130px; object-fit: cover; }
+        .item-info { padding: 12px; }
+
+        /* GOURMET GRID */
+        .gourmet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .gourmet-btn { background: var(--card-gray); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); padding: 15px 5px; text-align: center; text-decoration: none; color: #fff; font-size: 10px; font-weight: 900; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
         /* COUPONS */
         .coupon-group { margin-bottom: 25px; }
@@ -149,7 +172,7 @@
         .limit-badge { position: absolute; top: 0; right: 0; background: var(--alert-red); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 8px; border-bottom-left-radius: 8px; z-index: 10; }
         .expand-btn { width: 100%; background: #1c2126; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--gold); font-size: 10px; font-weight: 900; padding: 8px; margin-top: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* AREA EXPLORER (Full Restoration) */
+        /* AREA EXPLORER */
         #area-section { margin-top: 30px; position: relative; background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); background-size: cover; border-radius: 24px; padding: 25px 0; overflow: hidden; }
         #area-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(13, 15, 17, 0.75), rgba(13, 15, 17, 0.9)); z-index: 1; }
         .area-content-wrapper { position: relative; z-index: 2; }
@@ -202,18 +225,34 @@
     <header id="main-header">
         <div class="header-top">
             <div class="logo">TRIP_DASH.</div>
-            <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
-                <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
+            <div class="header-right">
+                <div class="refresh-btn" id="refresh-btn" onclick="forceReloadData()">
+                    <i id="refresh-icon" class="fa-solid fa-arrows-rotate"></i>
+                </div>
+                <div class="menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
             </div>
         </div>
         <nav>
             <a href="#field-ops" class="nav-link">Hub</a>
             <a href="#sale" class="nav-link">Sale</a>
             <a href="#dynamic-coupons" class="nav-link">Coupon</a>
-            <a href="#area-section" class="nav-link">Area</a>
-            <a href="#tips-section" class="nav-link">Tips</a>
+            <a href="#hotel-section" class="nav-link">Hotel</a>
         </nav>
     </header>
+
+    <div class="side-menu" id="side-menu">
+        <i class="fa-solid fa-xmark" style="position:absolute;top:30px;right:30px;font-size:24px;color:var(--text-sub);cursor:pointer;" onclick="toggleMenu()"></i>
+        <a href="#field-ops" onclick="toggleMenu()">INTELLIGENCE HUB</a>
+        <a href="#sale" onclick="toggleMenu()">PRIORITY SALE</a>
+        <a href="#dynamic-coupons" onclick="toggleMenu()">HOT COUPONS</a>
+        <a href="#area-section" onclick="toggleMenu()">AREA EXPLORER</a>
+        <a href="#hotel-section" onclick="toggleMenu()">HOTELS</a>
+        <a href="#gourmet-section" onclick="toggleMenu()">GOURMET</a>
+        <a href="#gadget-section" onclick="toggleMenu()">GADGETS</a>
+        <a href="#tips-section" onclick="toggleMenu()">TRAVEL TIPS</a>
+    </div>
 
     <div class="container">
         <a id="sale-banner" href="#">
@@ -227,7 +266,7 @@
                     <div class="hub-label"><i class="fa-solid fa-train"></i> Transit</div>
                     <div class="hub-val" id="transit-display">
                         <span class="status-dot dot-green"></span>
-                        正常運行
+                        運行状況を確認
                     </div>
                 </div>
                 <div class="hub-card" onclick="openModal('weather')">
@@ -266,46 +305,74 @@
                 <div class="area-swipe-container">
                     <div class="area-column">
                         <div class="area-card">
-                            <div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hYb8ED" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011init.do%3Fkeyword%3D%2593%258C%258B%259E%2589w%26distCd%3D06%26rootCd%3D7701%26screenId%3DFWPCTOP%26ccnt%3Dbutton-fw%26image1%3D" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokyo%2F140000%2F%3Fadcid%3D202550369%26adgid%3D12503541209%26discsort%3D1%26gclid%3DCjwKCAiAv5bMBhAIEiwAqP9GuMBYyxvkr0JP8J5sLu0idWUsu78PZEERAUDV0gvfnnLa6vJnYKY1JRoCs5UQAvD_BwE%26ikCo%3Dgoogle%26ppc%3D2%26rc%3D1" target="_blank" class="area-btn btn-i">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">OSAKA / 梅田</div><div class="area-spot">大阪 梅田</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hkI4ez" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%2591%25E5%258D%25E3%2583%25BB%2591%25E5%258D%25E3%2583%25BB%2596%25E1%2594%25B0%26distCd%3D27%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fosaka%2F31101101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
-                        </div>
-                    </div>
-                    <div class="area-column">
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">AICHI / 名古屋</div><div class="area-spot">名古屋駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPVp2x" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%2591%25BC%258C%25C3%258A%25AE%2589w%26distCd%3D23%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Ftokai%2F23060311%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26per_page%3D20%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">FUKUOKA / 博多</div><div class="area-spot">博多駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPdo3g" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%2594%258E%2591%25BD%2589w%26distCd%3D40%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyushu%2F35090111%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
+                            <div class="area-info"><div class="area-name">TOKYO / 東京</div><div class="area-spot">東京駅・銀座・日本橋</div></div>
+                            <div class="area-actions">
+                                <a href="https://travel.rakuten.co.jp/yado/tokyo/tokyo.html" target="_blank" class="area-btn btn-r">楽天</a>
+                                <a href="https://www.jalan.net/130000/rg_130100/" target="_blank" class="area-btn btn-j">じゃらん</a>
+                                <a href="https://www.ikyu.com/area/ma000000/" target="_blank" class="area-btn btn-i">一休</a>
+                            </div>
                         </div>
                     </div>
                     <div class="area-column">
                         <div class="area-card">
-                            <div class="area-info"><div class="area-name">HOKKAIDO / 札幌</div><div class="area-spot">札幌駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hP3p4T" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%258D%2544%2591%2559%2589w%26distCd%3D01%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fhokkaido%2F01021101%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
-                        </div>
-                        <div class="area-card">
-                            <div class="area-info"><div class="area-name">KANAGAWA / 横浜</div><div class="area-spot">横浜駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPrkC5" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%2589%25A1%2591%256C%2589w%26distCd%3D14%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkanagawa%2F140304%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
+                            <div class="area-info"><div class="area-name">OSAKA / 大阪</div><div class="area-spot">梅田・難波・USJ</div></div>
+                            <div class="area-actions">
+                                <a href="https://travel.rakuten.co.jp/yado/osaka/osaka.html" target="_blank" class="area-btn btn-r">楽天</a>
+                                <a href="https://www.jalan.net/270000/rg_270100/" target="_blank" class="area-btn btn-j">じゃらん</a>
+                                <a href="https://www.ikyu.com/area/ma000002/" target="_blank" class="area-btn btn-i">一休</a>
+                            </div>
                         </div>
                     </div>
                     <div class="area-column">
                         <div class="area-card">
-                            <div class="area-info"><div class="area-name">KYOTO / 京都</div><div class="area-spot">京都駅</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hUv1Rk" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2Fuw%2Fuwp2011%2Fuww2011search.do%3Fkeyword%3D%258B%2590%2593%2553%2589w%26distCd%3D26%26rootCd%3D7701%26screenId%3DFWPCTOP" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2Fkyoto%2F260104%2F%3Fadc%3D1%26discsort%3D1%26lc%3D1%26ppc%3D2%26rc%3D1%26si%3D6" target="_blank" class="area-btn btn-i">一休</a></div>
+                            <div class="area-info"><div class="area-name">KYOTO / 京都</div><div class="area-spot">京都駅・祇園・河原町</div></div>
+                            <div class="area-actions">
+                                <a href="https://travel.rakuten.co.jp/yado/kyoto/kyoto.html" target="_blank" class="area-btn btn-r">楽天</a>
+                                <a href="https://www.jalan.net/260000/rg_260100/" target="_blank" class="area-btn btn-j">じゃらん</a>
+                                <a href="https://www.ikyu.com/area/ma000003/" target="_blank" class="area-btn btn-i">一休</a>
+                            </div>
                         </div>
+                    </div>
+                    <div class="area-column">
                         <div class="area-card">
-                            <div class="area-info"><div class="area-name">OTHER / 全国</div><div class="area-spot">全エリア</div></div>
-                            <div class="area-actions"><a href="https://a.r10.to/hPwqVk" target="_blank" class="area-btn btn-r">楽天</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535803&vc_url=https%3A%2F%2Fwww.jalan.net%2F" target="_blank" class="area-btn btn-j">じゃらん</a><a href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3762635&pid=892535794&vc_url=https%3A%2F%2Fwww.ikyu.com%2F" target="_blank" class="area-btn btn-i">一休</a></div>
+                            <div class="area-info"><div class="area-name">FUKUOKA / 福岡</div><div class="area-spot">博多・天神・中洲</div></div>
+                            <div class="area-actions">
+                                <a href="https://travel.rakuten.co.jp/yado/fukuoka/fukuoka.html" target="_blank" class="area-btn btn-r">楽天</a>
+                                <a href="https://www.jalan.net/400000/rg_400100/" target="_blank" class="area-btn btn-j">じゃらん</a>
+                                <a href="https://www.ikyu.com/area/ma000005/" target="_blank" class="area-btn btn-i">一休</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="area-column">
+                        <div class="area-card">
+                            <div class="area-info"><div class="area-name">SAPPORO / 札幌</div><div class="area-spot">札幌駅・大通・すすきの</div></div>
+                            <div class="area-actions">
+                                <a href="https://travel.rakuten.co.jp/yado/hokkaido/sapporo.html" target="_blank" class="area-btn btn-r">楽天</a>
+                                <a href="https://www.jalan.net/010000/rg_010100/" target="_blank" class="area-btn btn-j">じゃらん</a>
+                                <a href="https://www.ikyu.com/area/ma000001/" target="_blank" class="area-btn btn-i">一休</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+        <section id="hotel-section">
+            <div class="section-header"><div class="section-title">HOTELS</div><div class="section-line"></div></div>
+            <div class="h-scroll" id="hotel-list"></div>
+        </section>
+
+        <section id="gourmet-section">
+            <div class="section-header"><div class="section-title">GOURMET</div><div class="section-line"></div></div>
+            <div class="gourmet-grid">
+                <a href="https://restaurant.ikyu.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-utensils" style="color:var(--ikyu-gold);font-size:20px;"></i>一休レストラン</a>
+                <a href="https://www.hotpepper.jp/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-fire" style="color:#ff3600;font-size:20px;"></i>ホットペッパー</a>
+                <a href="https://tabelog.com/" target="_blank" class="gourmet-btn"><i class="fa-solid fa-star" style="color:#fead00;font-size:20px;"></i>食べログ</a>
+            </div>
+        </section>
+
+        <section id="gadget-section">
+            <div class="section-header"><div class="section-title">GADGETS</div><div class="section-line"></div></div>
+            <div class="h-scroll" id="gadget-list"></div>
         </section>
 
         <section id="tips-section">
@@ -351,6 +418,8 @@
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYeo6mC85kmstRg6iJaxb7dgvy37mPo3knc09k0-82LZF_M5xaYRoRXbsUJig1CKldigIl03CT0Kww/pub?gid=0&single=true&output=csv";
         
+        function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
+
         const MODAL_DATA = {
             transit: { t: "RAILWAY STATUS", b: [{n: "JR東日本", l: "https://traininfo.jreast.co.jp/train_info/kanto.aspx", c: "#28a745"},{n: "東京メトロ", l: "https://www.tokyometro.jp/unko/", c: "#007aff"},{n: "都営交通", l: "https://www.kotsu.metro.tokyo.jp/subway/schedule/", c: "#e74c3c"},{n: "東急電鉄", l: "https://www.tokyu.co.jp/unko/", c: "#e60012"},{n: "Yahoo! 路線", l: "https://transit.yahoo.co.jp/diainfo", c: "#ff9900"}] },
             weather: { t: "WEATHER DETAILS", b: [{n: "tenki.jp", l: "https://tenki.jp/", c: "#007aff"},{n: "ウェザーニュース", l: "https://weathernews.jp/onebox/", c: "#2ecc71"},{n: "気象庁", l: "https://www.jma.go.jp/bosai/", c: "#34495e"},{n: "Yahoo! 天気", l: "https://weather.yahoo.co.jp/weather/", c: "#ff9900"}] },
@@ -399,16 +468,24 @@
             const bannerE = document.getElementById('emergency-banner');
             const bannerS = document.getElementById('sale-banner');
             const tipsContainer = document.getElementById('tips-container');
+            const hotelList = document.getElementById('hotel-list');
+            const gadgetList = document.getElementById('gadget-list');
             const root = document.documentElement;
-            const transitDisplay = document.getElementById('transit-display');
+            
+            // Initial reset
+            ['rakuten', 'jalan', 'ikyu'].forEach(id => {
+                const card = document.getElementById(`card-${id}`);
+                card.classList.remove('active-sale');
+            });
 
             bannerE.style.display = 'none'; 
             root.style.setProperty('--emergency-h', '0px');
             bannerS.style.display = 'none';
             tipsContainer.innerHTML = '';
+            hotelList.innerHTML = '';
+            gadgetList.innerHTML = '';
             
             let saleTopFound = false;
-            let hasEmergency = false;
             let coupons = { rakuten: [], jalan: [], ikyu: [] };
             const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu' };
             const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
@@ -425,16 +502,10 @@
                     bannerE.innerText = `【！】 ${title}`; 
                     bannerE.style.display = 'block';
                     root.style.setProperty('--emergency-h', '38px');
-                    hasEmergency = true;
                 }
                 if (type === 'SALE_TOP' && now >= sDate && now <= eDate) {
                     document.getElementById('sale-banner-text').innerText = title;
                     bannerS.style.display = 'block'; bannerS.href = url; bannerS.className = 'sale-today'; saleTopFound = true;
-                }
-                if (type === 'TIPS') {
-                    const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
-                    card.innerHTML = `<div class="tips-title">${title}</div>`;
-                    tipsContainer.appendChild(card);
                 }
                 if (type === 'SALE' && brands[brand] && now >= sDate && now <= eDate) {
                     const id = brands[brand]; const card = document.getElementById(`card-${id}`);
@@ -442,19 +513,22 @@
                     document.getElementById(`disc-${id}`).innerText = disc;
                     document.getElementById(`badge-${id}`).innerText = fTxt || 'SALE';
                 }
+                if (type === 'HOTEL' && now >= sDate && now <= eDate) {
+                    hotelList.innerHTML += `<a href="${url}" target="_blank" class="item-card"><img src="${direct}" class="item-img"><div class="item-info"><div style="font-size:12px;font-weight:900;">${title}</div><div style="font-size:10px;color:var(--gold);margin-top:4px;">${fTxt}</div></div></a>`;
+                }
+                if (type === 'GADGET') {
+                    gadgetList.innerHTML += `<a href="${url}" target="_blank" class="item-card"><img src="${direct}" class="item-img" style="object-fit:contain;background:#fff;"><div class="item-info"><div style="font-size:12px;font-weight:900;">${title}</div><div style="font-size:10px;color:var(--text-sub);margin-top:4px;">${brand}</div></div></a>`;
+                }
+                if (type === 'TIPS') {
+                    const card = document.createElement('div'); card.className = 'tips-card'; card.onclick = () => openTips(title, disc);
+                    card.innerHTML = `<div class="tips-title">${title}</div>`;
+                    tipsContainer.appendChild(card);
+                }
                 if (type === 'COUPON' && brands[brand] && now >= sDate && now <= eDate) {
                     coupons[brands[brand]].push({ title, url, fTxt, end, disc });
                 }
             });
 
-            // Status Light Logic
-            if (hasEmergency) {
-                transitDisplay.innerHTML = `<span class="status-dot dot-red"></span> 運行情報あり`;
-            } else {
-                transitDisplay.innerHTML = `<span class="status-dot dot-green"></span> 正常運行`;
-            }
-
-            // Recurring Sale Logic
             if (!saleTopFound) {
                 const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
                 const tomorrowDate = tomorrow.getDate();
@@ -462,19 +536,12 @@
                 if (rakutenDays.includes(date)) {
                     document.getElementById('sale-banner-text').innerText = "楽天トラベル｜本日 5と0のつく日 ポイント4倍";
                     bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-rakuten-day';
-                } else if (date === 9) {
-                    document.getElementById('sale-banner-text').innerText = "一休.com｜本日 毎月9日は一休の日 ポイントUP";
-                    bannerS.style.display = 'block'; bannerS.href = "https://www.ikyu.com/special/01/ikyu_day/"; bannerS.className = 'sale-ikyu-day';
                 } else if (rakutenDays.includes(tomorrowDate) && hour >= 15) {
                     document.getElementById('sale-banner-text').innerText = "予告｜明日 5と0のつく日 ポイント4倍";
                     bannerS.style.display = 'block'; bannerS.href = "https://travel.rakuten.co.jp/camp/50bunrui/"; bannerS.className = 'sale-preview';
-                } else if (date === 8 && hour >= 15) {
-                    document.getElementById('sale-banner-text').innerText = "予告｜明日 毎月9日は一休の日 ポイントUP";
-                    bannerS.style.display = 'block'; bannerS.href = "https://www.ikyu.com/special/01/ikyu_day/"; bannerS.className = 'sale-preview';
                 }
             }
 
-            // Coupon Render
             const container = document.getElementById('coupon-list'); container.innerHTML = '';
             const isMobile = window.innerWidth < 600;
             const maxVisible = isMobile ? 2 : 4;
