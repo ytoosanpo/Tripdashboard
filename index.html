@@ -457,13 +457,19 @@
             let saleTopFound = false;
             let coupons = { rakuten: [], jalan: [], ikyu: [] };
             let areaData = [];
-            const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu', '一休': 'ikyu' };
+            const brands = { '楽天トラベル': 'rakuten', 'じゃらん': 'jalan', '一休.com': 'ikyu', '一休': 'ikyu', 'ikyu': 'ikyu' };
             const colors = { 'rakuten': 'var(--rakuten-red)', 'jalan': 'var(--jalan-orange)', 'ikyu': 'var(--ikyu-gold)' };
             
             rows.forEach(line => {
                 const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
-                const [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
+                let [type, brand, title, start, end, url, direct, disc, fTxt] = cols;
                 if (!start || !end) return;
+
+                // URL内のダブルクォートを削除してHTML崩れを防止
+                if(url) url = url.replace(/"/g, "");
+                // 一休の表記揺れ吸収
+                if(brand && (brand.includes("一休") || brand.toLowerCase().includes("ikyu"))) brand = "一休";
+
                 const sDate = new Date(start); 
                 const eDate = new Date(end);
                 eDate.setHours(23, 59, 59);
